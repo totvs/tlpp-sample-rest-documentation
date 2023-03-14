@@ -85,5 +85,36 @@ Todos os componentes citados na documentação, foram criados nesse arquivo segu
 TLPP COMPONENT <Nome_Componente> <Nome_Propriedade> <Tipo_Propriedade> <Exemplo>
 ```
 
-> Obrigatório o uso da include:
+> Obrigatório o uso da include:<br>
 > **#include "tlpp-doc.th"**
+
+Vejamos um exemplo:
+
+```
+#include "tlpp-doc.th"
+
+TLPP COMPONENT pessoa nome      character "José da Silva"
+TLPP COMPONENT pessoa idade     numeric   "65"             // O exemplo sempre deverá ficar entre aspas.
+TLPP COMPONENT pessoa endereco  component "endereco"       // Quando o tipo for "component", então no exemplo devemos informar o nome do componente.
+
+TLPP COMPONENT endereco logradouro     character "Rua dos Felizes"
+TLPP COMPONENT endereco numero         numeric   "51"
+TLPP COMPONENT endereco complemento    character "apto 11"
+TLPP COMPONENT endereco municipio      character "Sao Paulo"
+TLPP COMPONENT endereco uf             character "SP"
+TLPP COMPONENT endereco cep            character "00000-000"
+```
+
+Para resgatar os dados de seu componente, utilize a seguinte função do tlppCore:
+
+```
+local jComponent as json
+
+if ( tlpp.doc.getComponent( 'pessoa', @jComponent, .T. ) )
+  // resgatou componente com sucesso, inserir seu código aqui.
+else
+  conout( "Erro ao obter o componente [pessoa]" )
+endif
+```
+
+**ATENÇÃO:** Ao gerar a documentação para o formato Swagger, você desenvolvedor não precisará utilizar a função acima, pois o motor já fará isso por você, porém, ao solicitar para gerar em formato JSON o motor apenas irá te retornar todos os dados da documentação em um arquivo JSON central, onde você terá condições de produzir o documento no formato que desejar, e nesse caso você terá que utilizar a função acima pois no JSON terá apenas o nome do componente.
