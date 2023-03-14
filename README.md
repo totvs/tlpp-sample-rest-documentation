@@ -41,3 +41,21 @@ Resumo do exemplo completo -> [complete.md](https://github.com/totvs/tlpp-sample
 - ***DOC:*** \src\rest\complete\sample_complete_DOC.tlpp
 - ***DOC (localização):*** \src\rest\complete\sample_complete_DOC-i18n.tlpp
 - ***Componente:*** \src\components\sample_components.tlpp
+
+## Gerando a documentação
+
+Para gerar a documentação dos exemplos desse projeto, como também dos documentos criados por você, será necessário executar a função do tlppCore capaz de gerar o documento final.
+
+> **ATENÇÃO:** Antes de executar a função, é imprescendível que o serviço REST esteja funcionando e acessível.
+
+Após o ambiente estiver disponível, a execução será através da seguinte função:
+```
+tlpp.doc.generate( 'swagger', 'api_doc' )
+```
+
+Para mais detalhes, veja em: *\src\main.tlpp*
+
+Nesse projeto, há uma cópia do arquivo gerado com o resultado desses exemplos.
+Esse arquivo você pode acessar em: *\output\api_doc_8080.yaml*
+
+> Pode-se validar o arquivo gerado através de uma ferramenta disponibilizada pela SmartBear Software, basta acessar a seguinte URL: [editor.swagger.io](https://editor.swagger.io/)

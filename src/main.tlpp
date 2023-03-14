@@ -8,7 +8,7 @@ main function sampleDOC()
 
   tlpp.doc.generate()
   */
-  tlpp.doc.generate( 'swagger', 'rest_tlpp' ) 
+  tlpp.doc.generate( 'swagger', 'api_doc' )
 
   /*
   Importante:
