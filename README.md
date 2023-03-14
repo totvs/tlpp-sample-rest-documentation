@@ -24,20 +24,20 @@ Aqui apresentaremos diversos fontes com exemplos de como criar suas documentaç�
 
 Abaixo segue a lista com exemplos:
 
-###### Básicos
+#### Básicos
 
-- *Somente descrição:* \src\rest\basic\sample_01_basic.tlpp
-- *Documentando utilizando annotation:* \src\rest\basic\sample_02_basic.tlpp
-- *Documentando diretamente no i18n:* \src\rest\basic\sample_03_basic_by_id.tlpp
-- *Documentando através de função:* \src\rest\basic\sample_04_basic_by_function.tlpp
-- *Descrição multi-linha:* \src\rest\basic\sample_05_basic_multiline.tlpp
+- ***Somente descrição:*** \src\rest\basic\sample_01_basic.tlpp
+- ***Documentando utilizando annotation:*** \src\rest\basic\sample_02_basic.tlpp
+- ***Documentando diretamente no i18n:*** \src\rest\basic\sample_03_basic_by_id.tlpp
+- ***Documentando através de função:*** \src\rest\basic\sample_04_basic_by_function.tlpp
+- ***Descrição multi-linha:*** \src\rest\basic\sample_05_basic_multiline.tlpp
 
-###### Completo (Documentação + Componente + i18n)
+#### Completo (Documentação + Componente + i18n)
 
 Resumo do exemplo completo -> [complete.md](https://github.com/totvs/tlpp-sample-rest-documentation/blob/main/src/rest/complete/complete.md)
 
-- *REST:* \src\rest\complete\sample_complete.tlpp
-- *REST (localização):* \src\rest\complete\sample_complete-i18n.tlpp
-- *DOC:* \src\rest\complete\sample_complete_DOC.tlpp
-- *DOC (localização):* \src\rest\complete\sample_complete_DOC-i18n.tlpp
-- *Componente:* \src\components\sample_components.tlpp
+- ***REST:*** \src\rest\complete\sample_complete.tlpp
+- ***REST (localização):*** \src\rest\complete\sample_complete-i18n.tlpp
+- ***DOC:*** \src\rest\complete\sample_complete_DOC.tlpp
+- ***DOC (localização):*** \src\rest\complete\sample_complete_DOC-i18n.tlpp
+- ***Componente:*** \src\components\sample_components.tlpp
