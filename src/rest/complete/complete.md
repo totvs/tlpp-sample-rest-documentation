@@ -17,8 +17,8 @@ src/
         ├── sample_complete_DOC.tlpp
         └── sample_complete_DOC-i18n.tlpp
 ```
-<br/>
-## Implementação do REST - sample_complete.tlpp
+
+## Implementação do REST [sample_complete.tlpp]
 
 Por esse arquivo, nós temos a implementação do serviço REST que irá responder pelo endpoint [*/rest/sample/doc/complete/:param1*].
 
