@@ -35,7 +35,7 @@ Nesse arquivo, iremos apontar para dois itens importantes:
   **description="[rest_sample_complete_DOC]"**
   
 <br/>
-## Localização do REST - sample_complete-i18n.tlpp
+## Localização do REST [sample_complete-i18n.tlpp]
 
 Aqui estarão todas as strings que foram localizadas no fonte principal através do Localize(), portanto todas as strings localizadas, ou seja, as strings com seus respectivos idiomas.
 
@@ -48,7 +48,7 @@ Nesse exemplo, utilizamos somente 2:
 - USA - Inglês Americano.
 
 <br/>
-## Função indicada para o REST DOC - sample_complete_DOC.tlpp
+## Função indicada para o REST DOC [sample_complete_DOC.tlpp]
 
 Nesse fonte é onde temos a função que retornará o JSON com todas as definições das funcionalidades presentes no REST para que o motor de gerador de documentação gere o documento final.
 
@@ -68,7 +68,7 @@ Para as estruturas de entrada e saída pelo Body da mensagem HTTP nós iremos as
   *"component" : "nameComponent"*
 
 <br/>
-## Localização do DOC - sample_complete_DOC-i18n.tlpp
+## Localização do DOC [sample_complete_DOC-i18n.tlpp]
 
 Aqui estarão todas as strings que foram localizadas no fonte de DOC através do "translate:", portanto todas as strings localizadas, ou seja, as strings com seus respectivos idiomas.
 
@@ -81,7 +81,7 @@ Nesse exemplo, utilizamos somente 2:
 * USA - Inglês Americano.
 
 <br/>
-## Definição dos componentes - sample_components.tlpp
+## Definição dos componentes [sample_components.tlpp]
 
 Todos os componentes citados na documentação, foram criados nesse arquivo seguindo a seguinte sintaxe:
 
