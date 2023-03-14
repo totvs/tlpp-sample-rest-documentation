@@ -81,7 +81,9 @@ Nesse exemplo, utilizamos somente 2:
 
 Todos os componentes citados na documentação, foram criados nesse arquivo seguindo a seguinte sintaxe:
 
+```
 TLPP COMPONENT <Nome_Componente> <Nome_Propriedade> <Tipo_Propriedade> <Exemplo>
+```
 
 > Obrigatório o uso da include:
 > **#include "tlpp-doc.th"**
