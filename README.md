@@ -43,7 +43,7 @@ Abaixo segue a lista com exemplos:
 
 ###### Completo (Documento + i18n)
 
-Resumo do exemplo completo -> [complete.md](src\rest\complete\complete.md)
+Resumo do exemplo completo -> [complete.md](https://github.com/totvs/tlpp-sample-rest-documentation/blob/main/src/rest/complete/complete.md)
 
 - *REST:*
   \src\rest\complete\sample_complete.tlpp
