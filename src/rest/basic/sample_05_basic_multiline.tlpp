@@ -1,0 +1,52 @@
+#include 'tlpp-rest.th'
+#include "tlpp-i18n.th"
+
+/* --------------------------------------------------------------------------
+EXEMPLO
+
+Exemplo curto de como apresentar uma descrição de múltiplas linhas.
+-------------------------------------------------------------------------- */
+
+@Get( endpoint="/rest/sample/doc/basic/05/multiline", description="[rest_sample_05_basic_DOC]" )
+function rest_sample_05_basic() as logical
+return oRest:setResponse('')
+
+
+/* --------------------------------------------------------------------------
+Função que irá retornar o JSON com dados da documentação do REST acima
+
+ATENÇÃO:
+
+- Importante ressaltar que ao se optar para uma descrição de múltiplas linhas,
+não poderemos mais usar a documentação diretamente pela annotation como no 
+exemplo 02, pois as annotations de REST possuem somente uma propriedade 
+"description" e aqui no JSON podemos criar quantas "description" forem 
+necessárias.
+
+- Pode-se começar com "description0" ou "description1", qualquer outra opção 
+invalida o description.
+
+- Ao se optar pelas múltiplas linhas, atente-se para não haver nada em 
+"description" sem números, pois ele será ingnorado.
+
+- A sequência numeral precisa ser correta, pois no primeiro número faltante
+o motor irá parar de ler, portanto, novamente atente-se a sequência para que 
+o motor não ignore suas descrições.
+-------------------------------------------------------------------------- */
+function rest_sample_05_basic_DOC() as character
+
+local cJson := '' as character
+
+TOSTRING cJson#;
+{;
+  "title" : "Múltiplas linhas",;
+  "description1" : "Linha 1",; // Pode-se iniciar também com "description0"
+  "description2" : "",; // linha em branco (salto de linha)
+  "description3" : "Linha 2\n",; // "\n" ao final da string também determina quebra de linha.
+  "description4" : "Linha 3\n",;
+  "description5" : "...\n",;
+  "description6" : "Linha N",;
+  "description8" : "sera ignorado"; // essa linha será ignorada pois quebramos a sequencia numerica dos description0 ... descriptionN
+}
+
+return cJson

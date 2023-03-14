@@ -1,0 +1,35 @@
+#include 'tlpp-rest.th'
+
+/* --------------------------------------------------------------------------
+EXEMPLO 03
+
+Temos o mesmo exemplo de REST do Basic 02, porém agora iremos documentar
+diretamente no arquivo i18n para esse fonte.
+
+Para isso, informaremos em "description" o ID entre <>, segue:
+description="<1>"
+
+Esse ID é o identificar no arquivo i18n:
+\src\rest\basic\sample_03_basic_by_id-i18n.tlpp
+
+O arquivo i18n serve para realizar a tradução de strings do seu código-fonte.
+Nesse caso, além da tradução, ele também disponibiliza recurso para informar
+dados da sua documentação REST, através da sintaxe:
+TRANSLATE <1>#URI#BRA#<json_doc>
+-------------------------------------------------------------------------- */
+
+@Get(endpoint="/rest/sample/doc/basic/03",description="<1>")
+function rest_sample_03_basic() as logical
+
+	local lReturn	:= .T. as logical
+	local jParams := oRest:getQueryRequest() as json
+
+	if ( jParams:hasProperty('param1') )
+		conout( "Parâmetro: " + jParams['param1'] )
+		lReturn	:= oRest:setJsonResponse(200,'OK')
+	else
+		conout( "Parâmetro não recebido" )
+		lReturn	:= oRest:setJsonResponse(400,'Parâmetro inválido')
+	endif
+
+return lReturn

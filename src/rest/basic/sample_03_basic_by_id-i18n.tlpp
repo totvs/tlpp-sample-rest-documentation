@@ -1,0 +1,59 @@
+#include "tlpp-i18n.th"
+
+//////////////////////////////////////////////////////////////
+TLPP TRANSLATION BRA sample_03_basic_by_id
+TLPP TRANSLATION USA sample_03_basic_by_id
+//////////////////////////////////////////////////////////////
+
+TLPP BEGIN TRANSLATION
+
+TRANSLATE 1#URI#BRA# ;
+{ ;
+  "title" : "DOC simples 03", ;
+  "description" : "Exemplo de documentação de REST utilizando i18n com ID", ;
+	"params":[;
+		{;
+			"name":"param1",;
+			"description":"desc_param_1",;
+			"in":"query",;
+			"type":"character",;
+			"required":true;
+		};
+		"responses":[;
+			{;
+				"statusCode":200,;
+				"description":"OK";
+			},;
+			{;
+				"statusCode":400,;
+				"description":"Parâmetro inválido";
+			};
+		];
+	],;
+}
+
+TRANSLATE 1#URI#USA# ;
+{ ;
+  "title" : "simple DOC 03", ;
+  "description" : "Example REST documentation using i18n with ID", ;
+	"params":[;
+		{;
+			"name":"param1",;
+			"description":"desc_param_1",;
+			"in":"query",;
+			"type":"character",;
+			"required":true;
+		}],;
+		"responses":[;
+			{;
+				"statusCode":200,;
+				"description":"OK";
+			},;
+			{;
+				"statusCode":400,;
+				"description":"Invalid parameter";
+			};
+		];
+}
+
+TLPP END TRANSLATION

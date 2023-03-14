@@ -1,0 +1,41 @@
+#include 'tlpp-core.th'
+
+main function sampleDOC()
+
+  /*
+  Para solicitar a geração da documentação REST de seu ambiente, basta executar 
+  a seguinte função do tlppCore:#COMMAND
+
+  tlpp.doc.generate()
+  */
+  tlpp.doc.generate( 'swagger', 'rest_tlpp' ) 
+
+  /*
+  Importante:
+  Ao suprimir as portas, será gerado documentação para todos os REST que estão no "ar" no momento da geração, 
+  ou seja, todas as portas disponíveis.
+
+  ------------------
+  Sintaxe da Função:
+  ------------------
+
+  tlpp.doc.generate( 
+    Formato da Exportação,        // Opções: 'json' e 'swagger' | Default: 'json'
+    Nome do arquivo a ser gerado, // Default: 'rest_doc'
+    Lista de Portas               // Se passar NULL, será documentado todas as portas no ar, 
+                                      caso queira filtrar, passar números das portas separadas por vírgula dentro de um array.
+  )
+
+  Ex:
+  -----------------------------------------------------------------
+  Gera em formato Swagger: rest_tlpp_8080.yaml e rest_tlpp_443.yaml
+  -----------------------------------------------------------------
+  tlpp.doc.generate( 'swagger', 'rest_tlpp', {8080,443}  ) 
+
+  -----------------------------------------------------------------
+  Gera em formato JSON: rest_tlpp_8080.json e rest_tlpp_443.json
+  -----------------------------------------------------------------
+  tlpp.doc.generate( 'json', 'rest_tlpp', {8080,443} )
+  */
+
+return

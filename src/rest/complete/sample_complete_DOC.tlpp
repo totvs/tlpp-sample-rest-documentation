@@ -1,0 +1,127 @@
+#include "tlpp-i18n.th"
+
+function rest_sample_complete_DOC() as character
+
+  local cJson := '' as character
+
+TOSTRING cJson#;
+{;
+  "title" : "translate:sample_complete_DOC:1:Exemplo completo",;
+  "description1" : "translate:sample_complete_DOC:2:Exemplo completo com todos os recursos disponíveis para uso.",;
+  "description2" : "translate:sample_complete_DOC:3:1 - Descrição multi-linha",;
+  "description3" : "translate:sample_complete_DOC:4:2 - Parâmetros de entrada (Obrigatórios e Opcionais)",;
+  "description4" : "translate:sample_complete_DOC:5:    - Cadeia de consulta (QueryString)",;
+  "description5" : "translate:sample_complete_DOC:6:    - Parâmetro no endpoint (Path Param)",;
+  "description6" : "translate:sample_complete_DOC:7:    - Parâmetro no Cabeçalho (Header Param)",;
+  "description7" : "translate:sample_complete_DOC:8:    - Corpo da mensagem (Body)",;
+  "description8" : "translate:sample_complete_DOC:9:    - eNum com valor máximo e mínimo e suas descrições de valores",;
+  "description9" : "translate:sample_complete_DOC:10:3 - Retorno da API",;
+  "description10" : "translate:sample_complete_DOC:11:    - Códigos e descrição",;
+  "description11" : "translate:sample_complete_DOC:12:    - JSON de retorno",;
+  "description12" : "translate:sample_complete_DOC:13:4 - Criação de componentes",;
+  "description13" : "translate:sample_complete_DOC:14:5 - Localização (TLPP i18n)",;
+  "description14" : "translate:sample_complete_DOC:15:    - Documentação REST",;
+  "description15" : "translate:sample_complete_DOC:16:    - Strings no fonte original REST",;
+  "params" : [;
+    {;
+      "name":"param1",;
+      "description":"translate:sample_complete_DOC:17:Parâmetro param1 recebido pela cadeia de consulta (QueryString)",;
+      "in":"query",;
+      "required":true,;
+      "type":"character";
+    },;
+    {;
+      "name":"param1",;
+      "description":"translate:sample_complete_DOC:18:Parâmetro param1 recebido pelo caminho do endpoint (Path Param)",;
+      "in":"path",;
+      "required":true,;
+      "type":"character";
+    },;
+    {;
+      "name":"param1",;
+      "description":"translate:sample_complete_DOC:19:Parâmetro param1 recebido pelo cabeçalho do http (Header Param)",;
+      "in":"header",;
+      "required":true,;
+      "type":"character";
+    },;
+    {;
+      "name":"log",;
+      "description":"translate:sample_complete_DOC:20:Parâmetro OPCIONAL recebido pela cadeia de consulta (QueryString)",;
+      "in":"query",;
+      "required":false,;
+      "type":"integer",;
+      "default":0,;
+      "minimum":0,;
+      "maximum":1,;
+      "values":[;
+        {;
+          "value":0,;
+          "description":"translate:sample_complete_DOC:21:Desliga Log";
+        },;
+        {;
+          "value":1,;
+          "description":"translate:sample_complete_DOC:22:Liga Log";
+        };
+      ];
+    },;
+    {;
+      "name":"return",;
+      "description":"translate:sample_complete_DOC:23:Indica qual formato deseja de retorno",;
+      "in":"query",;
+      "required":false,;
+      "type":"character",;
+      "default":"json",;
+      "values":[;
+        {;
+          "value":"json",;
+          "description":"application/json";
+        },;
+        {;
+          "value":"xml",;
+          "description":"application/xml";
+        };
+      ];
+    };
+  ],;
+  "requestBody" : {;
+    "description" : "translate:rest_guiMonitor_authentication_DOC:24:Parâmetro param1 recebido pelo corpo da mensagem http (body)",;
+    "Content-Type" : [;
+      {"json": {;
+        "type" : "component",;
+        "component" : "sampleBodyIn"; // Veja definição deste componente em: \src\components\sample_components.tlpp
+      }};
+    ];
+  },;
+  "responses" : [;
+    {;
+      "statusCode" : 200,;
+      "description" : "translate:sample_complete_DOC:25:Sucesso",;
+      "Content-Type" : [;
+        {"application/json": {;
+          "type" : "component",;
+          "component" : "sampleBodyOutOk"; // Veja definição deste componente em: \src\components\sample_components.tlpp
+        }},;
+        {"application/xml": {;
+          "type" : "component",;
+          "component" : "sampleBodyOutOk"; // Veja definição deste componente em: \src\components\sample_components.tlpp
+        }};
+      ];
+    },;
+    {;
+      "statusCode" : 400,;
+      "description" : "translate:sample_complete_DOC:26:Requisição Inválida",;
+      "Content-Type" : [;
+        {"json": {;
+          "type" : "component",;
+          "component" : "sampleBodyOutError"; // Veja definição deste componente em: \src\components\sample_components.tlpp
+        }},;
+        {"xml": {;
+          "type" : "component",;
+          "component" : "sampleBodyOutError"; // Veja definição deste componente em: \src\components\sample_components.tlpp
+        }};
+      ];
+    };
+  ];
+}
+
+return cJson

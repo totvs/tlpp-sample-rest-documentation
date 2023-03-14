@@ -1,0 +1,37 @@
+#include 'tlpp-rest.th'
+
+/* --------------------------------------------------------------------------
+EXEMPLO 02
+
+Agora estamos utilizando mais propriedades da Annotation de REST, sendo:
+
+title -> Título curto da API.
+
+params -> Parâmetros de entrada.
+					Neste exemplo, 1 parâmetro recebido via Query String e do tipo string.
+
+responses -> Lista de respostas possíveis com código e descrição.
+						 Neste exemplo, 200 e 400.
+-------------------------------------------------------------------------- */
+
+@Get(;
+  endpoint="/rest/sample/doc/basic/02",;
+  description="Exemplo de documentação de REST diretamente na annotation",;
+  title="DOC simples 02",;
+  params='[{"name":"param1","description":"desc_param_1","in":"query","type":"character","required":true}]',;
+  responses='[{"statusCode":200,"description":"OK"},{"statusCode":400,"description":"Parâmetro inválido"}]';
+)
+function rest_sample_02_basic() as logical
+
+	local lReturn	:= .T. as logical
+	local jParams := oRest:getQueryRequest() as json
+
+	if ( jParams:hasProperty('param1') )
+		conout( "Parâmetro: " + jParams['param1'] )
+		lReturn	:= oRest:setJsonResponse(200,'OK')
+	else
+		conout( "Parâmetro não recebido" )
+		lReturn	:= oRest:setJsonResponse(400,'Parâmetro inválido')
+	endif
+
+return lReturn

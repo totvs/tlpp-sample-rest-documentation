@@ -1,0 +1,125 @@
+#include 'tlpp-rest.th'
+#include 'tlpp-i18n.th'
+
+/* --------------------------------------------------------------------------
+EXEMPLO
+
+Este exemplo contempla a forma mais completa de documentação, sendo:
+- Utilizando função para retorno do JSON de dados da documentação;
+- Localização de idioma (i18n) para Documentação e Serviço REST.
+- Parâmetros de entrada (todos os tipos)
+- Body de entrada com JSON
+- Muitos retornos
+- Retorno com estruturas JSON no body
+
+NOTA: Utilizamos o mesmo nome de parâmetro (obrigatórios) em todos os 
+modos (Query | Path | Header | Body) para ficar claro que se tratam de dados
+distintos pois vieram de partes diferentes do HTTP.
+-------------------------------------------------------------------------- */
+
+@Put(endpoint="/rest/sample/doc/complete/:param1",description="[rest_sample_complete_DOC]")
+function rest_sample_complete() as logical
+
+	local lOK     := .T.                            as logical
+  local jQuery  := oRest:getQueryRequest()        as json
+  local jPath   := oRest:getPathParamsRequest()   as json
+  local jHeader := oRest:getHeaderRequest()       as json
+  local cBody   := oRest:getBodyRequest()         as character
+  local cRet    := ''                             as character
+  local cMsg    := ''                             as character
+  Local lLog    := .F.                            as logical
+  local lJson   := .T.                            as logical
+  local oBody, ret
+
+  // Liga ou desliga LOG
+  if ( jQuery:hasProperty('log') )
+    lLog := ( val( jQuery['log'] ) == 1 )
+  endif
+
+  // Formato de retorno
+  if ( jQuery:hasProperty('return') )
+    lJson := !( lower(jQuery['return']) == 'xml' )
+  endif
+
+	// Query String
+  if ( !jQuery:hasProperty('param1') .or. empty(jQuery['param1']) )
+    lOK  := .F.
+		cMsg := Localize( 1, 'Parâmetro param1 recebido pela cadeia de consulta é inválido' )
+    if ( lLog )
+      conout( "ERROR: " + cMsg )
+    endif
+    oRest:setStatusCode(400)
+	endif
+
+  // Path Param
+  if ( lOK )
+    if ( !jPath:hasProperty('param1') .or. empty(jPath['param1']))
+      lOK  := .F.
+      cMsg := Localize( 2, 'Parâmetro param1 recebido no endpoint é inválido' )
+      if ( lLog )
+        conout( "ERROR: " + cMsg )
+      endif
+      oRest:setStatusCode(400)
+    endif
+  endif
+
+  // Header Param
+  if ( lOK )
+    if ( !jHeader:hasProperty('param1') .or. empty(jHeader['param1']) )
+      lOK  := .F.
+      cMsg := Localize( 3, 'Parâmetro param1 recebido pelo cabeçalho do http é inválido' )
+      if ( lLog )
+        conout( "ERROR: " + cMsg )
+      endif
+      oRest:setStatusCode(400)
+    endif
+  endif
+
+  // Body Param
+  if ( lOK )
+    if ( !empty(cBody) )
+      oBody := JsonObject():new()
+      ret := oBody:fromJson(cBody)
+      if ( valtype(ret) == "U" )
+        if ( !oBody:hasProperty('param1') .or. empty(oBody['param1']) )
+          lOK := .F.
+        endif
+      else
+        lOK := .F.
+      endif
+    else
+      lOK := .F.
+    endif
+    if ( !lOK )
+      cMsg := Localize( 4, 'Parâmetro param1 recebido pelo corpo da mensagem http é inválido' )
+      if ( lLog )
+        conout( "ERROR: " + cMsg )
+      endif
+      oRest:setStatusCode(400)
+    endif
+  endif
+
+  if ( lJson )
+    cRet := '{"sucess":"' + if(lOK,'true','false') + '","error":"' + cMsg + '"}'
+  else
+    cRet := '<?xml version="1.0" encoding="UTF-8"?>'
+    cRet += '<sampleBodyOut>'
+    if( lOK )
+      cRet += '<error/>'
+    else
+      cRet += '<error>' + cMsg + '</error>'
+    endif
+    cRet += '<sucess>' + if(lOK,'true','false') + '</sucess>'
+    cRet += '</sampleBodyOut>'
+  endif
+
+  if ( lLog )
+    conout( "return -> " + cRet  )
+  endif
+
+  if ( lJson )
+    oRest:setKeyHeaderResponse('Content-Type', 'application/json')
+  else
+    oRest:setKeyHeaderResponse('Content-Type', 'application/xml')
+  endif
+return oRest:setResponse(cRet )

@@ -1,0 +1,17 @@
+#include 'tlpp-rest.th'
+
+/* --------------------------------------------------------------------------
+EXEMPLO 01
+
+A forma mais simples é informando uma descrição diretamente na propriedade
+"description" da annotation.
+
+Nesse exemplo, não teremos mais nenhuma informação além da descrição.
+-------------------------------------------------------------------------- */
+
+@Get(;
+  endpoint="/rest/sample/doc/basic/01",;
+  description="Exemplo de documentação simples, somente descrição";
+)
+function rest_sample_01_basic() as logical
+return oRest:setResponse('')

@@ -1,0 +1,186 @@
+openapi: 3.0.3
+info:
+  title: APIs REST
+  description: |-
+    List of REST APIs available by TOTVS appServer.
+    Port: [9080]
+  version: 0.1.1
+paths:
+  /rest/sample/doc/basic/01:
+    get:
+      description: Exemplo de documentação simples, somente descrição
+      responses: 
+        200:
+          description: Success
+  /rest/sample/doc/basic/02:
+    get:
+      summary: DOC simples 02
+      description: Exemplo de documentação de REST diretamente na annotation
+      parameters:
+        - name: param1
+          in: query
+          description: desc_param_1
+          required: true
+          schema: 
+            type: string
+      responses: 
+        200:
+          description: OK
+        400:
+          description: Parâmetro inválido
+  /rest/sample/doc/basic/03:
+    get:
+      summary: simple DOC 03
+      description: Example REST documentation using i18n with ID
+      parameters:
+        - name: param1
+          in: query
+          description: desc_param_1
+          required: true
+          schema: 
+            type: string
+      responses: 
+        200:
+          description: OK
+        400:
+          description: Invalid parameter
+  /rest/sample/doc/basic/04:
+    get:
+      summary: DOC simples 04
+      description: Exemplo de documentação de REST utilizando função retornando um JSON
+      parameters:
+        - name: param1
+          in: query
+          description: desc_param_1
+          required: true
+          schema: 
+            type: string
+      responses: 
+        200:
+          description: OK
+        400:
+          description: Parâmetro inválido
+  /rest/sample/doc/basic/05/multiline:
+    get:
+      summary: Múltiplas linhas
+      description: |-
+        Linha 1
+        
+        Linha 2
+        Linha 3
+        ...
+        Linha N
+      responses: 
+        200:
+          description: Success
+  /rest/sample/doc/complete/{param1}:
+    put:
+      summary: Full example
+      description: |-
+        Complete example with all features available for use.
+        1 - Multi-line description
+        2 - Input parameters (Mandatory and Optional)
+            - QueryString
+            - Path Param
+            - Header Param
+            - Message body
+            - eNum with maximum and minimum value and their value sequences
+        3 - Return from the API
+            - Codes and description
+            - return JSON
+        4 - Creation of components
+        5 - Location (TLPP i18n)
+            - REST documentation
+            - Strings in original REST source
+      parameters:
+        - name: param1
+          in: query
+          description: Parameter via Query String
+          required: true
+          schema: 
+            type: string
+        - name: param1
+          in: path
+          description: Param1 parameter received by path
+          required: true
+          schema: 
+            type: string
+        - name: param1
+          in: header
+          description: Param1 parameter received by http header
+          required: true
+          schema: 
+            type: string
+        - name: log
+          in: query
+          description: OPTIONAL parameter received by the query string ( Minimum value = 0, Maximum value = 1, Standard value = 0, Available values [0 = Turn off Log, 1 = Turn on Log] )
+          required: false
+          schema: 
+            type: integer
+            minimum: 0
+            maximum: 1
+            default: 0
+            enum: 
+            - 0
+            - 1
+        - name: return
+          in: query
+          description: Indicates which format you want to return (, Standard value = json, Available values [json = application/json, xml = application/xml] )
+          required: false
+          schema: 
+            type: string
+            default: json
+            enum: 
+            - json
+            - xml
+      requestBody: 
+        description: Parâmetro param1 recebido pelo corpo da mensagem http (body)
+        content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sampleBodyIn'
+      responses: 
+        200:
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sampleBodyOutOk'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/sampleBodyOutOk'
+        400:
+          description: Bad Request
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sampleBodyOutError'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/sampleBodyOutError'
+components:
+    schemas:
+      sampleBodyIn:
+        type: object
+        properties:
+          param1:
+            type: string
+            example: tlpp
+      sampleBodyOutOk:
+        type: object
+        properties:
+          error:
+            type: string
+            example: 
+          sucess:
+            type: boolean
+            example: true
+      sampleBodyOutError:
+        type: object
+        properties:
+          error:
+            type: string
+            example: Invalid Path parameter
+          sucess:
+            type: boolean
+            example: false

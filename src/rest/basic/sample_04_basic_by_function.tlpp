@@ -1,0 +1,77 @@
+#include 'tlpp-rest.th'
+#include "tlpp-i18n.th"
+
+/* --------------------------------------------------------------------------
+EXEMPLO 04
+
+Novamente, estamos utilizando o mesmo exemplo 02, porém agora iremos centralizar
+a documentação em uma função, na qual deve nos retornar uma strind, porém seu 
+conteúdo é um JSON válido (mesmo usado no arquivo i18n).
+
+Nesse caso, informaremos o nome da função entre colchetes na propriedade 
+"description", como no exemplo:
+description="[rest_sample_04_basic_DOC]"
+-------------------------------------------------------------------------- */
+
+@Get(endpoint="/rest/sample/doc/basic/04",description="[rest_sample_04_basic_DOC]")
+function rest_sample_04_basic() as logical
+
+	local lReturn	:= .T. as logical
+	local jParams := oRest:getQueryRequest()
+
+	if ( jParams:hasProperty('param1') )
+		conout( "Parâmetro: " + jParams['param1'] )
+		lReturn	:= oRest:setJsonResponse(200,'OK')
+	else
+		conout( "Parâmetro não recebido" )
+		lReturn	:= oRest:setJsonResponse(400,'Parâmetro inválido')
+	endif
+
+return lReturn
+
+
+/* --------------------------------------------------------------------------
+DOCUMENTAÇÃO
+
+Função informada em: description="[nome_da_funcao]"
+
+- Não é obrigatório que a função com o JSON com dados para gerar a documentação
+esteja no mesmo código fonte da implementação do REST. Fica a critério de cada 
+desenvolvedor/time.
+
+- A função necessita ser compilada no mesmo ambiente onde será gerada a 
+documentação e onde estão os RESTs.
+
+- Nessa versão BETA, ainda é preciso fazer uso do comando TOSTRING para retornar
+uma string com conteúdo JSON, porém em versões futuras será possível construir
+a documentação através de JSON in line e retornar diretamente o objeto JSON.
+-------------------------------------------------------------------------- */
+function rest_sample_04_basic_DOC() as character
+
+local cJson := '' as character
+
+TOSTRING cJson#;
+{ ;
+  "title" : "DOC simples 04", ;
+  "description" : "Exemplo de documentação de REST utilizando função retornando um JSON", ;
+	"params":[;
+		{;
+			"name":"param1",;
+			"description":"desc_param_1",;
+			"in":"query",;
+			"type":"character",;
+			"required":true;
+		}],;
+		"responses":[;
+			{;
+				"statusCode":200,;
+				"description":"OK";
+			},;
+			{;
+				"statusCode":400,;
+				"description":"Parâmetro inválido";
+			};
+		];
+}
+
+return cJson
