@@ -10,13 +10,10 @@ O tlppCore contém uma ferramenta nativa para a geração de documentação das 
 
 > ***Nota 2*** Os fontes aqui presentes são apenas exemplos de como utilizar os recursos disponíveis para a geração dos documentos.
 
-> ***Nota 3*** O motor de geração de documentação do tlppCore ainda está em sua **Versão Beta** e portanto os comportamentos podem mudar assim que seu desenvolvimento evolua.
-
-
 
 ## Exemplos
 
-Aqui apresentaremos diversos fontes com exemplos de como criar suas documentações e portanto teremos somente os exemplos nesse projeto, portanto é essencial que leiam a documentação oficial do motor no TDN acessando o link abaixo:
+Aqui apresentaremos diversos fontes com exemplos de como criar suas documentações e portanto teremos somente os exemplos nesse projeto, por isso é essencial que leiam a documentação oficial do motor no TDN acessando o link abaixo:
 
 > [TDN: Gerador de documentação](https://tdn.totvs.com/pages/viewpage.action?pageId=745121740)
 
