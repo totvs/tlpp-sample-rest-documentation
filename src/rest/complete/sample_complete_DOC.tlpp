@@ -1,6 +1,6 @@
 #include "tlpp-i18n.th"
 
-function rest_sample_complete_DOC() as character
+function U_rest_sample_complete_DOC() as character
 
   local cJson := '' as character
 
@@ -84,7 +84,7 @@ TOSTRING cJson#;
     };
   ],;
   "requestBody" : {;
-    "description" : "translate:rest_guiMonitor_authentication_DOC:24:Parâmetro param1 recebido pelo corpo da mensagem http (body)",;
+    "description" : "translate:sample_complete_DOC:24:Parâmetro param1 recebido pelo corpo da mensagem http (body)",;
     "Content-Type" : [;
       {"json": {;
         "type" : "component",;

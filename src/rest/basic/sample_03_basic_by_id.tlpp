@@ -19,7 +19,7 @@ TRANSLATE <1>#URI#BRA#<json_doc>
 -------------------------------------------------------------------------- */
 
 @Get(endpoint="/rest/sample/doc/basic/03",description="<1>")
-function rest_sample_03_basic() as logical
+function U_rest_sample_03_basic() as logical
 
 	local lReturn	:= .T. as logical
 	local jParams := oRest:getQueryRequest() as json

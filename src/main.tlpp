@@ -1,6 +1,6 @@
 #include 'tlpp-core.th'
 
-main function sampleDOC()
+function U_sampleDOC()
 
   /*
   Para solicitar a geração da documentação REST de seu ambiente, basta executar 

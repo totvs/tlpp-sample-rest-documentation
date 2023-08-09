@@ -21,7 +21,7 @@ responses -> Lista de respostas possíveis com código e descrição.
   params='[{"name":"param1","description":"desc_param_1","in":"query","type":"character","required":true}]',;
   responses='[{"statusCode":200,"description":"OK"},{"statusCode":400,"description":"Parâmetro inválido"}]';
 )
-function rest_sample_02_basic() as logical
+function U_rest_sample_02_basic() as logical
 
 	local lReturn	:= .T. as logical
 	local jParams := oRest:getQueryRequest() as json

@@ -13,5 +13,5 @@ Nesse exemplo, não teremos mais nenhuma informação além da descrição.
   endpoint="/rest/sample/doc/basic/01",;
   description="Exemplo de documentação simples, somente descrição";
 )
-function rest_sample_01_basic() as logical
+function U_rest_sample_01_basic() as logical
 return oRest:setResponse('')

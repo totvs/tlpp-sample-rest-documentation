@@ -7,8 +7,8 @@ EXEMPLO
 Exemplo curto de como apresentar uma descrição de múltiplas linhas.
 -------------------------------------------------------------------------- */
 
-@Get( endpoint="/rest/sample/doc/basic/05/multiline", description="[rest_sample_05_basic_DOC]" )
-function rest_sample_05_basic() as logical
+@Get( endpoint="/rest/sample/doc/basic/05/multiline", description="[U_rest_sample_05_basic_DOC]" )
+function U_rest_sample_05_basic() as logical
 return oRest:setResponse('')
 
 
@@ -33,7 +33,7 @@ invalida o description.
 o motor irá parar de ler, portanto, novamente atente-se a sequência para que 
 o motor não ignore suas descrições.
 -------------------------------------------------------------------------- */
-function rest_sample_05_basic_DOC() as character
+function U_rest_sample_05_basic_DOC() as character
 
 local cJson := '' as character
 
