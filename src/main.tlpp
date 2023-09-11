@@ -8,7 +8,7 @@ function U_sampleDOC()
 
   tlpp.doc.generate()
   */
-  tlpp.doc.generate( 'swagger', 'api_doc' )
+  tlpp.doc.generate( 'swagger', 'api_doc', {8080} )
 
   /*
   Importante:
@@ -22,9 +22,35 @@ function U_sampleDOC()
   tlpp.doc.generate( 
     Formato da Exportação,        // Opções: 'json' e 'swagger' | Default: 'json'
     Nome do arquivo a ser gerado, // Default: 'rest_doc'
-    Lista de Portas               // Se passar NULL, será documentado todas as portas no ar, 
-                                      caso queira filtrar, passar números das portas separadas por vírgula dentro de um array.
+    Lista de Portas               // 
   )
+
+  Sintaxe:
+  tlpp.doc.generate( <formato>, <nome arquivo>, [ports] 
+
+  <formato>
+  Descrição: Formato do arquivo a ser gerado.
+  Tipo: string
+  Obrigatório: Sim
+  Opções: 'swagger' | 'json'
+  Default: 'json'
+
+  <nome arquivo>
+  Descrição: Nome do arquivo a ser gerado.
+  Tipo: string
+  Obrigatório: Sim
+  Opções: Livre escolha
+  Default: 'rest_doc'
+
+  [ports] 
+  Descrição: Porta(s) do(s) serviço(s) REST, configuradas pelo INI ou inicializadas de forma dinâmica.
+    Se passar NULL, será documentado todas as portas no ar, caso queira filtrar, 
+    passar números das portas separadas por vírgula dentro de um array.
+  Tipo: array de numéricos
+  Obrigatório: Não
+  Opções: Livre escolha.
+    Ex: {8080,443}
+  Default: NULL
 
   Ex:
   -----------------------------------------------------------------

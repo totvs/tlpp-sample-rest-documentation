@@ -43,10 +43,9 @@ Para gerar a documentação dos exemplos desse projeto, como também dos documen
 
 Após o ambiente estiver disponível, a execução será através da seguinte função:
 ```
-tlpp.doc.generate( 'swagger', 'api_doc', {8090} )
+tlpp.doc.generate( 'swagger', 'api_doc', {8080} )
 ```
-
-Para mais detalhes, veja em: *\src\main.tlpp*
+Para mais detalhes sobre a sintaxe, veja em: *\src\main.tlpp*
 
 Nesse projeto, há uma cópia do arquivo gerado com o resultado desses exemplos.
 Esse arquivo você pode acessar em: *\output\api_doc_8080.yaml*
