@@ -13,6 +13,14 @@ O **tlppCore** contém uma ferramenta nativa para a geração de documentação 
 
 O projeto contindo nesse repositório não é a implementação do motor de geração da documentação do tlppCore mencionada acima, portanto os fontes aqui presentes são apenas exemplos de como utilizar os recursos disponíveis para a geração dos documentos.
 
+> <hr>
+> <div style="align-items: center; display: flex;">&nbsp;&nbsp;<img alt="tlpp logo" src="images/icons/disclaimer.png" width="32px" />&nbsp;&nbsp;<b>DISCLAIMER</b></div>
+> <br>
+> O módulo REST-DOC é um recurso extremamente novo no tlppCore e ainda está em fase de implementação.O produto está recebendo contantes ajustes, melhorias e, portanto, sua documentação ainda está em fase de construção.
+> <br><br>
+> Agradecemos o interesse em avaliar o produto, e nos colocamos à inteira disposição para eventuais dúvidas.<br>Por favor, usufruam do recurso de abertura de Issues para esse projeto!
+> <hr>
+
 ## Exemplos
 
 Os exemplos implementados nesse projeto traz luz ao aprendizado sobre a ferramenta, porém é imprescendível que a documentação oficial do motor seja lida através da [Wiki](https://github.com/totvs/tlpp-sample-rest-documentation/wiki) para obter detalhes de uso dos recursos disponibilizados.
