@@ -16,7 +16,7 @@ O projeto contindo nesse repositório não é a implementação do motor de gera
 > <hr>
 > <div style="align-items: center; display: flex;">&nbsp;&nbsp;<img alt="tlpp logo" src="images/icons/disclaimer.png" width="32px" />&nbsp;&nbsp;<b>DISCLAIMER</b></div>
 > <br>
-> O módulo REST-DOC é um recurso extremamente novo no tlppCore e ainda está em fase de implementação.O produto está recebendo contantes ajustes, melhorias e, portanto, sua documentação ainda está em fase de construção.
+> O módulo REST-DOC é um recurso extremamente novo no tlppCore e ainda está em fase de implementação. O produto está recebendo contantes ajustes, melhorias e, portanto, sua documentação ainda está em fase de construção.
 > <br><br>
 > Agradecemos o interesse em avaliar o produto, e nos colocamos à inteira disposição para eventuais dúvidas.<br>Por favor, usufruam do recurso de abertura de Issues para esse projeto!
 > <hr>
