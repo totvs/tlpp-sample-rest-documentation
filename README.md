@@ -25,7 +25,7 @@ O projeto contindo nesse repositório não é a implementação do motor de gera
 
 Os exemplos implementados nesse projeto traz luz ao aprendizado sobre a ferramenta, porém é imprescendível que a documentação oficial do motor seja lida através da [Wiki](https://github.com/totvs/tlpp-sample-rest-documentation/wiki) para obter detalhes de uso dos recursos disponibilizados.
 
-#### Exemplos Básicos
+### Exemplos Básicos
 
 - ***Somente descrição:*** \src\rest\basic\sample_01_basic.tlpp
 - ***Documentando utilizando annotation:*** \src\rest\basic\sample_02_basic.tlpp
@@ -33,7 +33,7 @@ Os exemplos implementados nesse projeto traz luz ao aprendizado sobre a ferramen
 - ***Documentando através de função:*** \src\rest\basic\sample_04_basic_by_function.tlpp
 - ***Descrição multi-linha:*** \src\rest\basic\sample_05_basic_multiline.tlpp
 
-#### Exemplo Completo (Documentação + Componente + i18n)
+### Exemplo Completo (Documentação + Componente + i18n)
 
 Resumo do exemplo completo -> [complete.md](https://github.com/totvs/tlpp-sample-rest-documentation/blob/main/src/rest/complete/complete.md)
 
@@ -43,7 +43,7 @@ Resumo do exemplo completo -> [complete.md](https://github.com/totvs/tlpp-sample
 - ***DOC (localização):*** \src\rest\complete\sample_complete_DOC-i18n.tlpp
 - ***Componente:*** \src\components\sample_components.tlpp
 
-#### Endpoints dinâmicos criados por JSON
+### Endpoints dinâmicos criados por JSON
 
 O REST tlppCore possibilita a subida e criação de serviços REST através de JSON de forma dinâmica, e portanto esses serviços não utilizam Annotation.
 
