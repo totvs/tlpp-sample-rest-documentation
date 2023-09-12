@@ -1,0 +1,77 @@
+#include "tlpp-i18n.th"
+
+// -------------------------------
+// DOC | endPoint: /init/dyn | GET
+// -------------------------------
+function U_FUNC_DYN_GET_DOC()
+
+  local cJson := ''
+
+TOSTRING cJson#;
+{ ;
+  "title" : "Exemplo 01 dinamico", ;
+  "description" : "Documentacao do endpoint [/init/dyn] metodo [GET] gerado dinamicamente sem annotation", ;
+  "responses" : [;
+    {;
+      "statusCode" : 200,;
+      "description" : "Sucesso | Content: [FUNC_DYN hh:mm:ss]";
+    };
+  ];
+}
+
+return cJson
+
+
+
+// -------------------------------
+// DOC | endPoint: /init/dyn | PUT
+// -------------------------------
+function U_FUNC_DYN_PUT_DOC()
+
+  local cJson := ''
+
+TOSTRING cJson#;
+{ ;
+  "title" : "Exemplo 02 dinamico", ;
+  "description" : "Documentacao do endpoint [/init/dyn] metodo [PUT] gerado dinamicamente sem annotation", ;
+  "responses" : [;
+    {;
+      "statusCode" : 200,;
+      "description" : "Sucesso | Content: [FUNC_DYN hh:mm:ss]";
+    };
+  ];
+}
+
+return cJson
+
+
+
+// -----------------------------------
+// DOC | endPoint: /init/:param1 | GET
+// -----------------------------------
+function U_CLASS_DYN_GET_DOC()
+
+  local cJson := ''
+
+TOSTRING cJson#;
+{ ;
+  "title" : "Exemplo 03 dinamico", ;
+  "description" : "Documentacao do endpoint [/class/:param1] metodo [GET] gerado dinamicamente sem annotation e recebendo 1 (um) PathParam", ;
+  "params" : [;
+    {;
+      "name":"param1",;
+      "description":"Parâmetro param1 recebido via Path Param",;
+      "in":"path",;
+      "required":true,;
+      "type":"character";
+    };
+  ],;
+  "responses" : [;
+    {;
+      "statusCode" : 200,;
+      "description" : "Sucesso | Content: [METHOD_DYN hh:mm:ss [{param1:value_param}]]";
+    };
+  ];
+}
+
+return cJson

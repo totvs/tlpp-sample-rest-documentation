@@ -3,12 +3,19 @@
 function U_sampleDOC()
 
   /*
+  Função responsável para "subir" um REST dinâmico, com EndPoints novos por JSON e sem annotation.
+  */
+  U_dynamic_rest_start()
+
+
+  /*
   Para solicitar a geração da documentação REST de seu ambiente, basta executar 
-  a seguinte função do tlppCore:#COMMAND
+  a seguinte função do tlppCore:
 
   tlpp.doc.generate()
   */
-  tlpp.doc.generate( 'swagger', 'api_doc', {8080} )
+  tlpp.doc.generate( 'swagger', 'api_doc', {8080}, Nil, "U_ListDOCFunctions" )
+
 
   /*
   Importante:
@@ -29,28 +36,28 @@ function U_sampleDOC()
   tlpp.doc.generate( <formato>, <nome arquivo>, [ports] 
 
   <formato>
-  Descrição: Formato do arquivo a ser gerado.
-  Tipo: string
-  Obrigatório: Sim
-  Opções: 'swagger' | 'json'
-  Default: 'json'
+    Descrição: Formato do arquivo a ser gerado.
+    Tipo: string
+    Obrigatório: Sim
+    Opções: 'swagger' | 'json'
+    Default: 'json'
 
   <nome arquivo>
-  Descrição: Nome do arquivo a ser gerado.
-  Tipo: string
-  Obrigatório: Sim
-  Opções: Livre escolha
-  Default: 'rest_doc'
+    Descrição: Nome do arquivo a ser gerado.
+    Tipo: string
+    Obrigatório: Sim
+    Opções: Livre escolha
+    Default: 'rest_doc'
 
   [ports] 
-  Descrição: Porta(s) do(s) serviço(s) REST, configuradas pelo INI ou inicializadas de forma dinâmica.
-    Se passar NULL, será documentado todas as portas no ar, caso queira filtrar, 
-    passar números das portas separadas por vírgula dentro de um array.
-  Tipo: array de numéricos
-  Obrigatório: Não
-  Opções: Livre escolha.
-    Ex: {8080,443}
-  Default: NULL
+    Descrição: Porta(s) do(s) serviço(s) REST, configuradas pelo INI ou inicializadas de forma dinâmica.
+      Se passar NULL, será documentado todas as portas no ar, caso queira filtrar, 
+      passar números das portas separadas por vírgula dentro de um array.
+    Tipo: array de numéricos
+    Obrigatório: Não
+    Opções: Livre escolha.
+      Ex: {8080,443}
+    Default: NULL
 
   Ex:
   -----------------------------------------------------------------

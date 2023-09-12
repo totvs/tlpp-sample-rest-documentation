@@ -1,0 +1,41 @@
+#include "tlpp-core.th"
+#include "tlpp-rest.th"
+
+
+
+// -----------------------------------
+// Rest Dinamico | endPoint: /init/dyn
+// -----------------------------------
+function U_FUNC_DYN()
+  local cRet := ""
+  cRet := "FUNC_DYN" + " " + time()
+return oRest:SetResponse( cRet )
+
+
+
+// ---------------------------------------
+// Rest Dinamico | endPoint: /init/:param1
+// ---------------------------------------
+class class_dyn
+  public method new() constructor
+  public method method_dyn()
+endclass
+
+/* ---------------------- */
+method new() class class_dyn
+return self
+
+/* ----------------------------- */
+method method_dyn() class class_dyn
+
+  local cRet := ""
+  local jPathParams := Nil
+
+  cRet := ProcName() + " " + time() + " "
+
+  jPathParams := oRest:getPathParamsRequest()
+  if ( jPathParams <> Nil )
+    cRet += "[" + jPathParams:ToJSon() + "]"
+  endif
+
+return oRest:SetResponse(cRet)

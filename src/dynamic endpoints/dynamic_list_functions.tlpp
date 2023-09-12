@@ -1,0 +1,60 @@
+#include "tlpp-core.th"
+
+//---------------------------------------------------
+// Função informada na chamada do tlpp.doc.generate()
+// Deve retornar o Objeto tlpp.doc.List
+//---------------------------------------------------
+function U_ListDOCFunctions() as object
+
+  local jMod as json
+  local oDoc as object
+  local lVersion := .F. as logical
+
+  // Protecao do codigo para evitar acessar um classe que nao exista em seu tlpp.rpo
+  jMod := jsonObject():New()
+  if ( tlpp.module( "DOC", @jMod ) )
+    if ( jMod['linked'] )
+      lVersion := ( jMod["version"] == "doc:16b77c0d32" )
+    endif
+  endif
+
+  if ( lVersion )
+
+    // -----------------------------------------------------------------------------------
+    // Somente é preciso utilizar essa class/method para indicar ao motor de documentação 
+    // qual função de DOC será executado para obter o DOC de determinado [endpoint:method]
+    // -----------------------------------------------------------------------------------
+
+    oDoc := tlpp.doc.List():New()
+      oDoc:add( "/init/dyn", "get", "U_FUNC_DYN_GET_DOC" )
+      oDoc:add( "/init/dyn", "put", "U_FUNC_DYN_PUT_DOC" )
+      oDoc:add( "/class/:param1", "get", "U_CLASS_DYN_GET_DOC" )
+
+      /*
+      Sintaxe:
+
+      oDoc:add( <endpoint>, <method>, <DOC_funcion_name> )
+
+      <endpoint>
+        Descrição: REST Endpoint definido no JSON para serviços dinâmicos.
+        Tipo: string
+        Obrigatório: Sim
+        Ex:
+          "/init/dyn"
+
+      <method>
+        Descrição: Tipo do método do serviço REST
+        Tipo: string
+        Obrigatório: Sim
+        Opções: "DELETE" | "GET" | "OPTIONS" | "PATCH" | "POST" | "PUT"
+
+      <DOC_funcion_name>
+        Descrição: Nome da função em TLPP que retornará estrutura de dados com informações para a geração da documentação
+        Tipo: string
+        Obrigatório: Sim
+        Ex:
+          "U_NOME_FUNCAO"
+      */
+  endif
+
+return oDoc
