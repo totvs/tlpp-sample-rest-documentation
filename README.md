@@ -43,6 +43,17 @@ Resumo do exemplo completo -> [complete.md](https://github.com/totvs/tlpp-sample
 - ***DOC (localização):*** \src\rest\complete\sample_complete_DOC-i18n.tlpp
 - ***Componente:*** \src\components\sample_components.tlpp
 
+#### Endpoints dinâmicos criados por JSON
+
+O REST tlppCore possibilita a subida e criação de serviços REST através de JSON de forma dinâmica, e portanto esses serviços não utilizam Annotation.
+
+Os exemplos abaixo criam DOC para esses casos.
+
+- ***Infraestrutura + EndPoints:*** src\rest\dynamic endpoints\dynamic_rest_start.tlpp
+- ***REST:*** src\rest\dynamic endpoints\dynamic_rest_services.tlpp
+- ***DOC List:*** src\rest\dynamic endpoints\dynamic_list_functions.tlpp
+- ***DOC REST:*** src\rest\dynamic endpoints\dynamic_rest_services_DOC.tlpp
+
 ## Gerando a documentação
 
 Para gerar a documentação dos exemplos desse projeto, como também dos documentos criados por você, será necessário executar a função do tlppCore capaz de gerar o documento final.
