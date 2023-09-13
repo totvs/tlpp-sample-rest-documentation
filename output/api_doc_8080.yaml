@@ -158,6 +158,33 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/sampleBodyOutError'
+  /class/{param1}:
+    get:
+      summary: Exemplo 03 dinamico
+      description: Documentacao do endpoint [/class/-param1] metodo [GET] gerado dinamicamente sem annotation e recebendo 1 (um) PathParam
+      parameters:
+        - name: param1
+          in: path
+          description: Parâmetro param1 recebido via Path Param
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Sucesso | Content- [METHOD_DYN hh-mm-ss [{param1-value_param}]]
+  /init/dyn:
+    get:
+      summary: Exemplo 01 dinamico
+      description: Documentacao do endpoint [/init/dyn] metodo [GET] gerado dinamicamente sem annotation
+      responses:
+        200:
+          description: Sucesso | Content- [FUNC_DYN hh-mm-ss]
+    put:
+      summary: Exemplo 02 dinamico
+      description: Documentacao do endpoint [/init/dyn] metodo [PUT] gerado dinamicamente sem annotation
+      responses:
+        200:
+          description: Sucesso | Content- [FUNC_DYN hh-mm-ss]
 components:
     schemas:
       sampleBodyIn:
