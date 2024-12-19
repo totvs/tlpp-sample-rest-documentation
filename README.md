@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="tlpp logo" src="images/tlpp_logo_white.png" width="250px" />
+  <img alt="tlpp logo" src="images/tlpp_logo.jpg" width="250px" />
   <h1 align="center">EXEMPLOS: Documentação de APIs REST em TLPP</h1>
 </p>
 
