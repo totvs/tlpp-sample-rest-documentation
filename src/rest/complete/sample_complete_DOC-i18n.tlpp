@@ -2,86 +2,86 @@
 
 //////////////////////////////////////////////////////////////
 TLPP TRANSLATION BRA sample_complete_DOC
-TLPP TRANSLATION USA sample_complete_DOC
+TLPP TRANSLATION EUA sample_complete_DOC
 //////////////////////////////////////////////////////////////
-TLPP BEGIN TRANSLATION
+TLPP BEGIN TRANSLATION sample_complete_DOC
 
 TRANSLATE 1#STR#BRA#Exemplo completo
-TRANSLATE 1#STR#USA#Full example
+TRANSLATE 1#STR#EUA#Full example
 
 TRANSLATE 2#STR#BRA#Exemplo completo com todos os recursos disponíveis para uso.
-TRANSLATE 2#STR#USA#Complete example with all features available for use.
+TRANSLATE 2#STR#EUA#Complete example with all features available for use.
 
 TRANSLATE 3#STR#BRA#1 - Descrição multi-linha
-TRANSLATE 3#STR#USA#1 - Multi-line description
+TRANSLATE 3#STR#EUA#1 - Multi-line description
 
 TRANSLATE 4#STR#BRA#2 - Parâmetros de entrada (Obrigatórios e Opcionais)
-TRANSLATE 4#STR#USA#2 - Input parameters (Mandatory and Optional)
+TRANSLATE 4#STR#EUA#2 - Input parameters (Mandatory and Optional)
 
 TRANSLATE 5#STR#BRA#    - Cadeia de consulta (QueryString)
-TRANSLATE 5#STR#USA#    - QueryString
+TRANSLATE 5#STR#EUA#    - QueryString
 
 TRANSLATE 6#STR#BRA#    - Parâmetro no endpoint (Path Param)
-TRANSLATE 6#STR#USA#    - Path Param
+TRANSLATE 6#STR#EUA#    - Path Param
 
 TRANSLATE 7#STR#BRA#    - Parâmetro no Cabeçalho (Header Param)
-TRANSLATE 7#STR#USA#    - Header Param
+TRANSLATE 7#STR#EUA#    - Header Param
 
 TRANSLATE 8#STR#BRA#    - Corpo da mensagem (Body)
-TRANSLATE 8#STR#USA#    - Message body
+TRANSLATE 8#STR#EUA#    - Message body
 
 TRANSLATE 9#STR#BRA#    - eNum com valor máximo e mínimo e suas descrições de valores
-TRANSLATE 9#STR#USA#    - eNum with maximum and minimum value and their value sequences
+TRANSLATE 9#STR#EUA#    - eNum with maximum and minimum value and their value sequences
 
 TRANSLATE 10#STR#BRA#3 - Retorno da API
-TRANSLATE 10#STR#USA#3 - Return from the API
+TRANSLATE 10#STR#EUA#3 - Return from the API
 
 TRANSLATE 11#STR#BRA#    - Códigos e descrição
-TRANSLATE 11#STR#USA#    - Codes and description
+TRANSLATE 11#STR#EUA#    - Codes and description
 
 TRANSLATE 12#STR#BRA#    - JSON de retorno
-TRANSLATE 12#STR#USA#    - return JSON
+TRANSLATE 12#STR#EUA#    - return JSON
 
 TRANSLATE 13#STR#BRA#4 - Criação de componentes
-TRANSLATE 13#STR#USA#4 - Creation of components
+TRANSLATE 13#STR#EUA#4 - Creation of components
 
 TRANSLATE 14#STR#BRA#5 - Localização (TLPP i18n)
-TRANSLATE 14#STR#USA#5 - Location (TLPP i18n)
+TRANSLATE 14#STR#EUA#5 - Location (TLPP i18n)
 
 TRANSLATE 15#STR#BRA#    - Documentação REST
-TRANSLATE 15#STR#USA#    - REST documentation
+TRANSLATE 15#STR#EUA#    - REST documentation
 
 TRANSLATE 16#STR#BRA#    - Strings no fonte original REST
-TRANSLATE 16#STR#USA#    - Strings in original REST source
+TRANSLATE 16#STR#EUA#    - Strings in original REST source
 
 TRANSLATE 17#STR#BRA#Parâmetro param1 recebido pela cadeia de consulta (QueryString)
-TRANSLATE 17#STR#USA#Parameter via Query String
+TRANSLATE 17#STR#EUA#Parameter via Query String
 
 TRANSLATE 18#STR#BRA#Parâmetro param1 recebido pelo caminho do endpoint (Path Param)
-TRANSLATE 18#STR#USA#Param1 parameter received by path
+TRANSLATE 18#STR#EUA#Param1 parameter received by path
 
 TRANSLATE 19#STR#BRA#Parâmetro param1 recebido pelo cabeçalho do http (Path Param)
-TRANSLATE 19#STR#USA#Param1 parameter received by http header
+TRANSLATE 19#STR#EUA#Param1 parameter received by http header
 
 TRANSLATE 20#STR#BRA#Parâmetro OPCIONAL recebido pela cadeia de consulta (QueryString)
-TRANSLATE 20#STR#USA#OPTIONAL parameter received by the query string
+TRANSLATE 20#STR#EUA#OPTIONAL parameter received by the query string
 
 TRANSLATE 21#STR#BRA#Desliga Log
-TRANSLATE 21#STR#USA#Turn off Log
+TRANSLATE 21#STR#EUA#Turn off Log
 
 TRANSLATE 22#STR#BRA#Liga Log
-TRANSLATE 22#STR#USA#Turn on Log
+TRANSLATE 22#STR#EUA#Turn on Log
 
 TRANSLATE 23#STR#BRA#Indica qual formato deseja de retorno
-TRANSLATE 23#STR#USA#Indicates which format you want to return
+TRANSLATE 23#STR#EUA#Indicates which format you want to return
 
 TRANSLATE 24#STR#BRA#Parâmetro param1 recebido pelo corpo da mensagem http (body)
-TRANSLATE 24#STR#USA#Param1 parameter received by the http message body
+TRANSLATE 24#STR#EUA#Param1 parameter received by the http message body
 
 TRANSLATE 25#STR#BRA#Sucesso
-TRANSLATE 25#STR#USA#Success
+TRANSLATE 25#STR#EUA#Success
 
 TRANSLATE 26#STR#BRA#Requisição Inválida
-TRANSLATE 26#STR#USA#Bad Request
+TRANSLATE 26#STR#EUA#Bad Request
 
 TLPP END TRANSLATION

@@ -2,20 +2,20 @@
 
 //////////////////////////////////////////////////////////////
 TLPP TRANSLATION BRA sample_complete
-TLPP TRANSLATION USA sample_complete
+TLPP TRANSLATION EUA sample_complete
 //////////////////////////////////////////////////////////////
-TLPP BEGIN TRANSLATION
+TLPP BEGIN TRANSLATION sample_complete
 
 TRANSLATE 1#STR#BRA#Parâmetro param1 recebido pela cadeia de consulta é inválido
-TRANSLATE 1#STR#USA#Invalid Param1 parameter received by query string
+TRANSLATE 1#STR#EUA#Invalid Param1 parameter received by query string
 
 TRANSLATE 2#STR#BRA#Parâmetro param1 recebido no endpoint é inválido
-TRANSLATE 2#STR#USA#Param1 parameter received on endpoint is invalid
+TRANSLATE 2#STR#EUA#Param1 parameter received on endpoint is invalid
 
 TRANSLATE 3#STR#BRA#Parâmetro param1 recebido pelo cabeçalho do http é inválido
-TRANSLATE 3#STR#USA#Param1 parameter received by http header is invalid
+TRANSLATE 3#STR#EUA#Param1 parameter received by http header is invalid
 
 TRANSLATE 4#STR#BRA#Parâmetro param1 recebido pelo corpo da mensagem http é inválido
-TRANSLATE 4#STR#USA#Param1 parameter received by http message body is invalid
+TRANSLATE 4#STR#EUA#Param1 parameter received by http message body is invalid
 
 TLPP END TRANSLATION

@@ -2,10 +2,10 @@
 
 //////////////////////////////////////////////////////////////
 TLPP TRANSLATION BRA sample_03_basic_by_id
-TLPP TRANSLATION USA sample_03_basic_by_id
+TLPP TRANSLATION EUA sample_03_basic_by_id
 //////////////////////////////////////////////////////////////
 
-TLPP BEGIN TRANSLATION
+TLPP BEGIN TRANSLATION sample_03_basic_by_id
 
 TRANSLATE 1#URI#BRA# ;
 { ;
@@ -32,7 +32,7 @@ TRANSLATE 1#URI#BRA# ;
 	],;
 }
 
-TRANSLATE 1#URI#USA# ;
+TRANSLATE 1#URI#EUA# ;
 { ;
   "title" : "simple DOC 03", ;
   "description" : "Example REST documentation using i18n with ID", ;
