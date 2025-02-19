@@ -14,7 +14,7 @@ function U_sampleDOC()
 
   tlpp.doc.generate()
   */
-  tlpp.doc.generate( 'swagger', 'api_doc', {8080}, Nil, "U_ListDOCFunctions" )
+  tlpp.doc.generate( 'swagger', 'api_doc', {8080}, {'en-us','pt-br'}, "U_ListDOCFunctions" )
 
 
   /*
