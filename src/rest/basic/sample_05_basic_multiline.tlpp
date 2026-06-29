@@ -1,52 +1,55 @@
 #include 'tlpp-rest.th'
 #include "tlpp-i18n.th"
 
-/* --------------------------------------------------------------------------
-EXEMPLO
+/* ==========================================================================
+   EXEMPLO 05: Descrição de Múltiplas Linhas (Multiline)
+   ==========================================================================
+   Quando há a necessidade de fornecer uma documentação textual longa ou 
+   detalhada para um endpoint, a limitação de uma única propriedade 
+   "description" na annotation pode ser contornada utilizando uma função _DOC 
+   (ou arquivo i18n).
 
-Exemplo curto de como apresentar uma descrição de múltiplas linhas.
--------------------------------------------------------------------------- */
+   O motor de documentação OpenAPI do tlppCore possui um comportamento 
+   específico e sequencial para concatenar múltiplas linhas:
+   
+   1. Deve-se utilizar propriedades numeradas sequencialmente, iniciando 
+      obrigatoriamente por "description0" ou "description1".
+   2. Se você optar por propriedades numeradas, qualquer propriedade chamada 
+      apenas "description" (sem número) será totalmente IGNORADA.
+   3. A sequência numérica NÃO pode ter saltos. O motor interrompe a leitura 
+      no primeiro número faltante, ignorando completamente as chaves seguintes.
+   4. O caractere de escape "\n" ao final da string pode ser usado para 
+      forçar explicitamente o salto de linha na renderização da documentação.
+   ========================================================================== */
 
-@Get( endpoint="/rest/sample/doc/basic/05/multiline", description="[U_rest_sample_05_basic_DOC]" )
+@Get(endpoint="/rest/sample/doc/basic/05/multiline", description="[U_rest_sample_05_basic_DOC]")
 function U_rest_sample_05_basic() as logical
+    
+    // Retorno vazio apenas para fins de demonstração da estrutura
 return oRest:setResponse('')
 
 
-/* --------------------------------------------------------------------------
-Função que irá retornar o JSON com dados da documentação do REST acima
-
-ATENÇÃO:
-
-- Importante ressaltar que ao se optar para uma descrição de múltiplas linhas,
-não poderemos mais usar a documentação diretamente pela annotation como no 
-exemplo 02, pois as annotations de REST possuem somente uma propriedade 
-"description" e aqui no JSON podemos criar quantas "description" forem 
-necessárias.
-
-- Pode-se começar com "description0" ou "description1", qualquer outra opção 
-invalida o description.
-
-- Ao se optar pelas múltiplas linhas, atente-se para não haver nada em 
-"description" sem números, pois ele será ingnorado.
-
-- A sequência numeral precisa ser correta, pois no primeiro número faltante
-o motor irá parar de ler, portanto, novamente atente-se a sequência para que 
-o motor não ignore suas descrições.
--------------------------------------------------------------------------- */
+/* ==========================================================================
+   FUNÇÃO DE DOCUMENTAÇÃO (Metadados OpenAPI)
+   ==========================================================================
+   Note abaixo que a propriedade "description8" foi colocada propositalmente. 
+   Como a "description7" está ausente, o motor parará a leitura na linha 6 
+   e a linha 8 será ignorada no documento OpenAPI final.
+   ========================================================================== */
 function U_rest_sample_05_basic_DOC() as character
 
-local cJson := '' as character
+    local cJson := '' as character
 
-TOSTRING cJson#;
-{;
-  "title" : "Múltiplas linhas",;
-  "description1" : "Linha 1",; // Pode-se iniciar também com "description0"
-  "description2" : "",; // linha em branco (salto de linha)
-  "description3" : "Linha 2\n",; // "\n" ao final da string também determina quebra de linha.
-  "description4" : "Linha 3\n",;
-  "description5" : "...\n",;
-  "description6" : "Linha N",;
-  "description8" : "sera ignorado"; // essa linha será ignorada pois quebramos a sequencia numerica dos description0 ... descriptionN
-}
+    TOSTRING cJson#;
+    { ;
+        "title" : "Múltiplas linhas", ;
+        "description1" : "Linha 1", ;
+        "description2" : "", ;
+        "description3" : "Linha 2\n", ;
+        "description4" : "Linha 3\n", ;
+        "description5" : "...\n", ;
+        "description6" : "Linha N", ;
+        "description8" : "Será ignorado devido à quebra de sequência numérica" ;
+    }
 
 return cJson

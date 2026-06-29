@@ -1,72 +1,126 @@
-<p align="center">
+<div align="center">
   <img alt="tlpp logo" src="images/tlpp_logo.jpg" width="250px" />
-  <h1 align="center">EXEMPLOS: DocumentaÃ§Ã£o de APIs REST em TLPP</h1>
+  <h1>EXEMPLOS: Documentação de APIs REST (OpenAPI) em TLPP</h1>
+</div>
+
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+  <img alt="tlppCore" src="https://img.shields.io/badge/tlppCore-01.04.02+-blue" />
+  <img alt="AppServer" src="https://img.shields.io/badge/AppServer-20.3.1.10+-blue" />
 </p>
 
-> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)<br>Esta Ã© uma iniciativa open source, sob **LicenÃ§a MIT**, e como tal, Ã© disponibilizada **sem qualquer garantia, expressa ou implÃ­cita**, nÃ£o havendo restriÃ§Ãµes sobre usar, copiar, modificar, fundir, publicar, distribuir, sublicenciar e/ou vender cÃ³pias de seu conteÃºdo.
+> Esta é uma iniciativa open source, sob **Licença MIT**, e como tal, é disponibilizada **sem qualquer garantia, expressa ou implícita**, não havendo restrições sobre usar, copiar, modificar, fundir, publicar, distribuir, sublicenciar e/ou vender cópias de seu conteúdo.
 
-## InformaÃ§Ãµes importantes
+---
 
-O **tlppCore** contÃ©m uma ferramenta nativa para a geraÃ§Ã£o de documentaÃ§Ã£o das APIs presentes no ambiente. Esse motor serÃ¡ distribuÃ­do atravÃ©s do tlpp.rpo juntamente com o appserver e esta ferramenta nÃ£o estarÃ¡ sob a licenÃ§a MIT. O motor Ã© de *propriedade* da **TOTVS S/A**.
+## ?? Informações Importantes e Pré-requisitos
 
-**VersÃ£o disponÃ­vel:** O motor estarÃ¡ disponÃ­vel a partir do tlppCore 01.04.02 + AppServer 20.3.1.10.
+O **tlppCore** possui uma ferramenta nativa para a geração automática da especificação OpenAPI (antigo formato Swagger) das rotas REST expostas no ambiente. Este motor de documentação é distribuído diretamente no RPO nativo (`tlpp.rpo`) juntamente com o AppServer da TOTVS, portanto, **o motor em si é proprietário (TOTVS S/A)** e não está sob a licença MIT deste repositório.
 
-O projeto contindo nesse repositÃ³rio nÃ£o Ã© a implementaÃ§Ã£o do motor de geraÃ§Ã£o da documentaÃ§Ã£o do tlppCore mencionada acima, portanto os fontes aqui presentes sÃ£o apenas exemplos de como utilizar os recursos disponÃ­veis para a geraÃ§Ã£o dos documentos.
+* **Versão Mínima do Ambiente:** `tlppCore 01.04.02` + `AppServer 20.3.1.10`.
 
-> <hr>
-> <div style="align-items: center; display: flex;">&nbsp;&nbsp;<img alt="tlpp logo" src="images/icons/disclaimer.png" width="32px" />&nbsp;&nbsp;<b>DISCLAIMER</b></div>
-> <br>
-> O mÃ³dulo REST-DOC Ã© um recurso extremamente novo no tlppCore e ainda estÃ¡ em fase de implementaÃ§Ã£o. O produto estÃ¡ recebendo contantes ajustes, melhorias e, portanto, sua documentaÃ§Ã£o ainda estÃ¡ em fase de construÃ§Ã£o.
-> <br><br>
-> Agradecemos o interesse em avaliar o produto, e nos colocamos Ã  inteira disposiÃ§Ã£o para eventuais dÃºvidas.<br>Por favor, usufruam do recurso de abertura de Issues para esse projeto!
-> <hr>
+Os códigos contidos neste repositório servem como um **guia de referência prático** com exemplos detalhados de como utilizar os recursos e as anotações do ecossistema TLPP para documentar seus serviços de forma eficiente.
 
-## Exemplos
+> ?? **DISCLAIMER:** O módulo REST-DOC é um recurso em constante evolução. O produto recebe frequentes ajustes e melhorias pelo time de engenharia da TOTVS. Sinta-se à vontade para abrir *Issues* neste repositório para reportar dúvidas ou sugestões de melhoria nos exemplos!
 
-Os exemplos implementados nesse projeto traz luz ao aprendizado sobre a ferramenta, porÃ©m Ã© imprescendÃ­vel que a documentaÃ§Ã£o oficial do motor seja lida atravÃ©s da [Wiki](https://github.com/totvs/tlpp-sample-rest-documentation/wiki) para obter detalhes de uso dos recursos disponibilizados.
+---
 
-### Exemplos BÃ¡sicos
+## ?? Matriz de Estratégias de Metadados
 
-- ***Somente descriÃ§Ã£o:*** \src\rest\basic\sample_01_basic.tlpp
-- ***Documentando utilizando annotation:*** \src\rest\basic\sample_02_basic.tlpp
-- ***Documentando diretamente no i18n:*** \src\rest\basic\sample_03_basic_by_id.tlpp
-- ***Documentando atravÃ©s de funÃ§Ã£o:*** \src\rest\basic\sample_04_basic_by_function.tlpp
-- ***DescriÃ§Ã£o multi-linha:*** \src\rest\basic\sample_05_basic_multiline.tlpp
+O motor do tlppCore oferece flexibilidade para a inserção de metadados informativos da API. Abaixo está o comparativo das abordagens exemplificadas no projeto:
 
-### Exemplo Completo (DocumentaÃ§Ã£o + Componente + i18n)
+| Estratégia | Localização do JSON | Impacto no Código Principal | Recomendação |
+| :--- | :--- | :--- | :--- |
+| **1. Tradicional (Direto)** | Injetado na annotation `@Get`/`@Post` | **Alto:** Polui o arquivo de regras de negócio com strings JSON gigantescas. | Apenas para documentações extremamente simples (ex: só descrição). |
+| **2. Via Dicionário (i18n)** | Isolado em arquivos `_i18n.tlpp` por ID | **Baixo:** Mantém a annotation limpa, mas pode duplicar chaves estruturais. | Ideal quando o reaproveitamento não é crítico, mas a tradução de idiomas é obrigatória. |
+| **3. Função Dedicada (`_DOC`)** | Centralizado em uma função externa | **Mínimo:** A annotation apenas aponta para o nome da função. Código limpo e desacoplado. | ?? **Altamente Recomendada.** Abordagem mais escalável e legível para projetos médios/grandes. |
+| **4. Dinâmica (Sem Anotação)** | Mapeado programaticamente via objeto | **Nenhum:** Utilizado para serviços levantados via código (`VdrCtrl`), sem annotations. | Obrigatório para APIs estruturadas dinamicamente por leitura de arquivos JSON. |
 
-Resumo do exemplo completo -> [complete.md](https://github.com/totvs/tlpp-sample-rest-documentation/blob/main/src/rest/complete/complete.md)
+---
 
-- ***REST:*** \src\rest\complete\sample_complete.tlpp
-- ***REST (localizaÃ§Ã£o):*** \src\rest\complete\sample_complete-i18n.tlpp
-- ***DOC:*** \src\rest\complete\sample_complete_DOC.tlpp
-- ***DOC (localizaÃ§Ã£o):*** \src\rest\complete\sample_complete_DOC-i18n.tlpp
-- ***Componente:*** \src\components\sample_components.tlpp
+## ?? Arquitetura e Fluxo de Metadados
 
-### Endpoints dinÃ¢micos criados por JSON
+Para entender como a documentação é amarrada, separamos o fluxo de trabalho em dois cenários principais: APIs com anotações fixas e APIs com rotas dinâmicas.
 
-O REST tlppCore possibilita a subida e criaÃ§Ã£o de serviÃ§os REST atravÃ©s de JSON de forma dinÃ¢mica, e portanto esses serviÃ§os nÃ£o utilizam Annotation.
+### ?? 1. Endpoints Fixos (via Annotation)
 
-Os exemplos abaixo criam DOC para esses casos.
+As anotações (ex: `@Get`, `@Post`) localizadas no topo das funções REST são a porta de entrada para os metadados. Elas ditam como o motor irá ler as informações:
 
-- ***Infraestrutura + EndPoints:*** src\rest\dynamic endpoints\dynamic_rest_start.tlpp
-- ***REST:*** src\rest\dynamic endpoints\dynamic_rest_services.tlpp
-- ***DOC List:*** src\rest\dynamic endpoints\dynamic_list_functions.tlpp
-- ***DOC REST:*** src\rest\dynamic endpoints\dynamic_rest_services_DOC.tlpp
+* ? **Tradicional (Direto):** `@Get(..., description='{JSON_Completo}')`
+  * **O Fluxo:** `Annotation` ? `Motor OpenAPI`
+  * *Ponto fraco:* O texto massivo do JSON reside dentro da anotação, poluindo o escopo de desenvolvimento.
 
-## Gerando a documentaÃ§Ã£o
+* ?? **Via Arquivo de Tradução:** `@Get(..., description='<1>')`
+  * **O Fluxo:** `Annotation` ? `Arquivo de Tradução (_i18n.tlpp)` ? `Motor OpenAPI`
+  * *Onde vive o JSON:* O ID `<1>` informa ao motor que a estrutura JSON deve ser buscada e traduzida dentro do arquivo de idiomas.
 
-Para gerar a documentaÃ§Ã£o dos exemplos desse projeto, como tambÃ©m dos documentos criados por vocÃª, serÃ¡ necessÃ¡rio executar a funÃ§Ã£o do tlppCore capaz de gerar o documento final.
+* ?? **Via Função Dedicada (Recomendado):** `@Get(..., description='[NomeDaFuncao]')`
+  * **O Fluxo:** `Annotation` ? `Função _DOC Isolada` ? `Motor OpenAPI`
+  * *Por que é o melhor?* A anotação apenas aciona um ponteiro `[]`. O JSON fica blindado e estruturado dentro de uma função exclusiva (geralmente terminada em `_DOC`), permitindo código limpo e validação isolada.
 
-> **AtenÃ§Ã£o:** Antes de executar a funÃ§Ã£o, Ã© imprescendÃ­vel que o serviÃ§o REST esteja funcionando e acessÃ­vel.
+### ?? 2. Endpoints Dinâmicos (Sem Annotation)
 
-ApÃ³s o ambiente estiver disponÃ­vel, a execuÃ§Ã£o serÃ¡ atravÃ©s da seguinte funÃ§Ã£o:
-```
-tlpp.doc.generate( 'swagger', 'api_doc', {8080} )
-```
-Para mais detalhes sobre a sintaxe, veja em: *\src\main.tlpp*
+Rotas levantadas via código (`VdrCtrl` / `loadUrns`) **não possuem** anotações `@Get`/`@Post` para ancorar a documentação. Neste caso, o tlppCore utiliza um fluxo programático:
 
-Nesse projeto, hÃ¡ uma cÃ³pia do arquivo gerado com o resultado desses exemplos.
-Esse arquivo vocÃª pode acessar em: *\output\api_doc_8080.yaml*
+1. **A Função `_DOC`:** Você cria a mesma *Função Dedicada* descrita acima contendo o JSON estruturado do seu serviço dinâmico.
+2. **A Função Mapeadora:** Você cria uma função que retorna uma lista (`tlpp.doc.List`) cujo único objetivo é dizer ao motor: *"A Rota Dinâmica X está documentada na Função Y"*.
+3. **O Fluxo Final:** `Rota Dinâmica` ? `Função Mapeadora` ? `Função _DOC Isolada` ? `Motor OpenAPI`
 
-> Pode-se validar o arquivo gerado atravÃ©s de uma ferramenta disponibilizada pela SmartBear Software, basta acessar a seguinte URL: [editor.swagger.io](https://editor.swagger.io/)
+> ?? **O Motor Central:** Independentemente do caminho escolhido, todos os fluxos desembocam na execução da função `tlpp.doc.generate()`, responsável por ler essa malha de vínculos, compilar os dados e gerar o arquivo `.yaml` ou `.json` final.
+
+---
+
+## ?? Guia e Estrutura do Código Fonte
+
+O projeto está organizado em módulos progressivos para facilitar o aprendizado da arquitetura de documentação:
+
+### 1. Exemplos Básicos (`/src/rest/basic/`)
+
+Demonstração das mecânicas fundamentais e regras de sintaxe do motor:
+
+* **Somente descrição:** `\src\rest\basic\sample_01_basic.tlpp`
+  Explica a diferença entre metadados *imperativos/funcionais* (`endpoint`) e *informativos* (`description`).
+* **Metadados na annotation:** `\src\rest\basic\sample_02_basic.tlpp`
+  Introduz propriedades estendidas na anotação (`title`, `params`, `responses`).
+* **Documentando via i18n:** `\src\rest\basic\sample_03_basic_by_id.tlpp`
+  Armazena as chaves de documentação OpenAPI dentro do ecossistema de internacionalização.
+* **Documentando via função:** `\src\rest\basic\sample_04_basic_by_function.tlpp`
+  Aplica a boa prática de apontar o metadado para uma função dedicada usando o comando `TOSTRING`.
+* **Descrição multi-linha:** `\src\rest\basic\sample_05_basic_multiline.tlpp`
+  Explica as regras rígidas do processador do tlppCore para descrições longas.
+
+### 2. Exemplo Completo e Reutilização (`/src/rest/complete/`)
+
+Cenário real simulando um ambiente produtivo com todas as features combinadas:
+
+* **Lógica REST:** `\src\rest\complete\sample_complete.tlpp`
+* **Mensagens e Erros (i18n):** `\src\rest\complete\sample_complete-i18n.tlpp`
+* **Metadados Estruturados (DOC):** `\src\rest\complete\sample_complete_DOC.tlpp`
+* **Textos OpenAPI (i18n):** `\src\rest\complete\sample_complete_DOC-i18n.tlpp`
+* **Componentes Globais:** `\src\components\sample_components.tlpp` (Cria esquemas de dados reutilizáveis como *Body In/Out*).
+
+### 3. Endpoints Dinâmicos (`/src/rest/dynamic endpoints/`)
+
+Estratégia avançada para rotas que nascem programaticamente via código através da classe `VdrCtrl`:
+
+* **Start do Servidor e URNs:** `dynamic_rest_start.tlpp`
+* **Lógica dos Serviços:** `dynamic_rest_services.tlpp`
+* **Metadados Dinâmicos (DOC):** `dynamic_rest_services_DOC.tlpp`
+* **Mapeador de Rotas (DOC List):** `dynamic_list_functions.tlpp` (Adiciona os mapeamentos através do método `oDoc:add()`).
+
+---
+
+## ?? Como Executar e Gerar o Arquivo Final
+
+A geração do arquivo de documentação é disparada programaticamente no ecossistema através do arquivo centralizador **`\src\main.tlpp`**.
+
+Ao executar a função contida no arquivo principal, o motor varrerá o RPO compilado em busca das anotações e dos mapeamentos dinâmicos registrados.
+
+### Assinatura Completa do Gerador
+
+A função nativa `tlpp.doc.generate()` aceita até 5 parâmetros para refinar o arquivo exportado:
+
+```tlpp
+tlpp.doc.generate( cFormato, cNomeArquivo, [aPorts], [aLocales], [cListFunc] )

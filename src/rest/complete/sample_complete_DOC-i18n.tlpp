@@ -1,5 +1,11 @@
 #include "tlpp-i18n.th"
 
+/* ==========================================================================
+   EXEMPLO COMPLETO: i18n da Documentação
+   ==========================================================================
+   Dicionário de dados exclusivo para os metadados da documentação OpenAPI.
+   ========================================================================== */
+
 //////////////////////////////////////////////////////////////
 TLPP TRANSLATION BRA sample_complete_DOC
 TLPP TRANSLATION EUA sample_complete_DOC
@@ -40,16 +46,16 @@ TRANSLATE 11#STR#BRA#    - Códigos e descrição
 TRANSLATE 11#STR#EUA#    - Codes and description
 
 TRANSLATE 12#STR#BRA#    - JSON de retorno
-TRANSLATE 12#STR#EUA#    - return JSON
+TRANSLATE 12#STR#EUA#    - Return JSON
 
 TRANSLATE 13#STR#BRA#4 - Criação de componentes
 TRANSLATE 13#STR#EUA#4 - Creation of components
 
 TRANSLATE 14#STR#BRA#5 - Localização (TLPP i18n)
-TRANSLATE 14#STR#EUA#5 - Location (TLPP i18n)
+TRANSLATE 14#STR#EUA#5 - Localization (TLPP i18n)
 
-TRANSLATE 15#STR#BRA#    - Documentação REST
-TRANSLATE 15#STR#EUA#    - REST documentation
+TRANSLATE 15#STR#BRA#    - Documentação OpenAPI
+TRANSLATE 15#STR#EUA#    - OpenAPI documentation
 
 TRANSLATE 16#STR#BRA#    - Strings no fonte original REST
 TRANSLATE 16#STR#EUA#    - Strings in original REST source
@@ -60,7 +66,7 @@ TRANSLATE 17#STR#EUA#Parameter via Query String
 TRANSLATE 18#STR#BRA#Parâmetro param1 recebido pelo caminho do endpoint (Path Param)
 TRANSLATE 18#STR#EUA#Param1 parameter received by path
 
-TRANSLATE 19#STR#BRA#Parâmetro param1 recebido pelo cabeçalho do http (Path Param)
+TRANSLATE 19#STR#BRA#Parâmetro param1 recebido pelo cabeçalho do http (Header Param)
 TRANSLATE 19#STR#EUA#Param1 parameter received by http header
 
 TRANSLATE 20#STR#BRA#Parâmetro OPCIONAL recebido pela cadeia de consulta (QueryString)

@@ -1,17 +1,25 @@
 #include 'tlpp-rest.th'
 
-/* --------------------------------------------------------------------------
-EXEMPLO 01
+/* ==========================================================================
+   EXEMPLO 01: Documentação Básica (Apenas Descrição)
+   ==========================================================================
+   A annotation de verbo HTTP (como @Get, @Post, etc.) aceita diferentes 
+   tipos de metadados. É importante notar a diferença entre eles:
 
-A forma mais simples é informando uma descrição diretamente na propriedade
-"description" da annotation.
-
-Nesse exemplo, não teremos mais nenhuma informação além da descrição.
--------------------------------------------------------------------------- */
+   - "endpoint": É um metadado imperativo/funcional. Ele atribui lógica real 
+     e é responsável por registrar a rota no servidor.
+   - "description": É um metadado estritamente informativo, utilizado apenas 
+     pelo motor para gerar a documentação da API.
+   
+   A forma mais simples de iniciar a documentação de um endpoint no tlppCore 
+   é inserindo o texto diretamente na propriedade "description".
+   ========================================================================== */
 
 @Get(;
   endpoint="/rest/sample/doc/basic/01",;
-  description="Exemplo de documentação simples, somente descrição";
+  description="Exemplo de documentação simples, contendo apenas a descrição do endpoint.";
 )
 function U_rest_sample_01_basic() as logical
+    
+    // Retorno vazio apenas para fins de demonstração da estrutura
 return oRest:setResponse('')

@@ -1,13 +1,21 @@
 #include "tlpp-i18n.th"
 
+/* ==========================================================================
+   EXEMPLO COMPLETO: i18n do Endpoint REST
+   ==========================================================================
+   Dicionário de dados para as mensagens de erro retornadas pelo endpoint 
+   U_rest_sample_complete.
+   ========================================================================== */
+
 //////////////////////////////////////////////////////////////
 TLPP TRANSLATION BRA sample_complete
 TLPP TRANSLATION EUA sample_complete
 //////////////////////////////////////////////////////////////
+
 TLPP BEGIN TRANSLATION sample_complete
 
 TRANSLATE 1#STR#BRA#Parâmetro param1 recebido pela cadeia de consulta é inválido
-TRANSLATE 1#STR#EUA#Invalid Param1 parameter received by query string
+TRANSLATE 1#STR#EUA#Invalid param1 parameter received by query string
 
 TRANSLATE 2#STR#BRA#Parâmetro param1 recebido no endpoint é inválido
 TRANSLATE 2#STR#EUA#Param1 parameter received on endpoint is invalid

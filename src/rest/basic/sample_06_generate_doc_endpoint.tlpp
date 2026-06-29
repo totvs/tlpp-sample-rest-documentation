@@ -1,0 +1,45 @@
+#include 'tlpp-rest.th'
+#include 'tlpp-core.th'
+
+/* ==========================================================================
+   GERADOR DE DOCUMENTAÇÃO (Trigger Endpoint)
+   ==========================================================================
+   Este endpoint aciona programaticamente o motor do tlppCore para gerar 
+   o arquivo de documentação das APIs.
+
+   ATENÇÃO: Embora o termo correto da especificação seja "OpenAPI", a função 
+   nativa `tlpp.doc.generate` ainda exige o parâmetro literal 'swagger' por 
+   questões de compatibilidade com o motor.
+   
+   Parâmetros da função tlpp.doc.generate utilizados aqui:
+   1. Formato (ex: 'swagger')
+   2. Nome do arquivo gerado (ex: 'api_doc')
+   3. Array de portas do AppServer (ex: {8080})
+   4. Array de idiomas/locales (ex: {'en-us', 'pt-br'})
+   5. Função customizada de lista de DOCs (opcional, ex: "U_ListDOCFunctions")
+   ========================================================================== */
+
+@Get(endpoint="/rest/sample/doc/generate", description="Gera documentação OpenAPI dos RESTs na porta 8080.")
+function U_rest_sample_doc_generate() as logical
+
+    local lOk  := .T. as logical
+    local cRet := ''  as character
+
+    begin sequence
+        // O parâmetro 'swagger' é mantido aqui por exigência do motor tlppCore
+        tlpp.doc.generate('swagger', 'api_doc', {8080}, {'en-us', 'pt-br'}, "U_ListDOCFunctions")
+    recover
+        lOk := .F.
+    end sequence
+
+    if ( lOk )
+        cRet := '{"success":true, "message":"Geração da documentação OpenAPI solicitada com sucesso."}'
+        oRest:setStatusCode(200)
+    else
+        cRet := '{"success":false, "message":"Falha ao solicitar a geração da documentação."}'
+        oRest:setStatusCode(500)
+    endif
+
+    oRest:setKeyHeaderResponse('Content-Type', 'application/json')
+    
+return oRest:setResponse(cRet)
