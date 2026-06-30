@@ -1,11 +1,14 @@
 
-# ?? TLPP REST API
+# ?? TLPP REST API: Documentação OpenAPI
 
 ![Licença](https://img.shields.io/badge/License-MIT-blue.svg)
 ![tlppCore](https://img.shields.io/badge/tlppCore-v01.04.02+-brightgreen.svg)
 ![AppServer](https://img.shields.io/badge/AppServer-v20.3.1.10+-orange.svg)
+![Status](https://img.shields.io/badge/Doc_Features-BETA-yellow.svg)
 
-Um guia prático e direto com código pronto para você documentar suas APIs REST no tlppCore utilizando a especificação OpenAPI. 
+Um guia prático e direto com código pronto para você documentar suas APIs REST no tlppCore utilizando a especificação OpenAPI (Swagger). 
+
+> **?? AVISO SOBRE A FASE BETA:** Embora o motor do TLPP REST seja altamente maduro e amplamente validado em produção, os recursos específicos de documentação abordados neste repositório (como a leitura de metadados nas anotações e a integração com dicionários `i18n`) ainda estão em **fase Beta** no tlppCore.
 
 ---
 
@@ -14,7 +17,7 @@ Um guia prático e direto com código pronto para você documentar suas APIs REST n
 Para extrair o `.yaml` ou `.json` com a documentação da sua API, é necessário chamar a função nativa do motor TLPP. Deixamos um endpoint "gatilho" pronto para isso na pasta `/generator/`.
 
 Basta fazer uma requisição `GET` para a rota:
-``` http
+```http
 GET /rest/sample/doc/generate
 ```
 
