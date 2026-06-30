@@ -1,0 +1,38 @@
+#include 'tlpp-rest.th'
+
+/*
+==========================================================================
+EXEMPLO 03: Documentação via Arquivo de Internacionalização (i18n)
+==========================================================================
+Temos a mesma lógica imperativa do Exemplo 02, porém agora extraímos os metadados 
+da documentação OpenAPI da annotation e os movemos para um arquivo externo de 
+tradução (i18n).
+
+Para criar esse vínculo, passamos um ID numérico entre sinais de menor e maior na 
+propriedade estritamente informativa "description":
+Exemplo: description="<1>"
+
+Esse ID aponta para a definição contida no arquivo i18n correspondente:
+\src\rest\basic\sample_03_basic_by_id-i18n.tlpp
+
+O arquivo i18n, além de traduzir strings convencionais do código-fonte, permite 
+definir os dados da sua documentação REST (em formato JSON) utilizando a seguinte sintaxe estruturada:
+TRANSLATE <1>#URI#BRA#<json_doc>
+==========================================================================
+*/
+
+@Get(endpoint="/rest/sample/doc/basic/03", description="<1>")
+function U_rest_sample_03_basic() as logical
+    local lReturn := .T. as logical
+    local jParams := oRest:getQueryRequest() as json
+
+    // A validação imperativa do parâmetro documentado via i18n ocorre aqui
+    if ( jParams:hasProperty('param1') )
+        conout( "Parâmetro recebido: " + jParams['param1'] )
+        lReturn := oRest:setJsonResponse(200, 'OK')
+    else
+        conout( "Erro: Parâmetro obrigatório não recebido." )
+        lReturn := oRest:setJsonResponse(400, 'Parâmetro inválido')
+    endif
+
+return lReturn
