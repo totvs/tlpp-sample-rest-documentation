@@ -1,0 +1,74 @@
+#include "tlpp-i18n.th"
+
+/*
+==========================================================================
+EXEMPLO 03: Arquivo de Internacionalização (i18n)
+==========================================================================
+Este arquivo contém as definições dos metadados da documentação OpenAPI 
+para o Exemplo 03, separados por idioma (BRA, EUA).
+
+A string JSON informada aqui é concatenada pela sintaxe de múltiplas linhas 
+do TLPP (ponto e vírgula no final). É fundamental garantir que a estrutura 
+do JSON resultante seja válida (chaves, colchetes e vírgulas literais) dentro 
+do bloco de texto.
+==========================================================================
+*/
+
+//////////////////////////////////////////////////////////////
+TLPP TRANSLATION BRA sample_03_basic_by_id
+TLPP TRANSLATION EUA sample_03_basic_by_id
+//////////////////////////////////////////////////////////////
+
+TLPP BEGIN TRANSLATION sample_03_basic_by_id
+
+TRANSLATE 1#URI#BRA# ;
+{ ;
+    "title" : "DOC simples 03", ;
+    "description" : "Exemplo de documentação de REST utilizando i18n com ID.", ;
+    "params": [ ;
+        { ;
+            "name": "param1", ;
+            "description": "desc_param_1", ;
+            "in": "query", ;
+            "type": "character", ;
+            "required": true ;
+        } ;
+    ], ;
+    "responses": [ ;
+        { ;
+            "statusCode": 200, ;
+            "description": "OK" ;
+        }, ;
+        { ;
+            "statusCode": 400, ;
+            "description": "Parâmetro inválido" ;
+        } ;
+    ] ;
+}
+
+TRANSLATE 1#URI#EUA# ;
+{ ;
+    "title" : "Simple DOC 03", ;
+    "description" : "Example of REST documentation using i18n with ID.", ;
+    "params": [ ;
+        { ;
+            "name": "param1", ;
+            "description": "desc_param_1", ;
+            "in": "query", ;
+            "type": "character", ;
+            "required": true ;
+        } ;
+    ], ;
+    "responses": [ ;
+        { ;
+            "statusCode": 200, ;
+            "description": "OK" ;
+        }, ;
+        { ;
+            "statusCode": 400, ;
+            "description": "Invalid parameter" ;
+        } ;
+    ] ;
+}
+
+TLPP END TRANSLATION

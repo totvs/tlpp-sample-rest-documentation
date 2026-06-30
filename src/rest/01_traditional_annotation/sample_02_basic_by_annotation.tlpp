@@ -1,0 +1,43 @@
+#include 'tlpp-rest.th'
+
+/*
+==========================================================================
+EXEMPLO 02: Documentação Estendida na Annotation
+==========================================================================
+Avançando em relação ao Exemplo 01, agora utilizamos mais propriedades 
+informativas na annotation do REST para enriquecer a documentação gerada:
+
+- "title": Título curto e direto da API.
+- "params": Define os parâmetros de entrada esperados em formato JSON. Neste 
+  caso, 1 parâmetro obrigatório (required:true) recebido via Query String (in:query).
+- "responses": Lista em formato JSON das possíveis respostas (HTTP Status) 
+  e suas respectivas descrições (ex: 200 e 400).
+
+Ponto de Atenção:
+As propriedades "title", "params" e "responses" são metadados puramente informativos 
+para a geração do OpenAPI. Note que, mesmo informando "required":true na documentação, 
+a validação real (imperativa) da presença do parâmetro deve ser feita manualmente na lógica da função.
+==========================================================================
+*/
+
+@Get(;
+    endpoint="/rest/sample/doc/basic/02",;
+    description="Exemplo de documentação de REST diretamente na annotation.",;
+    title="DOC simples 02",;
+    params='[{"name":"param1","description":"desc_param_1","in":"query","type":"character","required":true}]',;
+    responses='[{"statusCode":200,"description":"OK"},{"statusCode":400,"description":"Parâmetro inválido"}]';
+)
+function U_rest_sample_02_basic() as logical
+    local lReturn := .T. as logical
+    local jParams := oRest:getQueryRequest() as json
+
+    // A validação imperativa do parâmetro documentado na annotation ocorre aqui
+    if ( jParams:hasProperty('param1') )
+        conout( "Parâmetro recebido: " + jParams['param1'] )
+        lReturn := oRest:setJsonResponse(200, 'OK')
+    else
+        conout( "Erro: Parâmetro obrigatório não recebido." )
+        lReturn := oRest:setJsonResponse(400, 'Parâmetro inválido')
+    endif
+
+return lReturn
