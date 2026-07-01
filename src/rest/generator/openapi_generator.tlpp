@@ -27,7 +27,7 @@ function U_rest_sample_doc_generate() as logical
 
     begin sequence
         // O parâmetro 'swagger' é mantido aqui por exigência do motor tlppCore
-        tlpp.doc.generate('swagger', 'api_doc', {8080}, {'en-us', 'pt-br'}, "U_ListDOCFunctions")
+        tlpp.doc.generate('swagger', 'api_doc', {9995}, {'en-us', 'pt-br'}, "U_ListDOCFunctions")
     recover
         lOk := .F.
     end sequence
