@@ -1,0 +1,69 @@
+---
+title: i18n
+sidebar_label: I18n
+sidebar_position: 5
+displayed_sidebar: restSidebar
+---
+
+import ExemploRef from '@site/src/components/ExemploRef';
+
+# Metadados de i18n
+
+Documentação multilíngue no tlppCore usa três padrões distintos. Todos aparecem neste repositório.
+
+## 1. `description="<ID>"` + `TRANSLATE`
+
+Na annotation REST, aponte para um ID numérico:
+
+```tlpp
+@Get(endpoint="/rest/sample/doc/basic/03", description="<1>")
+```
+
+O JSON de documentação fica em blocos `TRANSLATE` no arquivo i18n, um por locale:
+
+```tlpp
+TRANSLATE 1#URI#BRA# ;
+{ ;
+  "title" : "DOC simples 03", ;
+  "description" : "...", ;
+  "params": [ ... ]
+}
+
+TRANSLATE 1#URI#EUA# ;
+{ ;
+  "title" : "simple DOC 03", ;
+  ...
+}
+```
+
+## 2. `translate:Funcao:ID:texto` no JSON DOC
+
+Dentro do JSON retornado pela função `_DOC`, marque textos traduzíveis:
+
+```tlpp
+"title" : "translate:sample_complete_DOC:1:Exemplo completo",;
+```
+
+O motor resolve usando entradas `TRANSLATE` com o mesmo ID no arquivo i18n da função.
+
+## 3. `Localize()` no fonte REST
+
+Para **mensagens da API** (não OpenAPI), use `Localize()` no código REST:
+
+```tlpp
+cMsg := Localize(1, 'Parâmetro param1 recebido pela cadeia de consulta é inválido')
+```
+
+As traduções ficam em `TRANSLATE 1#URI#BRA#...` no arquivo i18n correspondente.
+
+:::note Escopo
+`Localize()` documenta mensagens de runtime da API. O REST-DOC usa os padrões 1 e 2 para montar o OpenAPI.
+:::
+
+## Locales na geração
+
+O parâmetro `aLocales` de `tlpp.doc.generate()` define quais idiomas exportar — ex.: `{'en-us','pt-br'}`.
+
+<ExemploRef file="complete_api_DOC-i18n.tlpp" path="rest/03_dedicated_function_doc/advanced" />
+
+**Próximo passo:** [Exemplo 03 — i18n por ID](/docs/tlpp/rest/metadados/exemplos/basic/i18n-id).

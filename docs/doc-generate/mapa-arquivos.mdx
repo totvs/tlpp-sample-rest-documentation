@@ -1,0 +1,115 @@
+---
+title: Mapa de arquivos
+sidebar_position: 3
+displayed_sidebar: restSidebar
+---
+
+import {getExternalRepo, githubFileUrl, githubTreeUrl} from '@site/src/data/external-repos';
+import RepoLink from '@site/src/components/RepoLink';
+
+export const sampleRepo = getExternalRepo('doc-generate');
+
+# Mapa de arquivos do repositório
+
+Estrutura do projeto <RepoLink id="doc-generate">{sampleRepo.label}</RepoLink> (`doc-generate`):
+
+<table>
+  <thead>
+    <tr>
+      <th>Arquivo</th>
+      <th>Metadados / função</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href={githubFileUrl(sampleRepo, 'src/main.tlpp')} target="_blank" rel="noopener noreferrer"><code>src/main.tlpp</code></a></td>
+      <td><code>U_sampleDOC()</code>, sintaxe <code>tlpp.doc.generate()</code></td>
+    </tr>
+    <tr>
+      <td><a href={githubFileUrl(sampleRepo, 'src/components/sample_components.tlpp')} target="_blank" rel="noopener noreferrer"><code>src/components/sample_components.tlpp</code></a></td>
+      <td><code>TLPP COMPONENT</code></td>
+    </tr>
+    <tr>
+      <td><strong><a href={githubTreeUrl(sampleRepo, 'src/rest/01_traditional_annotation')} target="_blank" rel="noopener noreferrer">01_traditional_annotation/</a></strong></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>basic_description.tlpp</code></td>
+      <td><code>description</code> texto</td>
+    </tr>
+    <tr>
+      <td><code>extended_annotation.tlpp</code></td>
+      <td><code>title</code>, <code>params</code>, <code>responses</code></td>
+    </tr>
+    <tr>
+      <td><strong><a href={githubTreeUrl(sampleRepo, 'src/rest/02_dictionary_i18n')} target="_blank" rel="noopener noreferrer">02_dictionary_i18n/</a></strong></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>sample_basic_by_id.tlpp</code></td>
+      <td><code>description="&lt;1&gt;"</code></td>
+    </tr>
+    <tr>
+      <td><code>sample_basic_by_id-i18n.tlpp</code></td>
+      <td><code>TRANSLATE</code> + JSON DOC</td>
+    </tr>
+    <tr>
+      <td><strong><a href={githubTreeUrl(sampleRepo, 'src/rest/03_dedicated_function_doc')} target="_blank" rel="noopener noreferrer">03_dedicated_function_doc/</a></strong></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>basic/json_object_return.tlpp</code></td>
+      <td>função DOC + JSON</td>
+    </tr>
+    <tr>
+      <td><code>basic/multiline.tlpp</code></td>
+      <td><code>descriptionN</code></td>
+    </tr>
+    <tr>
+      <td><code>advanced/complete_api.tlpp</code></td>
+      <td>REST + <code>Localize()</code></td>
+    </tr>
+    <tr>
+      <td><code>advanced/complete_api_DOC.tlpp</code></td>
+      <td>JSON completo (<code>JsonObject</code>)</td>
+    </tr>
+    <tr>
+      <td><code>advanced/complete_api*-i18n.tlpp</code></td>
+      <td>i18n REST e DOC</td>
+    </tr>
+    <tr>
+      <td><strong><a href={githubTreeUrl(sampleRepo, 'src/rest/04_dynamic_mapping')} target="_blank" rel="noopener noreferrer">04_dynamic_mapping/</a></strong></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>dynamic_rest_start.tlpp</code></td>
+      <td>infra REST JSON</td>
+    </tr>
+    <tr>
+      <td><code>dynamic_rest_services.tlpp</code></td>
+      <td>handlers</td>
+    </tr>
+    <tr>
+      <td><code>dynamic_list_functions.tlpp</code></td>
+      <td><code>tlpp.doc.List()</code></td>
+    </tr>
+    <tr>
+      <td><code>dynamic_rest_services_DOC.tlpp</code></td>
+      <td>DOC por endpoint</td>
+    </tr>
+    <tr>
+      <td><strong><a href={githubTreeUrl(sampleRepo, 'src/rest/generator')} target="_blank" rel="noopener noreferrer">generator/</a></strong></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>openapi_generator.tlpp</code></td>
+      <td><code>GET /rest/sample/doc/generate</code></td>
+    </tr>
+    <tr>
+      <td><a href={githubFileUrl(sampleRepo, 'output/api_doc_8080.yaml')} target="_blank" rel="noopener noreferrer"><code>output/api_doc_8080.yaml</code></a></td>
+      <td>Snapshot OpenAPI (também em <a href="/tools/explorador-openapi">Explorador</a>)</td>
+    </tr>
+  </tbody>
+</table>
+
+**Próximo passo:** [Explorador OpenAPI](/tools/explorador-openapi) — navegue o YAML no navegador. Trilha REST: [Visão geral](/docs/tlpp/rest).

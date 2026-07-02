@@ -1,0 +1,43 @@
+---
+title: Annotation REST
+sidebar_position: 2
+displayed_sidebar: restSidebar
+---
+
+import ExemploRef from '@site/src/components/ExemploRef';
+
+# Metadados da annotation REST
+
+As annotations `@Get`, `@Post`, `@Put`, `@Patch` e `@Delete` aceitam metadados que o motor REST-DOC converte em OpenAPI. Alguns são **funcionais** (registram a rota); outros são **informativos** (só documentação).
+
+Rotas e verbos HTTP em detalhe: [Annotations REST](/docs/tlpp/rest/configuracoes/annotations).
+
+## Propriedades
+
+| Metadado | Para que serve |
+|----------|----------------|
+| **`endpoint`** | Path da rota REST — obrigatório para registrar o serviço |
+| **`description`** | Origem da documentação — ver [description](/docs/tlpp/rest/metadados/description) |
+| **`title`** | Título legível do endpoint no OpenAPI |
+| **`params`** | Parâmetros (`query`, `path`, `header`) como string JSON |
+| **`responses`** | Respostas HTTP (`statusCode`, `description`) como string JSON |
+
+## `params` e `responses` inline
+
+Quando a documentação é simples, você pode declarar parâmetros e respostas **direto na annotation**, sem função DOC:
+
+```tlpp
+@Get(;
+  endpoint="/rest/sample/doc/basic/02",;
+  description="...",;
+  title="DOC simples 02",;
+  params='[{"name":"param1","in":"query",...}]',;
+  responses='[{"statusCode":200,"description":"OK"},...]';
+)
+```
+
+Em documentações mais ricas (função `_DOC`), o JSON suporta campos extras como `minimum`, `maximum`, `values` e `requestBody`.
+
+<ExemploRef file="extended_annotation.tlpp" path="rest/01_traditional_annotation" />
+
+**Próximo passo:** [Exemplo 02 — annotation](/docs/tlpp/rest/metadados/exemplos/basic/annotation).

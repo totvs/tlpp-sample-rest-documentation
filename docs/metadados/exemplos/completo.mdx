@@ -1,0 +1,30 @@
+---
+title: Exemplo completo
+sidebar_label: Completo
+sidebar_position: 1
+displayed_sidebar: restSidebar
+---
+
+# Exemplo completo — `03_dedicated_function_doc/advanced/`
+
+**Pasta:** `src/rest/03_dedicated_function_doc/advanced/`
+
+| Arquivo | Metadados |
+|---------|-----------|
+| `complete_api.tlpp` | REST + `description="[U_rest_sample_complete_DOC]"` |
+| `complete_api_DOC.tlpp` | JSON via `JsonObject():New()` — params, body, responses, `translate:` |
+| `complete_api*-i18n.tlpp` | i18n REST e DOC |
+| `sample_components.tlpp` | `TLPP COMPONENT` |
+
+Endpoint: `PUT /rest/sample/doc/complete/{param1}`
+
+Destaques do `complete_api_DOC.tlpp`:
+
+- Parâmetros query, path, header e enum (`values`)
+- `requestBody` com `"type": "component"` → `sampleBodyIn`
+- `responses` 200/400 com `sampleBodyOutOk` e `sampleBodyOutError`
+- Textos `translate:` no JSON
+
+[Componentes](/docs/tlpp/rest/metadados/componentes) · [JSON DOC](/docs/tlpp/rest/metadados/json-documentacao) · [Explorador OpenAPI](/tools/explorador-openapi)
+
+**Próximo passo:** [Avisos e dicas](/docs/tlpp/rest/metadados/avisos-dicas) — feche o bloco Metadados antes de gerar o YAML.
