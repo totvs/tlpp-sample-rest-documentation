@@ -5,31 +5,42 @@ displayed_sidebar: restSidebar
 ---
 
 import ExemploRef from '@site/src/components/ExemploRef';
+import RepoLink from '@site/src/components/RepoLink';
 
 # Visão geral dos metadados
 
-O REST-DOC do tlppCore lê **metadados** no seu código TLPP e monta a especificação OpenAPI. Este repositório demonstra cada tipo de metadado que o motor entende.
+O REST-DOC do tlppCore lê **metadados** no seu código TLPP e monta a especificação OpenAPI. Os exemplos desta trilha vivem em <RepoLink id="doc-generate" />.
 
-## O que existe
+## O que o Doc Generate oferece
 
-| Metadado | Para que serve |
-|----------|----------------|
-| **`endpoint`** | Registra a rota REST no AppServer (comportamento funcional) |
-| **`description`** | Aponta a documentação do endpoint — texto, função DOC ou ID i18n |
-| **`title`**, **`params`**, **`responses`** | Campos OpenAPI declarados direto na annotation `@Get` / `@Put` |
-| **JSON da função `_DOC`** | Documentação rica retornada por uma função TLPP (`title`, `params`, `requestBody`, etc.) |
-| **`description1`…`N`** | Descrição longa dividida em blocos numerados no JSON |
-| **`translate:…`** | Textos traduzíveis dentro do JSON DOC |
-| **`TLPP COMPONENT`** | Schemas reutilizáveis referenciados no JSON |
-| **`tlpp.doc.List()`** | Associa documentação a rotas criadas dinamicamente — ver [Doc Generate](/docs/tlpp/rest/doc-generate/list-dinamico) |
-| **`tlpp.doc.generate()`** | Exporta tudo para YAML/JSON OpenAPI — ver [Doc Generate](/docs/tlpp/rest/doc-generate) |
+Capacidades do produto — **não** é o mapa de leitura (esse está na trilha abaixo).
+
+| Capacidade | O que resolve |
+|------------|---------------|
+| **Metadados no código** | Documentação junto da rota (`description`, `params`, `responses`) |
+| **Quatro formas de documentar** | Annotation, i18n, função `_DOC` ou rotas dinâmicas |
+| **Schemas reutilizáveis** | `TLPP COMPONENT` referenciado no JSON DOC |
+| **Export OpenAPI** | `tlpp.doc.generate()` gera YAML/JSON consumível por ferramentas |
+
+## Trilha sugerida
+
+Uma ordem só — de declarar metadados até exportar o OpenAPI. O menu **DOC GENERATE** espelha essa sequência.
+
+| Etapa | O que você aprende | Comece em |
+|-------|-------------------|-----------|
+| **1 — Description** | Como apontar a documentação do endpoint | [Description](/docs/tlpp/rest/metadados/description) |
+| **2 — Annotation REST** | Metadados inline em `@Get` / `@Post` | [Annotation REST](/docs/tlpp/rest/metadados/rest-annotation) |
+| **3 — JSON DOC** | Função `_DOC` com documentação rica | [JSON DOC](/docs/tlpp/rest/metadados/json-documentacao) |
+| **4 — I18n** | Textos traduzíveis (`translate:…`) | [I18n](/docs/tlpp/rest/metadados/i18n) |
+| **5 — Componentes** | Schemas reutilizáveis | [Componentes](/docs/tlpp/rest/metadados/componentes) |
+| **6 — Geração OpenAPI** | `tlpp.doc.generate()`, list dinâmico e YAML | [Doc Generate](/docs/tlpp/rest/doc-generate) |
 
 ## Quatro formas de documentar
 
 1. **Annotation tradicional** — metadados inline na `@Get` / `@Put`
 2. **Dicionário i18n** — `description="<ID>"` aponta para blocos `TRANSLATE`
 3. **Função dedicada `_DOC`** — JSON montado em função separada (recomendado para APIs reais)
-4. **Rotas dinâmicas** — `tlpp.doc.List()` liga endpoint + método + função DOC ([Doc Generate](/docs/tlpp/rest/doc-generate/list-dinamico))
+4. **Rotas dinâmicas** — `tlpp.doc.List()` liga endpoint + método + função DOC ([List dinâmico](/docs/tlpp/rest/doc-generate/list-dinamico))
 
 ## Regras importantes
 
@@ -38,3 +49,5 @@ O REST-DOC do tlppCore lê **metadados** no seu código TLPP e monta a especific
 3. **Geração:** o 1º parâmetro de `tlpp.doc.generate` deve ser `'swagger'` — ver [Doc Generate](/docs/tlpp/rest/doc-generate)
 
 <ExemploRef file="complete_api_DOC.tlpp" path="rest/03_dedicated_function_doc/advanced" />
+
+**Próximo passo:** [Description](/docs/tlpp/rest/metadados/description)

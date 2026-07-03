@@ -6,10 +6,27 @@ displayed_sidebar: restSidebar
 ---
 
 import ExemploRef from '@site/src/components/ExemploRef';
+import RepoLink from '@site/src/components/RepoLink';
 
 # Doc Generate
 
-O **REST-DOC** do tlppCore lê os [metadados](/docs/tlpp/rest/metadados/visao-geral) declarados no código TLPP e exporta a especificação OpenAPI via `tlpp.doc.generate()`.
+O **REST-DOC** do tlppCore lê os [metadados](/docs/tlpp/rest/metadados/visao-geral) declarados no código TLPP e exporta a especificação OpenAPI via `tlpp.doc.generate()`. Exemplos em <RepoLink id="doc-generate" />.
+
+## O que esta etapa oferece
+
+| Capacidade | O que resolve |
+|------------|---------------|
+| **Export OpenAPI** | YAML ou JSON a partir dos metadados do RPO |
+| **Rotas dinâmicas** | `tlpp.doc.List()` documenta endpoints sem annotation |
+| **Snapshot de referência** | YAML no repo para o [Explorador OpenAPI](/tools/explorador-openapi) |
+
+## Trilha sugerida
+
+| Etapa | O que você aprende | Comece em |
+|-------|-------------------|-----------|
+| **1 — List dinâmico** | Associar DOC a rotas criadas em runtime | [List dinâmico](/docs/tlpp/rest/doc-generate/list-dinamico) |
+| **2 — OpenAPI** | Formato e conteúdo do YAML gerado | [OpenAPI](/docs/tlpp/rest/doc-generate/openapi) |
+| **3 — Mapa de arquivos** | Onde cada exemplo do repo se encaixa | [Mapa de arquivos](/docs/tlpp/rest/doc-generate/mapa-arquivos) |
 
 ## `tlpp.doc.generate()`
 
@@ -49,3 +66,5 @@ tlpp.doc.generate( <cFormato>, <cNomeArquivo>, [aPorts], [aLocales], [cListFunc]
 O snapshot commitado neste repo está no [Explorador OpenAPI](/tools/explorador-openapi) e na [referência YAML](/docs/tlpp/rest/doc-generate/openapi).
 
 <ExemploRef file="openapi_generator.tlpp" path="rest/generator" />
+
+**Próximo passo:** [List dinâmico](/docs/tlpp/rest/doc-generate/list-dinamico)
