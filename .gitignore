@@ -4,3 +4,7 @@
 # environment files
 *.log
 bin/
+
+# Gerado localmente — nao versionar
+content-import/
+rest.lst

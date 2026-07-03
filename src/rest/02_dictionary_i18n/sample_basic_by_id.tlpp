@@ -10,7 +10,7 @@ Para isso, informaremos em "description" o ID entre <>, segue:
 description="<1>"
 
 Esse ID é o identificar no arquivo i18n:
-\src\rest\basic\sample_03_basic_by_id-i18n.tlpp
+\src\rest\basic\sample_basic_by_id-i18n.tlpp
 
 O arquivo i18n serve para realizar a tradução de strings do seu código-fonte.
 Nesse caso, além da tradução, ele também disponibiliza recurso para informar

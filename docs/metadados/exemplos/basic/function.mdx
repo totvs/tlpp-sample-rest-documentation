@@ -1,0 +1,26 @@
+---
+title: "04 — description [função]"
+sidebar_label: "04 · função"
+sidebar_position: 4
+displayed_sidebar: restSidebar
+---
+
+import CodeToOpenAPI from '@site/src/components/CodeToOpenAPI';
+
+# Exemplo 04 — `description="[U_rest_sample_04_basic_DOC]"`
+
+**Arquivo:** `src/rest/03_dedicated_function_doc/basic/json_object_return.tlpp`  
+**Metadados:** `description` apontando para função; JSON com `title`, `params`, `responses`.
+
+<CodeToOpenAPI
+tlpp={`@Get(endpoint="/rest/sample/doc/basic/04",
+     description="[U_rest_sample_04_basic_DOC]")
+
+function U_rest_sample_04_basic_DOC() as character
+  TOSTRING cJson#; { "title": "DOC simples 04", "params": [...] }`}
+yaml={`/rest/sample/doc/basic/04:
+  get:
+    summary: DOC simples 04`}
+/>
+
+**Conceito:** [JSON da função DOC](/docs/tlpp/rest/metadados/json-documentacao).

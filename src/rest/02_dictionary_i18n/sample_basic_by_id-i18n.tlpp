@@ -1,11 +1,11 @@
 #include "tlpp-i18n.th"
 
 //////////////////////////////////////////////////////////////
-TLPP TRANSLATION BRA sample_03_basic_by_id
-TLPP TRANSLATION EUA sample_03_basic_by_id
+TLPP TRANSLATION BRA sample_basic_by_id
+TLPP TRANSLATION EUA sample_basic_by_id
 //////////////////////////////////////////////////////////////
 
-TLPP BEGIN TRANSLATION sample_03_basic_by_id
+TLPP BEGIN TRANSLATION sample_basic_by_id
 
 TRANSLATE 1#URI#BRA# ;
 { ;
