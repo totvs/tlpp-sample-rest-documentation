@@ -1,0 +1,21 @@
+#include "tlpp-doc.th"
+
+/*
+-------------------------------------------------------------------
+SINTAXE: 
+
+TLPP COMPONENT <nameComponent> <propertyComponent> <type> <example>
+-------------------------------------------------------------------
+*/
+
+// Request Param para:
+// \src\rest\complete\sample_complete.tlpp
+TLPP COMPONENT sampleBodyIn param1         character "tlpp"
+
+// Response para:
+// \src\rest\complete\sample_complete.tlpp
+TLPP COMPONENT sampleBodyOutOk sucess      logical   "true"
+TLPP COMPONENT sampleBodyOutOk error       character ""
+
+TLPP COMPONENT sampleBodyOutError sucess   logical   "false"
+TLPP COMPONENT sampleBodyOutError error    character "Invalid Path parameter"

@@ -1,0 +1,125 @@
+#include "tlpp-core.th"
+
+
+/*
+-----------------------------------------
+Função central para "subir" REST dinâmico
+-----------------------------------------
+*/
+function U_dynamic_rest_start()
+
+  local oVdrCtrl := VdrCtrl():New()
+  local nResult
+  local jo := Nil
+  local sURL := ""
+  local aRet := {}
+  local lIsUnix := IsSrvUnix()
+  local cPathSep := "\"
+
+  if ( lIsUnix )
+    cPathSep := "/"
+  endif
+
+  sURL := "/rest_dyn"
+
+  jo := JsonObject():new()
+
+  jo['HTTPSERVER'] := JsonObject():new()
+    jo['HTTPSERVER']['Log'] := .F.
+    jo['HTTPSERVER']['Charset'] := "UTF-8"
+    jo['HTTPSERVER']['Servers'] := {"INIT_HTTP_REST"}
+    jo['HTTPSERVER']['LoadJSON'] := .F.
+
+  jo['INIT_HTTP_REST'] := JsonObject():new()
+    jo['INIT_HTTP_REST']['HostName'] := "INIT_DYNAMIC_REST"
+    jo['INIT_HTTP_REST']['Port'] := 8080
+    jo['INIT_HTTP_REST']['Charset'] := "UTF-8"
+    jo['INIT_HTTP_REST']['ContentTypes'] := "INIT_ContentTypes"
+    jo['INIT_HTTP_REST']['Locations'] := {"INIT_HTTP_ROOT_01"}
+
+  jo['INIT_HTTP_ROOT_01'] := JsonObject():new()
+    jo['INIT_HTTP_ROOT_01']['Path'] := sURL
+    jo['INIT_HTTP_ROOT_01']['RootPath'] := cPathSep + "root" + cPathSep + "web"
+    jo['INIT_HTTP_ROOT_01']['DefaultPage'] := {"index.html"}
+    jo['INIT_HTTP_ROOT_01']['ThreadPool'] := "INIT_THREAD_POOL_01"
+    jo['INIT_HTTP_ROOT_01']['AllowMethods'] := {"DELETE", "GET", "OPTIONS", "PATCH", "POST", "PUT"}
+
+  jo['INIT_THREAD_POOL_01'] := JsonObject():new()
+    jo['INIT_THREAD_POOL_01']['Environment'] := "TLPPCORE"
+    jo['INIT_THREAD_POOL_01']['MinThreads'] := 1
+    jo['INIT_THREAD_POOL_01']['MaxThreads'] := 4
+    jo['INIT_THREAD_POOL_01']['MinFreeThreads'] := 1
+    jo['INIT_THREAD_POOL_01']['GrowthFactor'] := 1
+    jo['INIT_THREAD_POOL_01']['InactiveTimeout'] := 60000
+    jo['INIT_THREAD_POOL_01']['AcceptTimeout'] := 10000
+
+  jo['INIT_ContentTypes'] := JsonObject():new()
+    jo['INIT_ContentTypes']['htm'] := "text/html"
+    jo['INIT_ContentTypes']['html'] := "text/html"
+    jo['INIT_ContentTypes']['stm'] := "text/html"
+    jo['INIT_ContentTypes']['tsp'] := "text/html"
+    jo['INIT_ContentTypes']['js'] := "text/javascript"
+    jo['INIT_ContentTypes']['json'] := "text/plain;charset=UTF-8"
+    jo['INIT_ContentTypes']['*'] := "application/octet-stream"
+
+  jo['INIT_HTTP_REST']['LoadURNs'] := JsonObject():new()
+    stLoadURNs(@jo['INIT_HTTP_REST']['LoadURNs'])
+
+  nResult := oVdrCtrl:Start(jo)
+    conout("Iniciado HTTP Server - " + cValToChar(nResult))
+
+  if ( valtype(nResult) == 'N' .and. nResult == 0 )
+    return sURL
+  else
+    // Falhou
+    if ( valtype(nResult) == 'C' )
+      aRet := {-1, nResult}
+      return aRet
+    else
+      return nResult
+    endif
+  endif
+return -32
+
+
+/*
+----------------------------------------
+Endpoints Dinamicos
+----------------------------------------
+*/
+static function stLoadURNs( jEndpoints )
+
+  if ( valtype(jEndpoints) == 'U' .Or. ValType(jEndpoints) != 'J' )
+    jEndpoints := jsonObject():New()
+  endif
+
+  // ----------
+  // /init/user
+  // ----------
+  jEndpoints['/init/dyn'] := JsonObject():new()
+
+    // Implementacao dessa fauncao encontra-se em: \src\dynamic endpoints\dynamic_rest_services.tlpp
+    jEndpoints['/init/dyn']['GET'] := JsonObject():new()
+    jEndpoints['/init/dyn']['GET']['ClassName'] := ""
+    jEndpoints['/init/dyn']['GET']['Function'] := "U_FUNC_DYN"
+    jEndpoints['/init/dyn']['GET']['EndPoint'] :={"init", "dyn"}
+
+    // Implementacao dessa fauncao encontra-se em: \src\dynamic endpoints\dynamic_rest_services.tlpp
+    jEndpoints['/init/dyn']['PUT'] := JsonObject():new()
+    jEndpoints['/init/dyn']['PUT']['ClassName'] := ""
+    jEndpoints['/init/dyn']['PUT']['Function'] := "U_FUNC_DYN"
+    jEndpoints['/init/dyn']['PUT']['EndPoint'] :={"init", "dyn"}
+
+
+  // --------------
+  // /class/:param1
+  // --------------
+  jEndpoints['/class/*'] := JsonObject():new()
+
+    // Implementacao dessa classe encontra-se em: \src\dynamic endpoints\dynamic_rest_services.tlpp
+    jEndpoints['/class/*']['GET'] := JsonObject():new()
+    jEndpoints['/class/*']['GET']['ClassName'] := "class_dyn"
+    jEndpoints['/class/*']['GET']['Function'] := "method_dyn"
+    jEndpoints['/class/*']['GET']['EndPoint'] :={"class", ":param1"}
+
+return .T.

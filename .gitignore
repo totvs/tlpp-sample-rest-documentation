@@ -1,2 +1,6 @@
-# Artefatos locais de importação / geração (não versionar)
-content-import/
+# vsCode Files
+.vscode/
+
+# environment files
+*.log
+bin/
