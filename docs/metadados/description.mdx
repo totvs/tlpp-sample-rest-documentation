@@ -1,0 +1,67 @@
+---
+title: description
+sidebar_label: Description
+sidebar_position: 3
+displayed_sidebar: restSidebar
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ExemploRef from '@site/src/components/ExemploRef';
+
+# Metadado `description`
+
+É o metadado **central** do REST-DOC. Ele diz ao motor **de onde vem** a documentação do endpoint — pode ser um texto simples, uma função que retorna JSON ou um ID de tradução.
+
+## Três modos
+
+<Tabs>
+  <TabItem value="text" label="Texto direto" default>
+
+Coloque o texto entre aspas. O valor vai direto para o campo `description` do OpenAPI.
+
+```tlpp
+description="Exemplo de documentação simples, somente descrição"
+```
+
+Útil quando a API precisa de poucas linhas de explicação.
+
+  </TabItem>
+  <TabItem value="func" label="Função [nome]">
+
+Aponte para uma função TLPP entre colchetes. O motor **executa** a função e usa o JSON retornado como documentação completa do endpoint.
+
+```tlpp
+description="[U_rest_sample_04_basic_DOC]"
+```
+
+A função deve estar compilada no mesmo ambiente e retornar um JSON válido.
+
+  </TabItem>
+  <TabItem value="id" label="ID i18n &lt;N&gt;">
+
+Use um número entre `<>` para referenciar um bloco `TRANSLATE` em um arquivo i18n. O JSON de documentação fica fora do fonte REST.
+
+```tlpp
+description="<1>"
+```
+
+O ID corresponde ao número do `TRANSLATE 1#URI#BRA# { ... }`.
+
+  </TabItem>
+</Tabs>
+
+## `endpoint` vs `description`
+
+| Metadado | Papel |
+|----------|--------|
+| **`endpoint`** | Imperativo — registra a rota no AppServer |
+| **`description`** | Informativo — alimenta apenas o REST-DOC |
+
+## Regras
+
+- **Função DOC:** nome entre colchetes `[NomeFuncao]`
+- **i18n:** número entre `<>` — conteúdo no arquivo `*-i18n.tlpp`
+- **Multi-linha:** use `description1`, `description2`, … no JSON (sem `description` simples no mesmo objeto); a sequência numérica deve ser contínua
+
+<ExemploRef file="basic_description.tlpp" path="rest/01_traditional_annotation" />

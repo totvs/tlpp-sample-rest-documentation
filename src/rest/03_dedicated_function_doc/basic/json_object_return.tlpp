@@ -1,0 +1,50 @@
+#include 'tlpp-rest.th'
+#include "tlpp-i18n.th"
+
+@Get(endpoint="/rest/sample/doc/basic/04", description="[U_rest_sample_04_basic_DOC]")
+function U_rest_sample_04_basic() as logical
+    local lReturn := .T. as logical
+    local jParams := oRest:getQueryRequest() as json
+
+    if ( jParams:hasProperty('param1') )
+        conout( "Parâmetro recebido: " + jParams['param1'] )
+        lReturn := oRest:setJsonResponse(200, 'OK')
+    else
+        conout( "Erro: Parâmetro obrigatório não recebido." )
+        lReturn := oRest:setJsonResponse(400, 'Parâmetro inválido')
+    endif
+
+return lReturn
+
+/* 
+==========================================================================
+FUNÇÃO DE DOCUMENTAÇÃO (Refatorada usando JsonObject nativo)
+==========================================================================
+*/
+function U_rest_sample_04_basic_DOC() as character
+    local jDoc     := JsonObject():New()
+    local jParam1  := JsonObject():New()
+    local jResp200 := JsonObject():New()
+    local jResp400 := JsonObject():New()
+
+    jDoc['title'] := "DOC simples 04"
+    jDoc['description'] := "Exemplo de documentação de REST utilizando função retornando um JSON nativo."
+
+    // Configurando os Parâmetros
+    jParam1['name'] := "param1"
+    jParam1['description'] := "desc_param_1"
+    jParam1['in'] := "query"
+    jParam1['type'] := "character"
+    jParam1['required'] := .T.
+    jDoc['params'] := { jParam1 } // Atribui como array
+
+    // Configurando as Respostas
+    jResp200['statusCode'] := 200
+    jResp200['description'] := "OK"
+
+    jResp400['statusCode'] := 400
+    jResp400['description'] := "Parâmetro inválido"
+    
+    jDoc['responses'] := { jResp200, jResp400 }
+
+return jDoc:toJson()

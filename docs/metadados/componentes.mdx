@@ -1,0 +1,38 @@
+---
+title: Componentes
+sidebar_position: 6
+displayed_sidebar: restSidebar
+---
+
+import ExemploRef from '@site/src/components/ExemploRef';
+
+# Metadado `TLPP COMPONENT`
+
+Define **schemas reutilizáveis** que você referencia no JSON DOC com `"type": "component"`. O motor expande para `components/schemas` no OpenAPI.
+
+## Sintaxe
+
+```tlpp
+#include "tlpp-doc.th"
+
+TLPP COMPONENT <nome> <propriedade> <tipo> <exemplo>
+```
+
+Cada linha declara uma propriedade do componente. O nome do componente é reutilizado em vários endpoints.
+
+## Referência no JSON DOC
+
+No `requestBody` ou `responses`, aponte para o componente:
+
+```json
+"type": "component",
+"component": "sampleBodyIn"
+```
+
+O OpenAPI gerado inclui o schema completo em `components/schemas`.
+
+## `tlpp.doc.getComponent()`
+
+Ao gerar no formato **JSON** (não Swagger), se o JSON central traz apenas o nome do componente, use `tlpp.doc.getComponent()` para expandir o schema.
+
+<ExemploRef file="sample_components.tlpp" path="components" />

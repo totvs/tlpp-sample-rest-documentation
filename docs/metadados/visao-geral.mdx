@@ -1,0 +1,40 @@
+---
+title: Visão geral
+sidebar_position: 1
+displayed_sidebar: restSidebar
+---
+
+import ExemploRef from '@site/src/components/ExemploRef';
+
+# Visão geral dos metadados
+
+O REST-DOC do tlppCore lê **metadados** no seu código TLPP e monta a especificação OpenAPI. Este repositório demonstra cada tipo de metadado que o motor entende.
+
+## O que existe
+
+| Metadado | Para que serve |
+|----------|----------------|
+| **`endpoint`** | Registra a rota REST no AppServer (comportamento funcional) |
+| **`description`** | Aponta a documentação do endpoint — texto, função DOC ou ID i18n |
+| **`title`**, **`params`**, **`responses`** | Campos OpenAPI declarados direto na annotation `@Get` / `@Put` |
+| **JSON da função `_DOC`** | Documentação rica retornada por uma função TLPP (`title`, `params`, `requestBody`, etc.) |
+| **`description1`…`N`** | Descrição longa dividida em blocos numerados no JSON |
+| **`translate:…`** | Textos traduzíveis dentro do JSON DOC |
+| **`TLPP COMPONENT`** | Schemas reutilizáveis referenciados no JSON |
+| **`tlpp.doc.List()`** | Associa documentação a rotas criadas dinamicamente — ver [Doc Generate](/docs/tlpp/rest/doc-generate/list-dinamico) |
+| **`tlpp.doc.generate()`** | Exporta tudo para YAML/JSON OpenAPI — ver [Doc Generate](/docs/tlpp/rest/doc-generate) |
+
+## Quatro formas de documentar
+
+1. **Annotation tradicional** — metadados inline na `@Get` / `@Put`
+2. **Dicionário i18n** — `description="<ID>"` aponta para blocos `TRANSLATE`
+3. **Função dedicada `_DOC`** — JSON montado em função separada (recomendado para APIs reais)
+4. **Rotas dinâmicas** — `tlpp.doc.List()` liga endpoint + método + função DOC ([Doc Generate](/docs/tlpp/rest/doc-generate/list-dinamico))
+
+## Regras importantes
+
+1. **Prefira `JsonObject():New()`** em funções DOC — evita JSON inválido por vírgula faltando
+2. **Multi-linha:** não pule números em `descriptionN` — o motor para no primeiro gap
+3. **Geração:** o 1º parâmetro de `tlpp.doc.generate` deve ser `'swagger'` — ver [Doc Generate](/docs/tlpp/rest/doc-generate)
+
+<ExemploRef file="complete_api_DOC.tlpp" path="rest/03_dedicated_function_doc/advanced" />

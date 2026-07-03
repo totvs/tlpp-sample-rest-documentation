@@ -1,0 +1,32 @@
+---
+title: List dinâmico
+sidebar_position: 2
+displayed_sidebar: restSidebar
+---
+
+import ExemploRef from '@site/src/components/ExemploRef';
+
+# `tlpp.doc.List()` — REST dinâmico
+
+Rotas criadas programaticamente (sem `@Get`/`@Put`) **não têm annotation** para ancorar metadados. O `tlpp.doc.List()` associa cada rota dinâmica a uma função DOC.
+
+## Como funciona
+
+```tlpp
+oDoc := tlpp.doc.List():New()
+oDoc:add( "/init/dyn", "get", "U_FUNC_DYN_GET_DOC" )
+oDoc:add( "/init/dyn", "put", "U_FUNC_DYN_PUT_DOC" )
+oDoc:add( "/class/:param1", "get", "U_CLASS_DYN_GET_DOC" )
+```
+
+| Parâmetro | Função |
+|-----------|--------|
+| `endpoint` | Path da rota dinâmica |
+| `method` | Verbo HTTP (`"get"`, `"put"`, …) |
+| `DOC_funcion_name` | Função TLPP que retorna o JSON de documentação |
+
+## Ligação com a geração
+
+Passe o nome da função que monta a lista como **5º parâmetro** de `tlpp.doc.generate()`. Sem isso, rotas dinâmicas não entram no YAML exportado.
+
+<ExemploRef file="dynamic_list_functions.tlpp" path="rest/04_dynamic_mapping" />

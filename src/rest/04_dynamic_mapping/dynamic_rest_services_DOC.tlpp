@@ -1,0 +1,53 @@
+#include "tlpp-i18n.th"
+
+/* DOC: /init/dyn | Método: GET */
+function U_FUNC_DYN_GET_DOC() as character
+    local jDoc := JsonObject():New()
+    local jResp := JsonObject():New()
+
+    jDoc['title'] := "Exemplo 01 dinâmico"
+    jDoc['description'] := "Documentação do endpoint [/init/dyn] método [GET] gerado dinamicamente."
+    
+    jResp['statusCode'] := 200
+    jResp['description'] := "Sucesso | Content: [FUNC_DYN hh:mm:ss]"
+    jDoc['responses'] := { jResp }
+
+return jDoc:toJson()
+
+
+/* DOC: /init/dyn | Método: PUT */
+function U_FUNC_DYN_PUT_DOC() as character
+    local jDoc := JsonObject():New()
+    local jResp := JsonObject():New()
+
+    jDoc['title'] := "Exemplo 02 dinâmico"
+    jDoc['description'] := "Documentação do endpoint [/init/dyn] método [PUT] gerado dinamicamente."
+    
+    jResp['statusCode'] := 200
+    jResp['description'] := "Sucesso | Content: [FUNC_DYN hh:mm:ss]"
+    jDoc['responses'] := { jResp }
+
+return jDoc:toJson()
+
+
+/* DOC: /class/:param1 | Método: GET */
+function U_CLASS_DYN_GET_DOC() as character
+    local jDoc := JsonObject():New()
+    local jParam := JsonObject():New()
+    local jResp := JsonObject():New()
+
+    jDoc['title'] := "Exemplo 03 dinâmico"
+    jDoc['description'] := "Documentação do endpoint [/class/:param1] método [GET] recebendo 1 PathParam."
+
+    jParam['name'] := "param1"
+    jParam['description'] := "Parâmetro param1 recebido via Path Param."
+    jParam['in'] := "path"
+    jParam['required'] := .T.
+    jParam['type'] := "character"
+    jDoc['params'] := { jParam }
+
+    jResp['statusCode'] := 200
+    jResp['description'] := "Sucesso | Content: [METHOD_DYN hh:mm:ss [{param1:value_param}]]"
+    jDoc['responses'] := { jResp }
+
+return jDoc:toJson()

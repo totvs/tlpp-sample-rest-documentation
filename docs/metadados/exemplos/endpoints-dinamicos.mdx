@@ -1,0 +1,23 @@
+---
+title: Endpoints dinâmicos
+sidebar_label: Dinâmicos
+sidebar_position: 2
+displayed_sidebar: restSidebar
+---
+
+# `04_dynamic_mapping/` — sem annotation na rota
+
+| Arquivo | Papel |
+|---------|--------|
+| `dynamic_rest_start.tlpp` | Infra REST JSON |
+| `dynamic_rest_services.tlpp` | Handlers |
+| `dynamic_list_functions.tlpp` | `tlpp.doc.List():add(...)` |
+| `dynamic_rest_services_DOC.tlpp` | Funções DOC |
+
+```tlpp
+oDoc:add( "/init/dyn", "get", "U_FUNC_DYN_GET_DOC" )
+```
+
+5º parâmetro de `tlpp.doc.generate`: `"U_ListDOCFunctions"`
+
+[Metadado List](/docs/tlpp/rest/doc-generate/list-dinamico)
