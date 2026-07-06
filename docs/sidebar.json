@@ -1,0 +1,44 @@
+{
+  "$comment": "Menu Doc Generate — exemplos auto-descobertos de docs/exemplos/.",
+  "docPrefix": "tlpp/rest",
+  "exemplos": {
+    "label": "Exemplos Doc Generate",
+    "key": "doc-generate-exemplos-repo",
+    "mountSubpath": "exemplos-doc-generate"
+  },
+  "items": [
+    {"type": "doc", "id": "metadados/visao-geral", "label": "Introdução", "key": "metadados-intro"},
+    {
+      "type": "category",
+      "label": "Metadados",
+      "collapsed": true,
+      "key": "metadados-conceitos",
+      "items": [
+        "metadados/description",
+        "metadados/rest-annotation",
+        "metadados/json-documentacao",
+        "metadados/i18n",
+        "metadados/componentes",
+        {
+          "type": "doc",
+          "id": "metadados/avisos-dicas",
+          "label": "Avisos e dicas",
+          "key": "avisos-metadados",
+          "className": "sidebar-avisos-dicas"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Geração OpenAPI",
+      "collapsed": true,
+      "key": "doc-generate-openapi",
+      "items": [
+        {"type": "doc", "id": "doc-generate/index", "label": "Visão geral", "key": "doc-generate-intro"},
+        "doc-generate/list-dinamico",
+        "doc-generate/openapi",
+        "doc-generate/mapa-arquivos"
+      ]
+    }
+  ]
+}
