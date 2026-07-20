@@ -1,0 +1,37 @@
+#include "tlpp-core.th"
+#include "tlpp-rest.th"
+
+/* ==========================================================================
+   ENDPOINT DINÂMICO: Implementação via Função Simples
+   Rota associada: /init/dyn (GET e PUT)
+   ========================================================================== */
+function U_FUNC_DYN()
+    local cRet := ""
+    cRet := "FUNC_DYN " + time()
+return oRest:SetResponse( cRet )
+
+/* ==========================================================================
+   ENDPOINT DINÂMICO: Implementação via Classe TLPP
+   Rota associada: /class/:param1 (GET)
+   ========================================================================== */
+class class_dyn
+    public method new() constructor
+    public method method_dyn()
+endclass
+
+method new() class class_dyn
+return self
+
+method method_dyn() class class_dyn
+
+    local cRet        := ""
+    local jPathParams := Nil
+
+    cRet := ProcName() + " " + time() + " "
+
+    jPathParams := oRest:getPathParamsRequest()
+    if ( jPathParams <> Nil )
+        cRet += "[" + jPathParams:ToJSon() + "]"
+    endif
+
+return oRest:SetResponse(cRet)

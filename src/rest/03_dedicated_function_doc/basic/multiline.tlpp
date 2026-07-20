@@ -1,0 +1,25 @@
+#include 'tlpp-rest.th'
+#include "tlpp-i18n.th"
+
+@Get(endpoint="/rest/sample/doc/basic/05/multiline", description="[U_rest_sample_05_basic_DOC]")
+function U_rest_sample_05_basic() as logical
+return oRest:setResponse('')
+
+/* 
+==========================================================================
+FUNÇÃO DE DOCUMENTAÇÃO (Refatorada usando JsonObject nativo)
+==========================================================================
+*/
+function U_rest_sample_05_basic_DOC() as character
+    local jDoc := JsonObject():New()
+
+    jDoc['title'] := "Múltiplas linhas via JsonObject"
+    jDoc['description1'] := "Linha 1"
+    jDoc['description2'] := ""
+    jDoc['description3'] := "Linha 2\n"
+    jDoc['description4'] := "Linha 3\n"
+    jDoc['description5'] := "...\n"
+    jDoc['description6'] := "Linha N"
+    jDoc['description8'] := "Será ignorado devido à quebra de sequência numérica"
+
+return jDoc:toJson()

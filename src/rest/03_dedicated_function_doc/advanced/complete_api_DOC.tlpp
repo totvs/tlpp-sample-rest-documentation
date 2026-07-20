@@ -1,0 +1,94 @@
+#include "tlpp-i18n.th"
+
+function U_rest_sample_complete_DOC() as character
+    local jDoc := JsonObject():New()
+    local jParamQuery, jPathParam, jHeaderParam, jLogParam, jRetParam
+    local jValLog0, jValLog1, jValRetJson, jValRetXml
+    local jReqBody, jBodyTypeJson
+    local jResp200, jRes200TypeJson, jRes200TypeXml
+    local jResp400, jRes400TypeJson, jRes400TypeXml
+
+    // 1. Textos e Multiline (Puxando do dicionário i18n via tag)
+    jDoc['title'] := "translate:sample_complete_DOC:1:Exemplo completo"
+    jDoc['description1'] := "translate:sample_complete_DOC:2:Exemplo completo com todos os recursos..."
+    jDoc['description2'] := "translate:sample_complete_DOC:3:1 - Descrição multi-linha"
+    jDoc['description3'] := "translate:sample_complete_DOC:4:2 - Parâmetros de entrada (Obrigatórios e Opcionais)"
+    
+    // 2. Parâmetros Base
+    jParamQuery := JsonObject():New()
+    jParamQuery['name'] := "param1"
+    jParamQuery['description'] := "translate:sample_complete_DOC:17:Parâmetro query"
+    jParamQuery['in'] := "query"
+    jParamQuery['required'] := .T.
+    jParamQuery['type'] := "character"
+
+    jPathParam := JsonObject():New()
+    jPathParam['name'] := "param1"
+    jPathParam['description'] := "translate:sample_complete_DOC:18:Parâmetro path"
+    jPathParam['in'] := "path"
+    jPathParam['required'] := .T.
+    jPathParam['type'] := "character"
+
+    jHeaderParam := JsonObject():New()
+    jHeaderParam['name'] := "param1"
+    jHeaderParam['description'] := "translate:sample_complete_DOC:19:Parâmetro header"
+    jHeaderParam['in'] := "header"
+    jHeaderParam['required'] := .T.
+    jHeaderParam['type'] := "character"
+
+    // 3. Parâmetro eNum (Log)
+    jLogParam := JsonObject():New()
+    jLogParam['name'] := "log"
+    jLogParam['in'] := "query"
+    jLogParam['required'] := .F.
+    jLogParam['type'] := "integer"
+    jLogParam['default'] := 0
+    
+    jValLog0 := JsonObject():New()
+    jValLog0['value'] := 0
+    jValLog0['description'] := "translate:sample_complete_DOC:21:Desliga Log"
+    jValLog1 := JsonObject():New()
+    jValLog1['value'] := 1
+    jValLog1['description'] := "translate:sample_complete_DOC:22:Liga Log"
+    jLogParam['values'] := { jValLog0, jValLog1 }
+
+    jDoc['params'] := { jParamQuery, jPathParam, jHeaderParam, jLogParam }
+
+    // 4. Request Body (Referenciando componente global)
+    jReqBody := JsonObject():New()
+    jReqBody['description'] := "translate:sample_complete_DOC:24:Body param"
+    
+    jBodyTypeJson := JsonObject():New()
+    jBodyTypeJson['json'] := JsonObject():New()
+    jBodyTypeJson['json']['type'] := "component"
+    jBodyTypeJson['json']['component'] := "sampleBodyIn"
+    
+    jReqBody['Content-Type'] := { jBodyTypeJson }
+    jDoc['requestBody'] := jReqBody
+
+    // 5. Responses (Referenciando componentes globais múltiplos)
+    jResp200 := JsonObject():New()
+    jResp200['statusCode'] := 200
+    jResp200['description'] := "translate:sample_complete_DOC:25:Sucesso"
+    
+    jRes200TypeJson := JsonObject():New()
+    jRes200TypeJson['application/json'] := JsonObject():New()
+    jRes200TypeJson['application/json']['type'] := "component"
+    jRes200TypeJson['application/json']['component'] := "sampleBodyOutOk"
+    
+    jResp200['Content-Type'] := { jRes200TypeJson }
+
+    jResp400 := JsonObject():New()
+    jResp400['statusCode'] := 400
+    jResp400['description'] := "translate:sample_complete_DOC:26:Requisição Inválida"
+    
+    jRes400TypeJson := JsonObject():New()
+    jRes400TypeJson['json'] := JsonObject():New()
+    jRes400TypeJson['json']['type'] := "component"
+    jRes400TypeJson['json']['component'] := "sampleBodyOutError"
+
+    jResp400['Content-Type'] := { jRes400TypeJson }
+
+    jDoc['responses'] := { jResp200, jResp400 }
+
+return jDoc:toJson()

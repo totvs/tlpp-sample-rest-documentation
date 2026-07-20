@@ -1,0 +1,17 @@
+name: Notify Hub
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger totvstec-doc rebuild
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.HUB_DISPATCH_TOKEN }}
+          repository: totvs/totvstec-doc
+          event-type: doc-generate-updated
+          client-payload: '{"ref": "${{ github.sha }}"}'

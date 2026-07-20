@@ -1,74 +1,81 @@
 #include 'tlpp-core.th'
 
+/* ==========================================================================
+   FUNÇÃO PRINCIPAL: Orquestrador de Exemplos e Geração de DOC
+   ==========================================================================
+   Este bloco inicializa o ambiente de testes do repositório, levantando os
+   serviços REST dinâmicos e disparando a geração do arquivo de documentação.
+   ========================================================================== */
 function U_sampleDOC()
 
-  /*
-  Função responsável para "subir" um REST dinâmico, com EndPoints novos por JSON e sem annotation.
-  */
-  U_dynamic_rest_start()
+    /* ----------------------------------------------------------------------
+       1. Inicialização dos Endpoints Dinâmicos
+       Subirá o servidor HTTP virtual e registrará as rotas construídas via 
+       JSON (sem o uso de annotations convencionais).
+       ---------------------------------------------------------------------- */
+    U_dynamic_rest_start()
 
-
-  /*
-  Para solicitar a geração da documentação REST de seu ambiente, basta executar 
-  a seguinte função do tlppCore:
-
-  tlpp.doc.generate()
-  */
-  tlpp.doc.generate( 'swagger', 'api_doc', {8080}, {'en-us','pt-br'}, "U_ListDOCFunctions" )
-
-
-  /*
-  Importante:
-  Ao suprimir as portas, será gerado documentação para todos os REST que estão no "ar" no momento da geração, 
-  ou seja, todas as portas disponíveis.
-
-  ------------------
-  Sintaxe da Função:
-  ------------------
-
-  tlpp.doc.generate( 
-    Formato da Exportação,        // Opções: 'json' e 'swagger' | Default: 'json'
-    Nome do arquivo a ser gerado, // Default: 'rest_doc'
-    Lista de Portas               // 
-  )
-
-  Sintaxe:
-  tlpp.doc.generate( <formato>, <nome arquivo>, [ports] 
-
-  <formato>
-    Descrição: Formato do arquivo a ser gerado.
-    Tipo: string
-    Obrigatório: Sim
-    Opções: 'swagger' | 'json'
-    Default: 'json'
-
-  <nome arquivo>
-    Descrição: Nome do arquivo a ser gerado.
-    Tipo: string
-    Obrigatório: Sim
-    Opções: Livre escolha
-    Default: 'rest_doc'
-
-  [ports] 
-    Descrição: Porta(s) do(s) serviço(s) REST, configuradas pelo INI ou inicializadas de forma dinâmica.
-      Se passar NULL, será documentado todas as portas no ar, caso queira filtrar, 
-      passar números das portas separadas por vírgula dentro de um array.
-    Tipo: array de numéricos
-    Obrigatório: Não
-    Opções: Livre escolha.
-      Ex: {8080,443}
-    Default: NULL
-
-  Ex:
-  -----------------------------------------------------------------
-  Gera em formato Swagger: rest_tlpp_8080.yaml e rest_tlpp_443.yaml
-  -----------------------------------------------------------------
-  tlpp.doc.generate( 'swagger', 'rest_tlpp', {8080,443}  ) 
-
-  -----------------------------------------------------------------
-  Gera em formato JSON: rest_tlpp_8080.json e rest_tlpp_443.json
-  -----------------------------------------------------------------
-  tlpp.doc.generate( 'json', 'rest_tlpp', {8080,443} )
-  */
+    /* ----------------------------------------------------------------------
+       2. Disparo do Motor de Geração OpenAPI
+       Aciona o motor nativo do tlppCore para ler as annotations e as rotas 
+       dinâmicas amarradas e exportar o arquivo final.
+       ---------------------------------------------------------------------- */
+    tlpp.doc.generate( 'swagger', 'api_doc', {8080}, {'en-us','pt-br'}, "U_ListDOCFunctions" )
 
 return
+
+/* ==========================================================================
+   DOCUMENTAÇÃO TÉCNICA: SINTAXE DA FUNÇÃO NATIVA
+   ==========================================================================
+   Sintaxe completa:
+   tlpp.doc.generate( <cFormato>, <cNomeArquivo>, [aPorts], [aLocales], [cListFunc] )
+
+   --------------------------------------------------------------------------
+   1. <cFormato> (String | Obrigatório)
+   --------------------------------------------------------------------------
+   Define o formato do arquivo de saída.
+   Opções: 
+     - 'swagger' : Gera o arquivo estruturado na especificação OpenAPI (.yaml).
+     - 'json'    : Gera o arquivo puro no formato JSON (.json).
+   Default: 'json'
+
+   --------------------------------------------------------------------------
+   2. <cNomeArquivo> (String | Obrigatório)
+   --------------------------------------------------------------------------
+   Define o nome base do arquivo que será salvo no servidor.
+   Default: 'rest_doc'
+
+   --------------------------------------------------------------------------
+   3. [aPorts] (Array de Numéricos | Opcional)
+   --------------------------------------------------------------------------
+   Filtro de portas do serviço REST (configuradas via INI ou dinamicamente).
+   Se informado como NULL ou omitido, o motor gerará a documentação para 
+   TODOS os serviços REST que estiverem ativos ("no ar") no momento da execução.
+   Ex: {8080, 443}
+   Default: NULL
+
+   --------------------------------------------------------------------------
+   4. [aLocales] (Array de Strings | Opcional)
+   --------------------------------------------------------------------------
+   Lista de idiomas (locales) que serão processados pelo i18n para gerar 
+   documentações localizadas/traduzidas.
+   Ex: {'en-us', 'pt-br'}
+   Default: Idioma padrão do sistema.
+
+   --------------------------------------------------------------------------
+   5. [cListFunc] (String | Opcional)
+   --------------------------------------------------------------------------
+   Nome da função customizada (User Function) responsável por retornar a lista 
+   de amarração (`tlpp.doc.List`) das rotas dinâmicas criadas via JSON.
+   Ex: "U_ListDOCFunctions"
+   Default: ""
+
+   ==========================================================================
+   EXEMPLOS DE SAÍDA NO SERVIDOR:
+   ==========================================================================
+   - Chamada: tlpp.doc.generate( 'swagger', 'rest_tlpp', {8080, 443} )
+     Gera na pasta do sistema: rest_tlpp_8080.yaml e rest_tlpp_443.yaml
+
+   - Chamada: tlpp.doc.generate( 'json', 'rest_tlpp', {8080, 443} )
+     Gera na pasta do sistema: rest_tlpp_8080.json e rest_tlpp_443.json
+   ========================================================================== */

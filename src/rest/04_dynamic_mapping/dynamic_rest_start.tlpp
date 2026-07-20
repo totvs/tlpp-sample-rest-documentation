@@ -1,0 +1,126 @@
+#include "tlpp-core.th"
+
+/* ==========================================================================
+   ENDPOINT DINÂMICO: Inicialização do Servidor REST (VdrCtrl)
+   ==========================================================================
+   Esta função centraliza a inicialização e configuração do servidor HTTP 
+   REST do tlppCore de forma totalmente programática e dinâmica via JSON, 
+   sem a necessidade de utilizar as annotations padrão no código.
+   ========================================================================== */
+function U_dynamic_rest_start()
+
+    local oVdrCtrl := VdrCtrl():New()
+    local nResult
+    local jo       := Nil
+    local sURL     := ""
+    local aRet     := {}
+    local lIsUnix  := IsSrvUnix()
+    local cPathSep := "\"
+
+    if ( lIsUnix )
+        cPathSep := "/"
+    endif
+
+    sURL := "/rest_dyn"
+    jo   := JsonObject():new()
+
+    // 1. Configurações Globais do Servidor
+    jo['HTTPSERVER'] := JsonObject():new()
+    jo['HTTPSERVER']['Log']      := .F.
+    jo['HTTPSERVER']['Charset']  := "UTF-8"
+    jo['HTTPSERVER']['Servers']  := {"INIT_HTTP_REST"}
+    jo['HTTPSERVER']['LoadJSON'] := .F.
+    
+    // 2. Configurações do REST App
+    jo['INIT_HTTP_REST'] := JsonObject():new()
+    jo['INIT_HTTP_REST']['HostName']     := "INIT_DYNAMIC_REST"
+    jo['INIT_HTTP_REST']['Port']         := 8080
+    jo['INIT_HTTP_REST']['Charset']      := "UTF-8"
+    jo['INIT_HTTP_REST']['ContentTypes'] := "INIT_ContentTypes"
+    jo['INIT_HTTP_REST']['Locations']    := {"INIT_HTTP_ROOT_01"}
+
+    // 3. Diretórios Virtuais / Locais
+    jo['INIT_HTTP_ROOT_01'] := JsonObject():new()
+    jo['INIT_HTTP_ROOT_01']['Path']         := sURL
+    jo['INIT_HTTP_ROOT_01']['RootPath']     := cPathSep + "root" + cPathSep + "web"
+    jo['INIT_HTTP_ROOT_01']['DefaultPage']  := {"index.html"}
+    jo['INIT_HTTP_ROOT_01']['ThreadPool']   := "INIT_THREAD_POOL_01"
+    jo['INIT_HTTP_ROOT_01']['AllowMethods'] := {"DELETE", "GET", "OPTIONS", "PATCH", "POST", "PUT"}
+
+    // 4. Thread Pool
+    jo['INIT_THREAD_POOL_01'] := JsonObject():new()
+    jo['INIT_THREAD_POOL_01']['Environment']     := "TLPPCORE"
+    jo['INIT_THREAD_POOL_01']['MinThreads']      := 1
+    jo['INIT_THREAD_POOL_01']['MaxThreads']      := 4
+    jo['INIT_THREAD_POOL_01']['MinFreeThreads']  := 1
+    jo['INIT_THREAD_POOL_01']['GrowthFactor']    := 1
+    jo['INIT_THREAD_POOL_01']['InactiveTimeout'] := 60000
+    jo['INIT_THREAD_POOL_01']['AcceptTimeout']   := 10000
+
+    // 5. Content-Types Suportados
+    jo['INIT_ContentTypes'] := JsonObject():new()
+    jo['INIT_ContentTypes']['htm']  := "text/html"
+    jo['INIT_ContentTypes']['html'] := "text/html"
+    jo['INIT_ContentTypes']['stm']  := "text/html"
+    jo['INIT_ContentTypes']['tsp']  := "text/html"
+    jo['INIT_ContentTypes']['js']   := "text/javascript"
+    jo['INIT_ContentTypes']['json'] := "text/plain;charset=UTF-8"
+    jo['INIT_ContentTypes']['*']    := "application/octet-stream"
+
+    // 6. Carregamento das URNs (Rotas Dinâmicas)
+    jo['INIT_HTTP_REST']['LoadURNs'] := JsonObject():new()
+    stLoadURNs(@jo['INIT_HTTP_REST']['LoadURNs'])
+
+    // Iniciando o servidor virtual
+    nResult := oVdrCtrl:Start(jo)
+    conout("Iniciado HTTP Server - " + cValToChar(nResult))
+
+    if ( valtype(nResult) == 'N' .and. nResult == 0 )
+        return sURL
+    else
+        if ( valtype(nResult) == 'C' )
+            aRet := {-1, nResult}
+            return aRet
+        else
+            return nResult
+        endif
+    endif
+    
+return -32
+
+/* ==========================================================================
+   CARGA DOS ENDPOINTS
+   ==========================================================================
+   Mapeamento das URNs para suas respectivas Funções/Classes TLPP.
+   ========================================================================== */
+static function stLoadURNs( jEndpoints )
+
+    if ( valtype(jEndpoints) == 'U' .Or. ValType(jEndpoints) != 'J' )
+        jEndpoints := jsonObject():New()
+    endif
+
+    // Rota Dinâmica 01: /init/dyn
+    jEndpoints['/init/dyn'] := JsonObject():new()
+
+    // Endpoint GET - Implementação em: \src\dynamic endpoints\dynamic_rest_services.tlpp
+    jEndpoints['/init/dyn']['GET'] := JsonObject():new()
+    jEndpoints['/init/dyn']['GET']['ClassName'] := ""
+    jEndpoints['/init/dyn']['GET']['Function']  := "U_FUNC_DYN"
+    jEndpoints['/init/dyn']['GET']['EndPoint']  := {"init", "dyn"}
+
+    // Endpoint PUT - Implementação em: \src\dynamic endpoints\dynamic_rest_services.tlpp
+    jEndpoints['/init/dyn']['PUT'] := JsonObject():new()
+    jEndpoints['/init/dyn']['PUT']['ClassName'] := ""
+    jEndpoints['/init/dyn']['PUT']['Function']  := "U_FUNC_DYN"
+    jEndpoints['/init/dyn']['PUT']['EndPoint']  := {"init", "dyn"}
+
+    // Rota Dinâmica 02: /class/:param1
+    jEndpoints['/class/*'] := JsonObject():new()
+
+    // Endpoint GET - Implementação em: \src\dynamic endpoints\dynamic_rest_services.tlpp
+    jEndpoints['/class/*']['GET'] := JsonObject():new()
+    jEndpoints['/class/*']['GET']['ClassName'] := "class_dyn"
+    jEndpoints['/class/*']['GET']['Function']  := "method_dyn"
+    jEndpoints['/class/*']['GET']['EndPoint']  := {"class", ":param1"}
+
+return .T.

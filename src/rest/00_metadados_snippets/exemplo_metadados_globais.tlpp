@@ -1,0 +1,96 @@
+@Get(;
+endpoint="/rest/exemplo/respostas",;
+title="Consulta Simples",;
+description="Doc com possiveis respostas",;
+responses='[{"statusCode":200,"description":"OK"},{"statusCode":400,"description":"Requisicao Invalida"}]';
+)
+Metadados de Parâmetros (O Array "params[]")
+Quando você abre a propriedade params='...'
+na sua anotação, você deve passar um Array de objetos JSON. Cada objeto dentro desse Array representa um campo que a sua API espera receber.
+
+Abaixo listamos as propriedades que você pode configurar para cada campo:
+
+
+
+
+name
+
+O nome do parâmetro.
+
+"name": "id"
+
+description
+
+Uma breve explicação sobre o que é este parâmetro.
+
+"description": "ID interno do cliente"
+
+in
+
+Diz ao servidor de onde este parâmetro vai chegar. Valores aceites: query (na URL), path (na rota) ou header (no cabeçalho).
+
+"in": "query"
+
+type
+
+O tipo de dado esperado (ex: character, integer, logical, date, etc).
+
+"type": "integer"
+
+required
+
+Define de forma booleana se o parâmetro é obrigatório.
+
+"required": true
+
+default
+
+Se o cliente não enviar nada, o servidor assume este valor padrão.
+
+"default": 1
+
+minimum
+
+Valor numérico mínimo permitido.
+
+"minimum": 18
+
+maximum
+
+Valor numérico máximo permitido.
+
+"maximum": 65
+
+values
+
+(Enums) Cria uma lista fechada de valores que a API aceita. Se o cliente enviar algo fora desta lista, é considerado inválido.
+
+{{"values":
+{"value":"json", "description":"Retorno em JSON"}}}
+
+
+Metadados de Respostas (O Array "responses[]")
+
+O metadado responses recebe um array de objetos JSON, onde cada objeto representa um cenário possível de retorno da sua API. Cada objeto possui duas propriedades básicas:
+
+
+
+
+statusCode
+
+Integer
+
+O Código de Estado HTTP (ex: 200, 201, 400, 404, 500) que o servidor devolverá naquele cenário.
+
+description
+
+String
+
+A descrição humana do significado daquele status (ex: "Sucesso", "Recurso não encontrado", "Requisição inválida").
+
+LEMBRETE ARQUITETURAL
+Assim como nos parâmetros, este metadado é estritamente descritivo. Definir um statusCode: 400 na anotação não fará o servidor devolver um erro 400 automaticamente. O desenvolvedor deve programar os desvios utilizando oRest:setStatusCode(400) no corpo da função.
+
+Exemplo (Juntando Tudo)
+
+Abaixo, apresentamos a construção de uma API "Padrão Ouro". Note como a utilização do caractere ; no final de cada linha da anotação permite quebrar o código de forma elegante, deixando o JSON imenso dos parâmetros muito fácil de ser lido e mantido.

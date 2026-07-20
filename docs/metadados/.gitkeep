@@ -1,0 +1,3 @@
+# Páginas sincronizadas de totvs/tlpp-sample-rest-documentation (npm run sync:deps)
+
+Execute `npm run sync:deps` na raiz do hub para popular esta pasta.

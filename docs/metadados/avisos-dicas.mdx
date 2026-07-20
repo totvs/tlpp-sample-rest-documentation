@@ -1,0 +1,36 @@
+---
+title: Avisos e dicas
+description: Cuidados ao documentar com REST-DOC — seção Metadados.
+sidebar_class_name: sidebar-avisos-dicas
+displayed_sidebar: restSidebar
+---
+
+# Avisos e dicas — Metadados
+
+## Antes de gerar OpenAPI
+
+1. Código REST compilado no RPO do `Environment` do serviço
+2. `#include "tlpp-doc.th"` onde houver `TLPP COMPONENT` ou funções DOC
+3. Metadados coerentes com rotas reais — o YAML só documenta o que o AppServer expõe
+
+## `tlpp.doc.generate` — parâmetro `swagger`
+
+O 1º parâmetro ainda deve ser a string literal `'swagger'` para gerar YAML OpenAPI 3.x. Não é o formato antigo Swagger 2 — é o nome exigido pelo motor.
+
+## `descriptionN` sem buracos
+
+Se usar `description1`, `description2`, `description3`… **não pule números**. Um gap interrompe a leitura silenciosamente.
+
+## `statusCode` na documentação vs HTTP real
+
+`statusCode` em `responses` na annotation ou no JSON DOC é **descritivo** para o OpenAPI. O status HTTP enviado ao cliente depende de `oRest:setStatusResponse()` — ver [Avisos e dicas do oREST](/docs/tlpp/rest/objeto-orest/avisos-dicas).
+
+## JSON inválido na função DOC
+
+Prefira `JsonObject():New()` em funções `_DOC`. Montar JSON com concatenação de strings é frágil (vírgulas, aspas).
+
+## Rotas dinâmicas
+
+Sem `@Get`/`@Post` na rota, use `tlpp.doc.List()` — a infra REST costuma vir de [Sem annotation](/docs/tlpp/rest/configuracoes/sem-annotation).
+
+**Próximo passo:** [Doc Generate — visão geral](/docs/tlpp/rest/doc-generate) — exportar o YAML com `tlpp.doc.generate()`.

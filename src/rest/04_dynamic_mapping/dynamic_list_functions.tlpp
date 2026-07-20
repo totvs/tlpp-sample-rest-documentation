@@ -1,0 +1,44 @@
+#include "tlpp-core.th"
+
+/* ==========================================================================
+   AMARRAÇÃO DE DOCUMENTAÇÃO DINÂMICA
+   ==========================================================================
+   Esta função é informada como parâmetro opcional na chamada da função 
+   tlpp.doc.generate() (vista no arquivo /src/main.tlpp).
+   
+   Sua responsabilidade é retornar um objeto do tipo tlpp.doc.List() para 
+   indicar ao motor do OpenAPI qual função _DOC está associada a qual 
+   rota/método dinâmico levantado pelo servidor.
+   ========================================================================== */
+function U_ListDOCFunctions() as object
+
+    local jMod     as json
+    local oDoc     as object
+    local lVersion := .F. as logical
+
+    // Proteção de código para evitar instanciar uma classe que não exista no tlpp.rpo
+    jMod := jsonObject():New()
+    if ( tlpp.module("DOC", @jMod) )
+        if ( jMod['linked'] )
+            lVersion := ( jMod["version"] == "doc:16b77c0d32" )
+        endif
+    endif
+
+    if ( lVersion )
+        oDoc := tlpp.doc.List():New()
+        
+        // ----------------------------------------------------------------------
+        // Sintaxe de Inclusão:
+        // oDoc:add( <endpoint>, <method>, <DOC_funcion_name> )
+        // ----------------------------------------------------------------------
+        // <endpoint>: Rota REST (string). Ex: "/init/dyn"
+        // <method>: Verbo HTTP (string). Ex: "GET", "POST", "PUT", "DELETE"
+        // <DOC_funcion_name>: Nome da função TLPP que contém o JSON (string).
+        // ----------------------------------------------------------------------
+
+        oDoc:add( "/init/dyn", "GET", "U_FUNC_DYN_GET_DOC" )
+        oDoc:add( "/init/dyn", "PUT", "U_FUNC_DYN_PUT_DOC" )
+        oDoc:add( "/class/:param1", "GET", "U_CLASS_DYN_GET_DOC" )
+    endif
+
+return oDoc
