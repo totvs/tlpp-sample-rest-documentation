@@ -2,44 +2,54 @@
 #include 'tlpp-core.th'
 
 /* ==========================================================================
-   GERADOR DE DOCUMENTAÇÃO (Trigger Endpoint)
+   GERADOR DE DOCUMENTA??O (Trigger Endpoint)
    ==========================================================================
-   Este endpoint aciona programaticamente o motor do tlppCore para gerar 
-   o arquivo de documentação das APIs.
+   Este endpoint aciona programaticamente o motor do tlppCore para gerar
+   o arquivo de documenta??o das APIs.
 
-   ATENÇÃO: Embora o termo correto da especificação seja "OpenAPI", a função 
-   nativa `tlpp.doc.generate` ainda exige o parâmetro literal 'swagger' por 
-   questões de compatibilidade com o motor.
-   
-   Parâmetros da função tlpp.doc.generate utilizados aqui:
+   ATEN??O: Embora o termo correto da especifica??o seja "OpenAPI", a fun??o
+   nativa `tlpp.doc.generate` ainda exige o par?metro literal 'swagger' por
+   quest?es de compatibilidade com o motor.
+
+   Par?metros da fun??o tlpp.doc.generate utilizados aqui:
    1. Formato (ex: 'swagger')
    2. Nome do arquivo gerado (ex: 'api_doc')
    3. Array de portas do AppServer (ex: {8080})
    4. Array de idiomas/locales (ex: {'en-us', 'pt-br'})
-   5. Função customizada de lista de DOCs (opcional, ex: "U_ListDOCFunctions")
+   5. Fun??o customizada de lista de DOCs (opcional, ex: "U_ListDOCFunctions")
+   6. Fun??o de filtro/allowlist (opcional, ex: "U_ListFilter")
    ========================================================================== */
 
-@Get(endpoint="/rest/sample/doc/generate", description="Gera documentação OpenAPI dos RESTs na porta 8080.")
-function U_rest_sample_doc_generate() as logical
+/* Allowlist: s? estes pares path+m?todo entram no OpenAPI gerado. */
+function U_ListFilter( oFilter ) as object
 
-    local lOk  := .T. as logical
-    local cRet := ''  as character
+  oFilter:add( "/rest/sample/doc/basic/01", "GET" )
+  oFilter:add( "/rest/sample/doc/basic/02", "GET" )
+  oFilter:add( "/rest/sample/doc/basic/03", "GET" )
+  oFilter:add( "/rest/sample/doc/basic/04", "GET" )
 
-    begin sequence
-        // O parâmetro 'swagger' é mantido aqui por exigência do motor tlppCore
-        tlpp.doc.generate('swagger', 'api_doc', {9995}, {'en-us', 'pt-br'}, "U_ListDOCFunctions")
-    recover
-        lOk := .F.
-    end sequence
+return oFilter
 
-    if ( lOk )
-        cRet := '{"success":true, "message":"Geração da documentação OpenAPI solicitada com sucesso."}'
-        oRest:setStatusCode(200)
-    else
-        cRet := '{"success":false, "message":"Falha ao solicitar a geração da documentação."}'
-        oRest:setStatusCode(500)
-    endif
+@Get(endpoint="/rest/sample/doc/generate", description="Gera documentacao OpenAPI")
+function U_rest_sample_doc_generate()
+  local lOk  := .T.
+  local cRet := ''
 
-    oRest:setKeyHeaderResponse('Content-Type', 'application/json')
-    
+  begin sequence
+    // Apenas os parametros basicos + filtro. Varre a porta 8080 (ou a do ini).
+    tlpp.doc.generate('swagger', 'api_doc', {8080}, {'en-us','pt-br'} , "" , "U_ListFilter")
+  recover
+    lOk := .F.
+  end sequence
+
+  if (lOk)
+    cRet := '{"success": true, "message": "Arquivo api_doc gerado na pasta raiz do AppServer!"}'
+    oRest:setStatusCode(200)
+  else
+    cRet := '{"success": false, "message": "Falha ao gerar o OpenAPI."}'
+    oRest:setStatusCode(500)
+  endif
+
+  oRest:setKeyHeaderResponse('Content-Type', 'application/json')
+
 return oRest:setResponse(cRet)
