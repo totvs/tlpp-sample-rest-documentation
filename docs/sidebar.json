@@ -36,7 +36,6 @@
       "items": [
         {"type": "doc", "id": "doc-generate/index", "label": "Visão geral", "key": "doc-generate-intro"},
         "doc-generate/list-dinamico",
-        {"type": "doc", "id": "doc-generate/list-filter", "label": "Filtro de rotas", "key": "doc-generate-filter"},
         "doc-generate/openapi",
         "doc-generate/mapa-arquivos"
       ]

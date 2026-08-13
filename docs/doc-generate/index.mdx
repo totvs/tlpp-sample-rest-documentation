@@ -18,7 +18,6 @@ O **REST-DOC** do tlppCore lê os [metadados](/docs/tlpp/rest/metadados/visao-ge
 |------------|---------------|
 | **Export OpenAPI** | YAML ou JSON a partir dos metadados do RPO |
 | **Rotas dinâmicas** | `tlpp.doc.List()` documenta endpoints sem annotation |
-| **Filtro de rotas** | Allowlist (`U_ListFilter`) para exportar só as APIs desejadas |
 | **Snapshot de referência** | YAML no repo para o [Explorador OpenAPI](/tools/explorador-openapi) |
 
 ## Trilha sugerida
@@ -26,9 +25,8 @@ O **REST-DOC** do tlppCore lê os [metadados](/docs/tlpp/rest/metadados/visao-ge
 | Etapa | O que você aprende | Comece em |
 |-------|-------------------|-----------|
 | **1 — List dinâmico** | Associar DOC a rotas criadas em runtime | [List dinâmico](/docs/tlpp/rest/doc-generate/list-dinamico) |
-| **2 — Filtro de rotas** | Allowlist no 6º parâmetro de `generate` | [Filtro de rotas](/docs/tlpp/rest/doc-generate/list-filter) |
-| **3 — OpenAPI** | Formato e conteúdo do YAML gerado | [OpenAPI](/docs/tlpp/rest/doc-generate/openapi) |
-| **4 — Mapa de arquivos** | Onde cada exemplo do repo se encaixa | [Mapa de arquivos](/docs/tlpp/rest/doc-generate/mapa-arquivos) |
+| **2 — OpenAPI** | Formato e conteúdo do YAML gerado | [OpenAPI](/docs/tlpp/rest/doc-generate/openapi) |
+| **3 — Mapa de arquivos** | Onde cada exemplo do repo se encaixa | [Mapa de arquivos](/docs/tlpp/rest/doc-generate/mapa-arquivos) |
 
 ## `tlpp.doc.generate()`
 
@@ -49,7 +47,7 @@ O motor ainda exige a string literal `'swagger'` no 1º parâmetro, mesmo gerand
 ### Parâmetros
 
 ```tlpp
-tlpp.doc.generate( <cFormato>, <cNomeArquivo>, [aPorts], [aLocales], [cListFunc], [cFilterFunc] )
+tlpp.doc.generate( <cFormato>, <cNomeArquivo>, [aPorts], [aLocales], [cListFunc] )
 ```
 
 | Parâmetro | Função |
@@ -59,13 +57,11 @@ tlpp.doc.generate( <cFormato>, <cNomeArquivo>, [aPorts], [aLocales], [cListFunc]
 | `aPorts` | Portas a documentar — ex.: `{8080}`; omitir = todas |
 | `aLocales` | Idiomas para textos i18n — ex.: `{'en-us','pt-br'}` |
 | `cListFunc` | Função `tlpp.doc.List()` para rotas dinâmicas — ex.: `"U_ListDOCFunctions"` |
-| `cFilterFunc` | Allowlist de path+método — ex.: `"U_ListFilter"` — ver [Filtro de rotas](/docs/tlpp/rest/doc-generate/list-filter) |
 
 ### Orquestração típica
 
 1. Inicializar rotas dinâmicas (se houver) — ver [List dinâmico](/docs/tlpp/rest/doc-generate/list-dinamico)
-2. (Opcional) Definir allowlist — ver [Filtro de rotas](/docs/tlpp/rest/doc-generate/list-filter)
-3. Chamar `tlpp.doc.generate(...)` para exportar
+2. Chamar `tlpp.doc.generate(...)` para exportar
 
 O snapshot commitado neste repo está no [Explorador OpenAPI](/tools/explorador-openapi) e na [referência YAML](/docs/tlpp/rest/doc-generate/openapi).
 
