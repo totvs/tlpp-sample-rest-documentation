@@ -1,0 +1,38 @@
+#include 'tlpp-rest.th'
+#include 'tlpp-i18n.th'
+
+// @annotation FWExternal
+//   module as char 
+// @end
+
+/*
+==========================================================================
+EXEMPLO COMPLETO (com objeto): Endpoint REST
+==========================================================================
+Cópia
+
+NOTA: Utilizamos o mesmo nome de parâmetro ("param1") em todos os meios de 
+transporte HTTP para deixar claro que são dados distintos sendo tratados.
+==========================================================================
+*/
+
+// @FWExternal("SigaCOM")
+@Put(endpoint="/rest/sample/doc/complete_with_object/:param1", description="[U_rest_sample_complete_with_object_DOC]")
+function U_rest_sample_complete_with_object() as logical
+
+  local cRet := '' as character
+
+  /* --------------------------------------------------------------------------------------------------------------------
+    Essa implementação é idêntica ao exemplo anterior, por essa razão, não teremos a implementação detalhada.
+
+    A diferença é que o arquivo de documentação gerado será o "U_rest_sample_complete_with_object_DOC.tlpp" que contém a 
+    documentação do endpoint com o uso de objeto recebido por parâmetro para descrever os parâmetros de entrada e saída. 
+
+    Isso permite uma documentação mais simples de implementar, pois não é preciso conhecer a estrutura JSON esperado pelo
+    REST_DOC, facilitando o desenvolvimento e manutenção da documentação, especialmente quando se trata de APIs mais 
+    complexas.
+  -------------------------------------------------------------------------------------------------------------------- */
+
+  cRet := "Api sem funcionalidade real, apenas para demonstração de documentação. "
+
+return oRest:setResponse(cRet)

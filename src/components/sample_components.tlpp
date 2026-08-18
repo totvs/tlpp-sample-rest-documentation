@@ -4,18 +4,28 @@
 -------------------------------------------------------------------
 SINTAXE: 
 
-TLPP COMPONENT <nameComponent> <propertyComponent> <type> <example>
+DOC COMPONENT <nameComponent> <propertyComponent> <type> <example>
 -------------------------------------------------------------------
 */
 
 // Request Param para:
 // \src\rest\complete\sample_complete.tlpp
-TLPP COMPONENT sampleBodyIn param1         character "tlpp"
+DOC COMPONENT sampleBodyIn param1         character "tlpp"
 
 // Response para:
 // \src\rest\complete\sample_complete.tlpp
-TLPP COMPONENT sampleBodyOutOk sucess      logical   "true"
-TLPP COMPONENT sampleBodyOutOk error       character ""
+DOC COMPONENT sampleBodyOutOk sucess      logical   "true"
+DOC COMPONENT sampleBodyOutOk error       character ""
 
-TLPP COMPONENT sampleBodyOutError sucess   logical   "false"
-TLPP COMPONENT sampleBodyOutError error    character "Invalid Path parameter"
+DOC COMPONENT sampleBodyOutError sucess   logical   "false"
+DOC COMPONENT sampleBodyOutError error    character "Invalid Path parameter"
+
+/*
+Atenção:
+
+Caso você ainda não esteja com a versão mais recente do tlppCore, utilize a sintaxe antiga, que ainda funciona, mas será descontinuada em breve:
+TLPP COMPONENT <nameComponent> <propertyComponent> <type> <example>
+
+Lembre-se de que após atualizar o tlppCore, é preciso também atualizar os includes do seu projeto realizando o seguinte procedimento:
+Ambiente de compilação do TLPP - https://tdn.totvs.com/pages/viewpage.action?pageId=619741238
+*/

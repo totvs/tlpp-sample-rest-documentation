@@ -1,0 +1,100 @@
+#include 'tlpp-rest.th'
+#include 'tlpp-doc.th' // ESSENCIAL UTILIZAR ESSE INCLUDE
+
+
+// ------------------------------------------------------------------------------------------------------------------------------------------
+// NOTA
+//
+// Em description, quando passamos dentro de colchetes, estamos indicando ao REST_DOC o nome da função que contém a documentação do endpoint. 
+// Essa função deve ser criada obrigatoriamente, caso contrário, o REST_DOC não conseguirá gerar a documentação do endpoint.
+// ------------------------------------------------------------------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------------------------------------------
+// ATENÇÃO: Nós sugerimos fortemente que esse seja o modelo adotado para a criação de documentação de endpoints REST, 
+// pois é o mais simples e direto, além de permitir a utilização de objetos nativos do TLPP para gerar a documentação, 
+// sem a necessidade de conhecer a estrutura JSON esperada pelo REST_DOC.
+// -------------------------------------------------------------------------------------------------------------------
+
+@Get(endpoint="/rest/sample/doc/basic/restdoc_object_return", description="[U_rest_sample_basic_with_object_DOC]")
+function U_rest_sample__basic_with_object() as logical
+
+  local lReturn := .T. as logical
+  local jParams := oRest:getQueryRequest() as json
+
+  if ( jParams:hasProperty('param1') )
+    conout( "Parâmetro recebido: " + jParams['param1'] )
+    lReturn := oRest:setJsonResponse(200, 'OK')
+  else
+    conout( "Erro: Parâmetro obrigatório não recebido." )
+    lReturn := oRest:setJsonResponse(400, 'Parâmetro inválido')
+  endif
+
+return lReturn
+
+/* 
+==========================================================================
+FUNÇÃO DE DOCUMENTAÇÃO (Refatorada usando objeto oDoc, recebido por parametro)
+==========================================================================
+*/
+function U_rest_sample_basic_with_object_DOC( oDoc )
+
+  local nIndex := 0 as numeric
+
+  // ---------------------------------------------------------------
+  // ATENÇÃO
+  // Garante que recebeu o objeto correto para gerar a documentação
+  // Recurso liberado a partir da versão 01.07.00 do tlppCore
+  // ---------------------------------------------------------------
+  if ( !valtype(oDoc) == "O" .or. !MethIsMemberOf(oDoc,"isa") .or. !oDoc:isa("RestDoc") )
+    return ""
+  endif
+
+  // -----------------------------------------------
+  // Iniciando a documentação para o endpoint 
+  // /rest/sample/doc/basic/04/restdoc_object_return
+  // -----------------------------------------------
+
+  oDoc:setTitle( "DOC simples 04 - modelo com objeto" )
+  oDoc:addDescription( "Exemplo de documentação de REST utilizando função recebendo um objeto nativo para gerar a documentação." )
+
+  // Documentando os Parâmetros de entrada
+  // -------------------------------------
+    nIndex := oDoc:createParam()
+    oDoc:setParam( nIndex, "param1", "desc_param_1", _query_, _char_, .T. )
+    //             index , name    , description   , in     , type  , required
+
+    // Caso prefira algo mais detalhado, poderia ser implementado assim:
+    /*
+    nIndex := oDoc:createParam()
+      oDoc:setParamName(nIndex, "param1")
+      oDoc:setParamDescription(nIndex, "desc_param_1")
+      oDoc:setParamIn(nIndex, _query_)
+      oDoc:setParamType(nIndex, _char_)
+      oDoc:setParamRequired(nIndex, .T.)
+    */
+
+    // -----------------------------------------------------------------------------------
+    // Valores aceitos para IN, forma por onde os parâmetros são enviados ao serviço REST:
+    // _query_  // Query String
+    // _path_   // Path Param
+    // _header_ // Header HTTP
+    // -----------------------------------------------------------------------------------
+    // Tipos aceitos para os parametros de entrada ( _query_ , _path_ , _header_ )
+    // _char_       // character'
+    // _int_        // integer'
+    // _numeric_    // number'
+    // _logical_    // boolean'
+    // -----------------------------------------------------------------------------------
+
+  // Documentando as respostas do serviço
+  // ------------------------------------
+
+    // Modo 1: simplificado
+    oDoc:createResponse(200, "OK") // Aqui estamos ignorando o retorno de nIndex
+
+    // Modo 2: detalhado
+    nIndex := oDoc:createResponse() // Já aqui, utilizaremos nIndex para informar dados da resposta 400
+    oDoc:setResponseStatusCode(nIndex, 400)
+    oDoc:setResponseDescription(nIndex, "Parâmetro inválido")
+
+return

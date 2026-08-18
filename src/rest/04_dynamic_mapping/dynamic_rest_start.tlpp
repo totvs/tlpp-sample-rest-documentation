@@ -49,7 +49,7 @@ function U_dynamic_rest_start()
 
     // 4. Thread Pool
     jo['INIT_THREAD_POOL_01'] := JsonObject():new()
-    jo['INIT_THREAD_POOL_01']['Environment']     := "TLPPCORE"
+    jo['INIT_THREAD_POOL_01']['Environment']     := "ENV"
     jo['INIT_THREAD_POOL_01']['MinThreads']      := 1
     jo['INIT_THREAD_POOL_01']['MaxThreads']      := 4
     jo['INIT_THREAD_POOL_01']['MinFreeThreads']  := 1

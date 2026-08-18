@@ -1,37 +1,53 @@
 #include "tlpp-i18n.th"
 
 function U_rest_sample_complete_DOC() as character
-    local jDoc := JsonObject():New()
-    local jParamQuery, jPathParam, jHeaderParam, jLogParam, jRetParam
-    local jValLog0, jValLog1, jValRetJson, jValRetXml
+
+    local jDoc as json
+    local jParamQuery, jPathParam, jHeaderParam, jLogParam, jReturnParam
+    local jValLog0, jValLog1
+    local jValReturn0, jValReturn1
     local jReqBody, jBodyTypeJson
-    local jResp200, jRes200TypeJson, jRes200TypeXml
-    local jResp400, jRes400TypeJson, jRes400TypeXml
+    local jResp200, jRes200TypeJson
+    local jResp400, jRes400TypeJson
+
+    jDoc := JsonObject():New()
 
     // 1. Textos e Multiline (Puxando do dicionário i18n via tag)
-    jDoc['title'] := "translate:sample_complete_DOC:1:Exemplo completo"
-    jDoc['description1'] := "translate:sample_complete_DOC:2:Exemplo completo com todos os recursos..."
-    jDoc['description2'] := "translate:sample_complete_DOC:3:1 - Descrição multi-linha"
-    jDoc['description3'] := "translate:sample_complete_DOC:4:2 - Parâmetros de entrada (Obrigatórios e Opcionais)"
-    
+    jDoc['title'] := tlpp.i18n.Localize(1,"Exemplo completo")
+    jDoc['description1'] := tlpp.i18n.Localize(2,"Exemplo completo com todos os recursos disponíveis para uso.")
+    jDoc['description2'] := tlpp.i18n.Localize(3,"1 - Descrição multi-linha")
+    jDoc['description3'] := tlpp.i18n.Localize(4,"2 - Parâmetros de entrada (Obrigatórios e Opcionais)")
+    jDoc['description4'] := tlpp.i18n.Localize(5,"    - Cadeia de consulta (QueryString)")
+    jDoc['description5'] := tlpp.i18n.Localize(6,"    - Parâmetro no endpoint (Path Param)")
+    jDoc['description6'] := tlpp.i18n.Localize(7,"    - Parâmetro no Cabeçalho (Header Param)")
+    jDoc['description7'] := tlpp.i18n.Localize(8,"    - Corpo da mensagem (Body)")
+    jDoc['description8'] := tlpp.i18n.Localize(9,"    - eNum com valor máximo e mínimo e suas descrições de valores")
+    jDoc['description9'] := tlpp.i18n.Localize(10,"3 - Retorno da API")
+    jDoc['description10'] := tlpp.i18n.Localize(11,"    - Códigos e descrição")
+    jDoc['description11'] := tlpp.i18n.Localize(12,"    - JSON de retorno")
+    jDoc['description12'] := tlpp.i18n.Localize(13,"4 - Criação de componentes")
+    jDoc['description13'] := tlpp.i18n.Localize(14,"5 - Localização (TLPP i18n)")
+    jDoc['description14'] := tlpp.i18n.Localize(15,"    - Documentação REST")
+    jDoc['description15'] := tlpp.i18n.Localize(16,"    - Strings no fonte original REST")
+
     // 2. Parâmetros Base
     jParamQuery := JsonObject():New()
     jParamQuery['name'] := "param1"
-    jParamQuery['description'] := "translate:sample_complete_DOC:17:Parâmetro query"
+    jParamQuery['description'] := tlpp.i18n.Localize(17,"Parâmetro query")
     jParamQuery['in'] := "query"
     jParamQuery['required'] := .T.
     jParamQuery['type'] := "character"
 
     jPathParam := JsonObject():New()
     jPathParam['name'] := "param1"
-    jPathParam['description'] := "translate:sample_complete_DOC:18:Parâmetro path"
+    jPathParam['description'] := tlpp.i18n.Localize(18,"Parâmetro path")
     jPathParam['in'] := "path"
     jPathParam['required'] := .T.
     jPathParam['type'] := "character"
 
     jHeaderParam := JsonObject():New()
     jHeaderParam['name'] := "param1"
-    jHeaderParam['description'] := "translate:sample_complete_DOC:19:Parâmetro header"
+    jHeaderParam['description'] := tlpp.i18n.Localize(19,"Parâmetro header")
     jHeaderParam['in'] := "header"
     jHeaderParam['required'] := .T.
     jHeaderParam['type'] := "character"
@@ -46,18 +62,37 @@ function U_rest_sample_complete_DOC() as character
     
     jValLog0 := JsonObject():New()
     jValLog0['value'] := 0
-    jValLog0['description'] := "translate:sample_complete_DOC:21:Desliga Log"
+    jValLog0['description'] := tlpp.i18n.Localize(21,"Desliga Log")
     jValLog1 := JsonObject():New()
     jValLog1['value'] := 1
-    jValLog1['description'] := "translate:sample_complete_DOC:22:Liga Log"
+    jValLog1['description'] := tlpp.i18n.Localize(22,"Liga Log")
     jLogParam['values'] := { jValLog0, jValLog1 }
 
-    jDoc['params'] := { jParamQuery, jPathParam, jHeaderParam, jLogParam }
+    // 4. Parâmetro de formato do retorno (return)
+    jReturnParam := JsonObject():New()
+    jReturnParam['name'] := "return"
+    jReturnParam['description'] := tlpp.i18n.Localize(23,"Indica qual formato deseja de retorno")
+    jReturnParam['in'] := "query"
+    jReturnParam['required'] := .F.
+    jReturnParam['type'] := "character"
+    jReturnParam['default'] := 'json'
 
-    // 4. Request Body (Referenciando componente global)
+        jValReturn0 := JsonObject():New()
+        jValReturn0['value'] := 'json'
+        jValReturn0['description'] := 'application/json'
+
+        jValReturn1 := JsonObject():New()
+        jValReturn1['value'] := 'xml'
+        jValReturn1['description'] := "application/xml"
+
+    jReturnParam['values'] := { jValReturn0, jValReturn1 }
+
+    jDoc['params'] := { jParamQuery, jPathParam, jHeaderParam, jLogParam, jReturnParam }
+
+    // 5. Request Body (Referenciando componente global)
     jReqBody := JsonObject():New()
-    jReqBody['description'] := "translate:sample_complete_DOC:24:Body param"
-    
+    jReqBody['description'] := tlpp.i18n.Localize(24,"Parâmetro param1 recebido pelo corpo da mensagem http (body)")
+
     jBodyTypeJson := JsonObject():New()
     jBodyTypeJson['json'] := JsonObject():New()
     jBodyTypeJson['json']['type'] := "component"
@@ -66,10 +101,10 @@ function U_rest_sample_complete_DOC() as character
     jReqBody['Content-Type'] := { jBodyTypeJson }
     jDoc['requestBody'] := jReqBody
 
-    // 5. Responses (Referenciando componentes globais múltiplos)
+    // 6. Responses (Referenciando componentes globais múltiplos)
     jResp200 := JsonObject():New()
     jResp200['statusCode'] := 200
-    jResp200['description'] := "translate:sample_complete_DOC:25:Sucesso"
+    jResp200['description'] := tlpp.i18n.Localize(25,"Sucesso")
     
     jRes200TypeJson := JsonObject():New()
     jRes200TypeJson['application/json'] := JsonObject():New()
@@ -80,8 +115,8 @@ function U_rest_sample_complete_DOC() as character
 
     jResp400 := JsonObject():New()
     jResp400['statusCode'] := 400
-    jResp400['description'] := "translate:sample_complete_DOC:26:Requisição Inválida"
-    
+    jResp400['description'] := tlpp.i18n.Localize(26,"Requisição Inválida")
+
     jRes400TypeJson := JsonObject():New()
     jRes400TypeJson['json'] := JsonObject():New()
     jRes400TypeJson['json']['type'] := "component"

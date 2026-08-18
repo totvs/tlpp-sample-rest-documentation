@@ -1,0 +1,112 @@
+#include "tlpp-i18n.th"
+#include 'tlpp-doc.th'
+
+/* ----------------------------------------------------------------- */
+function U_rest_sample_complete_with_object_DOC( oDoc ) as character
+
+  local nIndex as integer
+
+  // ---------------------------------------------------------------
+  // ATENÇÃO
+  // Garante que recebeu o objeto correto para gerar a documentação
+  // Recurso liberado a partir da versão 01.07.00 do tlppCore
+  // ---------------------------------------------------------------
+  if ( !valtype(oDoc) == "O" .or. !MethIsMemberOf(oDoc,"isa") .or. !oDoc:isa("RestDoc") )
+    return ""
+  endif
+
+
+  // -----------------------------------------------------------------
+  // NOTA 1
+  // ------
+  //
+  // A documentação desse exemplo é a mesma escrita em: 
+  // src/rest/03_dedicated_function_doc/advanced/complete_api_DOC.tlpp
+  // -----------------------------------------------------------------
+
+
+  // Toda a documentação aqui escrita, utiliza tlpp.i18n para traduções
+  oDoc:setTitle( tlpp.i18n.Localize(1,"Exemplo completo") )
+  // Porém, seu uso não é obrigatório, portanto a instrução acima ficaria assim:
+  // oDoc:setTitle( "Exemplo completo" )
+
+  oDoc:addDescription( tlpp.i18n.Localize(2,"Exemplo completo com todos os recursos disponíveis para uso.") )
+  oDoc:addDescription( tlpp.i18n.Localize(3,"1 - Descrição multi-linha") )
+  oDoc:addDescription( tlpp.i18n.Localize(4,"2 - Parâmetros de entrada (Obrigatórios e Opcionais)") )
+  oDoc:addDescription( tlpp.i18n.Localize(5,"    - Cadeia de consulta (QueryString)") )
+  oDoc:addDescription( tlpp.i18n.Localize(6,"    - Parâmetro no endpoint (Path Param)") )
+  oDoc:addDescription( tlpp.i18n.Localize(7,"    - Parâmetro no Cabeçalho (Header Param)") )
+  oDoc:addDescription( tlpp.i18n.Localize(8,"    - Corpo da mensagem (Body)") )
+  oDoc:addDescription( tlpp.i18n.Localize(9,"    - eNum com valor máximo e mínimo e suas descrições de valores") )
+  oDoc:addDescription( tlpp.i18n.Localize(10,"3 - Retorno da API") )
+  oDoc:addDescription( tlpp.i18n.Localize(11,"    - Códigos e descrição") )
+  oDoc:addDescription( tlpp.i18n.Localize(12,"    - JSON de retorno") )
+  oDoc:addDescription( tlpp.i18n.Localize(13,"4 - Criação de componentes") )
+  oDoc:addDescription( tlpp.i18n.Localize(14,"5 - Localização (TLPP i18n)") )
+  oDoc:addDescription( tlpp.i18n.Localize(15,"    - Documentação REST") )
+  oDoc:addDescription( tlpp.i18n.Localize(16,"    - Strings no fonte original REST") )
+
+  // 2. Parâmetros Base
+  // Pode-se passar os valores um a um, como no exemplo abaixo:
+  nIndex := oDoc:createParam()
+    oDoc:setParamName(nIndex, "param1")
+    oDoc:setParamDescription(nIndex, tlpp.i18n.Localize(17,"Parâmetro param1 recebido pela cadeia de consulta (QueryString)"))
+    oDoc:setParamIn(nIndex, _query_)
+    oDoc:setParamType(nIndex, _char_)
+    oDoc:setParamRequired(nIndex, .T.)
+
+  // Pode-se também, utilizar somente 1 método e passar todos os valores de uma vez, como no exemplo abaixo:
+  nIndex := oDoc:createParam()
+    oDoc:setParam( nIndex, "param1", tlpp.i18n.Localize(18,"Parâmetro param1 recebido pelo caminho do endpoint (Path Param)"), _path_, _char_, .T. )
+
+  nIndex := oDoc:createParam()
+    oDoc:setParamName(nIndex, "param1")
+    oDoc:setParamDescription(nIndex, tlpp.i18n.Localize(19,"Parâmetro param1 recebido pelo cabeçalho do http (Header Param)"))
+    oDoc:setParamIn(nIndex, _header_)
+    oDoc:setParamType(nIndex, _char_)
+    oDoc:setParamRequired(nIndex, .T.)
+
+  // 3. Parâmetro eNum (Log)
+  nIndex := oDoc:createParam()
+    oDoc:setParamName(nIndex, "log")
+    oDoc:setParamDescription(nIndex, tlpp.i18n.Localize(20,"Parâmetro OPCIONAL recebido pela cadeia de consulta (QueryString)"))
+    oDoc:setParamIn(nIndex, _query_)
+    oDoc:setParamType(nIndex, _int_)
+    oDoc:setParamRequired(nIndex, .F.)
+    oDoc:setParamValueDefault(nIndex, 0)
+    oDoc:setParamValueMinimum(nIndex, 0)
+    oDoc:setParamValueMaximum(nIndex, 1)
+    oDoc:addParamValue(nIndex, 0, tlpp.i18n.Localize(21,"Desliga Log"))
+    oDoc:addParamValue(nIndex, 1, tlpp.i18n.Localize(22,"Liga Log"))
+
+  // 4. Parâmetro de formato do retorno (return)
+  nIndex := oDoc:createParam()
+    oDoc:setParamName(nIndex, "return")
+    oDoc:setParamDescription(nIndex, tlpp.i18n.Localize(23,"Indica qual formato deseja de retorno"))
+    oDoc:setParamIn(nIndex, _query_)
+    oDoc:setParamType(nIndex, _char_)
+    oDoc:setParamRequired(nIndex, .F.)
+    oDoc:setParamValueDefault(nIndex, 'json')
+    oDoc:addParamValue(nIndex, 'json', 'application/json')
+    oDoc:addParamValue(nIndex, 'xml' , "application/xml" )
+
+  // 5. Request Body (Referenciando componente global)
+  oDoc:setParamBodyDescription( tlpp.i18n.Localize(24,"Parâmetro param1 recebido pelo corpo da mensagem http (body)") )
+  oDoc:setParamBodyRequired(.T.)
+  oDoc:setParamBodyComponent( "sampleBodyIn" , _json_ ) 
+  // Componente global de entrada (request body) para JSON
+  // sampleBodyIn foi definido em: src/components/sample_components.tlpp
+
+
+  // 6. Responses (Referenciando componentes globais múltiplos)
+  nIndex := oDoc:createResponse()
+    oDoc:setResponseStatusCode(nIndex, 200)
+    oDoc:setResponseDescription(nIndex, tlpp.i18n.Localize(25,"Sucesso"))
+    oDoc:setResponseComponent(nIndex, "sampleBodyOutOk", _json_, _xml_ )
+
+  // NOTA: Também poderíamos ter feito assim:
+  nIndex := oDoc:createResponse(400, tlpp.i18n.Localize(26,"Requisição Inválida"))
+    oDoc:setResponseComponent(nIndex, "sampleBodyOutError", _json_, _xml_ )
+
+return 
+
