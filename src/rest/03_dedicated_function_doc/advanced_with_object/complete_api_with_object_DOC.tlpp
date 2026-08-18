@@ -1,28 +1,36 @@
 #include "tlpp-i18n.th"
-#include 'tlpp-doc.th'
+#include 'tlpp-doc.th' // ESSENCIAL UTILIZAR ESSE INCLUDE
 
 /* ----------------------------------------------------------------- */
 function U_rest_sample_complete_with_object_DOC( oDoc ) as character
 
   local nIndex as integer
 
-  // ---------------------------------------------------------------
-  // ATENÇÃO
+  // ---------------------------------------------------------------------------
+  // ATENÇÂO 1
+  // 
+  // O objeto oDoc recebido como primeiro parâmetro é inicializado pelo REST_DOC
+  // e por essa função apenas iremos utilizar seus métodos para inserir os dados
+  // técnicos da API.
+  // ---------------------------------------------------------------------------
+
+  // ---------------------------------------------------------------------------
+  // ATENÇÃO 2
   // Garante que recebeu o objeto correto para gerar a documentação
   // Recurso liberado a partir da versão 01.07.00 do tlppCore
-  // ---------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   if ( !valtype(oDoc) == "O" .or. !MethIsMemberOf(oDoc,"isa") .or. !oDoc:isa("RestDoc") )
     return ""
   endif
 
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // NOTA 1
   // ------
   //
   // A documentação desse exemplo é a mesma escrita em: 
   // src/rest/03_dedicated_function_doc/advanced/complete_api_DOC.tlpp
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
 
   // Toda a documentação aqui escrita, utiliza tlpp.i18n para traduções
@@ -30,6 +38,8 @@ function U_rest_sample_complete_with_object_DOC( oDoc ) as character
   // Porém, seu uso não é obrigatório, portanto a instrução acima ficaria assim:
   // oDoc:setTitle( "Exemplo completo" )
 
+  // Pode-se gerar uma descrição da API em multi-linhas
+  // --------------------------------------------------
   oDoc:addDescription( tlpp.i18n.Localize(2,"Exemplo completo com todos os recursos disponíveis para uso.") )
   oDoc:addDescription( tlpp.i18n.Localize(3,"1 - Descrição multi-linha") )
   oDoc:addDescription( tlpp.i18n.Localize(4,"2 - Parâmetros de entrada (Obrigatórios e Opcionais)") )
@@ -46,7 +56,22 @@ function U_rest_sample_complete_with_object_DOC( oDoc ) as character
   oDoc:addDescription( tlpp.i18n.Localize(15,"    - Documentação REST") )
   oDoc:addDescription( tlpp.i18n.Localize(16,"    - Strings no fonte original REST") )
 
-  // 2. Parâmetros Base
+  // Parâmetros de Entrada
+  // ---------------------
+
+  // -----------------------------------------------------------------------------------
+  // Valores aceitos para IN, forma por onde os parâmetros são enviados ao serviço REST:
+  // _query_  // Query String
+  // _path_   // Path Param
+  // _header_ // Header HTTP
+  // -----------------------------------------------------------------------------------
+  // Tipos aceitos para os parametros de entrada ( _query_ , _path_ , _header_ )
+  // _char_       // character'
+  // _int_        // integer'
+  // _numeric_    // number'
+  // _logical_    // boolean'
+  // -----------------------------------------------------------------------------------
+
   // Pode-se passar os valores um a um, como no exemplo abaixo:
   nIndex := oDoc:createParam()
     oDoc:setParamName(nIndex, "param1")
@@ -66,7 +91,7 @@ function U_rest_sample_complete_with_object_DOC( oDoc ) as character
     oDoc:setParamType(nIndex, _char_)
     oDoc:setParamRequired(nIndex, .T.)
 
-  // 3. Parâmetro eNum (Log)
+  // eNum
   nIndex := oDoc:createParam()
     oDoc:setParamName(nIndex, "log")
     oDoc:setParamDescription(nIndex, tlpp.i18n.Localize(20,"Parâmetro OPCIONAL recebido pela cadeia de consulta (QueryString)"))
@@ -79,7 +104,6 @@ function U_rest_sample_complete_with_object_DOC( oDoc ) as character
     oDoc:addParamValue(nIndex, 0, tlpp.i18n.Localize(21,"Desliga Log"))
     oDoc:addParamValue(nIndex, 1, tlpp.i18n.Localize(22,"Liga Log"))
 
-  // 4. Parâmetro de formato do retorno (return)
   nIndex := oDoc:createParam()
     oDoc:setParamName(nIndex, "return")
     oDoc:setParamDescription(nIndex, tlpp.i18n.Localize(23,"Indica qual formato deseja de retorno"))
@@ -90,7 +114,8 @@ function U_rest_sample_complete_with_object_DOC( oDoc ) as character
     oDoc:addParamValue(nIndex, 'json', 'application/json')
     oDoc:addParamValue(nIndex, 'xml' , "application/xml" )
 
-  // 5. Request Body (Referenciando componente global)
+  // Conteúdo recebido pelo Body (Referenciando componente global)
+  // -------------------------------------------------------------
   oDoc:setParamBodyDescription( tlpp.i18n.Localize(24,"Parâmetro param1 recebido pelo corpo da mensagem http (body)") )
   oDoc:setParamBodyRequired(.T.)
   oDoc:setParamBodyComponent( "sampleBodyIn" , _json_ ) 
@@ -98,7 +123,8 @@ function U_rest_sample_complete_with_object_DOC( oDoc ) as character
   // sampleBodyIn foi definido em: src/components/sample_components.tlpp
 
 
-  // 6. Responses (Referenciando componentes globais múltiplos)
+  // Responses (Referenciando componentes globais múltiplos)
+  // -------------------------------------------------------
   nIndex := oDoc:createResponse()
     oDoc:setResponseStatusCode(nIndex, 200)
     oDoc:setResponseDescription(nIndex, tlpp.i18n.Localize(25,"Sucesso"))
@@ -107,6 +133,15 @@ function U_rest_sample_complete_with_object_DOC( oDoc ) as character
   // NOTA: Também poderíamos ter feito assim:
   nIndex := oDoc:createResponse(400, tlpp.i18n.Localize(26,"Requisição Inválida"))
     oDoc:setResponseComponent(nIndex, "sampleBodyOutError", _json_, _xml_ )
+
+  /*
+  ----------------------------------------------------------------------------------------------------------------------
+  NOTA:
+
+  Sugerimos que sempre faça uso dos componentes para descrever em detalhes estruturas mais complexas, para isso veja em:
+  src/components/sample_components.tlpp
+  ----------------------------------------------------------------------------------------------------------------------
+  */
 
 return 
 

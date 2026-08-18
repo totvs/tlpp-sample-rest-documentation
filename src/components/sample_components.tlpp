@@ -29,3 +29,29 @@ TLPP COMPONENT <nameComponent> <propertyComponent> <type> <example>
 Lembre-se de que após atualizar o tlppCore, é preciso também atualizar os includes do seu projeto realizando o seguinte procedimento:
 Ambiente de compilação do TLPP - https://tdn.totvs.com/pages/viewpage.action?pageId=619741238
 */
+
+
+/*
+----------------------------------------------------------------------------------------------
+Exemplo de componente com Lista (array) de Json
+
+Componente: exemploComponente (formato json)
+{
+  "propriedade_1": "valor de exemplo",
+  "lista": [
+    {
+      "propriedade_2": "valor exemplo 2",
+      "propriedade_3": "valor exemplo 3",
+      "propriedade_4": 100
+    }
+  ]
+}
+----------------------------------------------------------------------------------------------
+*/
+
+DOC COMPONENT exemploComponente  propriedade_1  character "valor de exemplo"
+DOC COMPONENT exemploComponente  lista          array     "itemList" // Indico um componente para compor essa lista
+
+DOC COMPONENT itemList           propriedade_2  character "valor exemplo 2"
+DOC COMPONENT itemList           propriedade_3  character "valor exemplo 3"
+DOC COMPONENT itemList           propriedade_4  numeric   "100"

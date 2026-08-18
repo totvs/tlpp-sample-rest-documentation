@@ -16,7 +16,6 @@ transporte HTTP para deixar claro que são dados distintos sendo tratados.
 ==========================================================================
 */
 
-// @FWExternal("SigaCOM")
 @Put(endpoint="/rest/sample/doc/complete_with_object/:param1", description="[U_rest_sample_complete_with_object_DOC]")
 function U_rest_sample_complete_with_object() as logical
 
