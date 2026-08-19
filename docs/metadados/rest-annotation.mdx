@@ -1,7 +1,7 @@
 ---
 title: Annotation REST
 sidebar_position: 2
-displayed_sidebar: restSidebar
+displayed_sidebar: docsSidebar
 ---
 
 import ExemploRef from '@site/src/components/ExemploRef';
@@ -34,7 +34,7 @@ Quando a documentação é simples, você pode declarar parâmetros e respostas 
 )
 ```
 
-Em documentações mais ricas (função `_DOC`), o JSON suporta campos extras como `minimum`, `maximum`, `values` e `requestBody`.
+Em documentações mais ricas (função `_DOC`), o JSON suporta campos extras como `minimum`, `maximum`, `values` e `requestBody`. A partir do tlppCore 01.07.01, a função DOC pode receber o objeto [`oDoc (RestDoc)`](/docs/tlpp/rest/doc-generate/classe-restdoc), que é a forma recomendada.
 
 <ExemploRef file="extended_annotation.tlpp" path="rest/01_traditional_annotation" />
 

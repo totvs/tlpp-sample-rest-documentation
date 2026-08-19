@@ -2,13 +2,38 @@
 title: "Função DOC · básico"
 sidebar_label: "Função DOC · básico"
 sidebar_position: 6
-displayed_sidebar: restSidebar
+displayed_sidebar: docsSidebar
 ---
 
 import ExemploRef from '@site/src/components/ExemploRef';
 import RepoLink from '@site/src/components/RepoLink';
 
 # Função DOC · básico
+
+## Modelo com objeto oDoc (recomendado)
+
+:::tip Abordagem recomendada
+Este modelo utiliza o objeto [`RestDoc (oDoc)`](/docs/tlpp/rest/doc-generate/classe-restdoc) recebido por parâmetro na função DOC.
+Não é necessário conhecer a estrutura JSON esperada pelo REST_DOC — o próprio objeto serializa internamente.
+Disponível a partir do **tlppCore 01.07.01**.
+:::
+
+Exemplos em <RepoLink id="doc-generate" /> (`src/rest/03_dedicated_function_doc/basic/`).
+
+| Arquivo | O que demonstra |
+|---------|-----------------|
+| `restdoc_object_return.tlpp` | <ExemploRef repo="doc-generate" file="restdoc_object_return.tlpp" path="rest/03_dedicated_function_doc/basic" /> |
+
+### Destaques do exemplo com objeto
+
+- **Validação do oDoc** — verifica `valtype`, `MethIsMemberOf` e `oDoc:isa("RestDoc")` antes de usar
+- **setTitle / addDescription** — metadados básicos do endpoint
+- **createParam + setParam** — modo compacto (todos os valores de uma vez)
+- **createResponse** — modo simplificado `(200, "OK")` e modo detalhado com setters separados
+
+---
+
+## Modelo com JSON (retorno string)
 
 Exemplos TLPP em <RepoLink id="doc-generate" /> (`src/rest/03_dedicated_function_doc/basic/`).
 

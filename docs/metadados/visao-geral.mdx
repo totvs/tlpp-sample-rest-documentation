@@ -1,7 +1,7 @@
 ---
 title: Visão geral
 sidebar_position: 1
-displayed_sidebar: restSidebar
+displayed_sidebar: docsSidebar
 ---
 
 import ExemploRef from '@site/src/components/ExemploRef';
@@ -18,8 +18,8 @@ Capacidades do produto — **não** é o mapa de leitura (esse está na trilha a
 | Capacidade | O que resolve |
 |------------|---------------|
 | **Metadados no código** | Documentação junto da rota (`description`, `params`, `responses`) |
-| **Quatro formas de documentar** | Annotation, i18n, função `_DOC` ou rotas dinâmicas |
-| **Schemas reutilizáveis** | `TLPP COMPONENT` referenciado no JSON DOC |
+| **Quatro formas de documentar** | Annotation, i18n, função `_DOC` (com objeto oDoc) ou rotas dinâmicas |
+| **Schemas reutilizáveis** | `DOC COMPONENT` (substitui `TLPP COMPONENT` a partir do 01.07.01) |
 | **Export OpenAPI** | `tlpp.doc.generate()` gera YAML/JSON consumível por ferramentas |
 
 ## Trilha sugerida
@@ -30,7 +30,7 @@ Uma ordem só — de declarar metadados até exportar o OpenAPI. O menu **DOC GE
 |-------|-------------------|-----------|
 | **1 — Description** | Como apontar a documentação do endpoint | [Description](/docs/tlpp/rest/metadados/description) |
 | **2 — Annotation REST** | Metadados inline em `@Get` / `@Post` | [Annotation REST](/docs/tlpp/rest/metadados/rest-annotation) |
-| **3 — JSON DOC** | Função `_DOC` com documentação rica | [JSON DOC](/docs/tlpp/rest/metadados/json-documentacao) |
+| **3 — JSON DOC** | Função `_DOC` com documentação rica (ou objeto oDoc) | [JSON DOC](/docs/tlpp/rest/metadados/json-documentacao) |
 | **4 — I18n** | Textos traduzíveis (`translate:…`) | [I18n](/docs/tlpp/rest/metadados/i18n) |
 | **5 — Componentes** | Schemas reutilizáveis | [Componentes](/docs/tlpp/rest/metadados/componentes) |
 | **6 — Geração OpenAPI** | `tlpp.doc.generate()`, list dinâmico e YAML | [Doc Generate](/docs/tlpp/rest/doc-generate) |
@@ -39,15 +39,18 @@ Uma ordem só — de declarar metadados até exportar o OpenAPI. O menu **DOC GE
 
 1. **Annotation tradicional** — metadados inline na `@Get` / `@Put`
 2. **Dicionário i18n** — `description="<ID>"` aponta para blocos `TRANSLATE`
-3. **Função dedicada `_DOC`** — JSON montado em função separada (recomendado para APIs reais)
+3. **Função dedicada `_DOC`** — JSON montado em função separada ou, preferencialmente, via objeto [`oDoc (RestDoc)`](/docs/tlpp/rest/doc-generate/classe-restdoc) recebido por parâmetro (recomendado para APIs reais)
 4. **Rotas dinâmicas** — `tlpp.doc.List()` liga endpoint + método + função DOC ([List dinâmico](/docs/tlpp/rest/doc-generate/list-dinamico))
 
 ## Regras importantes
 
-1. **Prefira `JsonObject():New()`** em funções DOC — evita JSON inválido por vírgula faltando
-2. **Multi-linha:** não pule números em `descriptionN` — o motor para no primeiro gap
-3. **Geração:** o 1º parâmetro de `tlpp.doc.generate` deve ser `'swagger'` — ver [Doc Generate](/docs/tlpp/rest/doc-generate)
+1. **Prefira o objeto `oDoc`** na função DOC — a partir do tlppCore 01.07.01, a função recebe um [`RestDoc`](/docs/tlpp/rest/doc-generate/classe-restdoc) por parâmetro que dispensa conhecer a estrutura JSON interna
+2. **Alternativa JSON:** se usar retorno string, prefira `JsonObject():New()` — evita JSON inválido por vírgula faltando
+3. **Multi-linha:** não pule números em `descriptionN` — o motor para no primeiro gap
+4. **Geração:** o 1º parâmetro de `tlpp.doc.generate` deve ser `'swagger'` — ver [Doc Generate](/docs/tlpp/rest/doc-generate)
 
+<ExemploRef file="restdoc_object_return.tlpp" path="rest/03_dedicated_function_doc/basic" />
+<ExemploRef file="complete_api_with_object_DOC.tlpp" path="rest/03_dedicated_function_doc/advanced_with_object" />
 <ExemploRef file="complete_api_DOC.tlpp" path="rest/03_dedicated_function_doc/advanced" />
 
 ## Exemplos no GitHub

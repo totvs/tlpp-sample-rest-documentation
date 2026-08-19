@@ -2,7 +2,7 @@
 title: description
 sidebar_label: Description
 sidebar_position: 3
-displayed_sidebar: restSidebar
+displayed_sidebar: docsSidebar
 ---
 
 import Tabs from '@theme/Tabs';
@@ -36,6 +36,12 @@ description="[U_rest_sample_04_basic_DOC]"
 ```
 
 A função deve estar compilada no mesmo ambiente e retornar um JSON válido.
+
+:::tip Objeto oDoc (tlppCore 01.07.01+)
+A partir da versão 01.07.01, a função DOC recebe o objeto [`RestDoc (oDoc)`](/docs/tlpp/rest/doc-generate/classe-restdoc) por parâmetro.
+Com ele, não é necessário montar JSON manualmente — basta usar os métodos do objeto.
+Esta é a forma recomendada.
+:::
 
   </TabItem>
   <TabItem value="id" label="ID i18n &lt;N&gt;">

@@ -35,6 +35,8 @@
       "key": "doc-generate-openapi",
       "items": [
         {"type": "doc", "id": "doc-generate/index", "label": "Visão geral", "key": "doc-generate-intro"},
+        {"type": "doc", "id": "doc-generate/classe-restdoc", "label": "Classe RestDoc (oDoc)", "key": "doc-generate-restdoc"},
+        {"type": "doc", "id": "doc-generate/cli", "label": "CLI (linha de comando)", "key": "doc-generate-cli"},
         "doc-generate/list-dinamico",
         {"type": "doc", "id": "doc-generate/list-filter", "label": "Filtro de rotas", "key": "doc-generate-filter"},
         "doc-generate/openapi",

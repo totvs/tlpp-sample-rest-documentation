@@ -1,12 +1,18 @@
 ---
 title: Componentes
 sidebar_position: 6
-displayed_sidebar: restSidebar
+displayed_sidebar: docsSidebar
 ---
 
 import ExemploRef from '@site/src/components/ExemploRef';
 
 # Metadado `TLPP COMPONENT`
+
+:::caution Deprecação — migre para `DOC COMPONENT`
+A partir do **tlppCore 01.07.01**, a sintaxe `TLPP COMPONENT` é substituída por `DOC COMPONENT`.
+O modelo antigo continuará funcionando temporariamente, mas será **deprecado** em versões futuras.
+Recomendamos atualizar todos os fontes para a nova sintaxe ao adotar o tlppCore 01.07.01.
+:::
 
 Define **schemas reutilizáveis** que você referencia no JSON DOC com `"type": "component"`. O motor expande para `components/schemas` no OpenAPI.
 
@@ -15,6 +21,10 @@ Define **schemas reutilizáveis** que você referencia no JSON DOC com `"type": 
 ```tlpp
 #include "tlpp-doc.th"
 
+// Nova sintaxe (tlppCore 01.07.01+) — recomendada
+DOC COMPONENT <nome> <propriedade> <tipo> <exemplo>
+
+// Sintaxe anterior (deprecada)
 TLPP COMPONENT <nome> <propriedade> <tipo> <exemplo>
 ```
 
@@ -31,12 +41,8 @@ No `requestBody` ou `responses`, aponte para o componente:
 
 O OpenAPI gerado inclui o schema completo em `components/schemas`.
 
-## `tlpp.doc.getComponent()`
-
-Ao gerar no formato **JSON** (não Swagger), se o JSON central traz apenas o nome do componente, use `tlpp.doc.getComponent()` para expandir o schema.
-
 <ExemploRef file="sample_components.tlpp" path="components" />
 
 ## Exemplos no GitHub
 
-Fontes `.tlpp` de componentes: [TLPP Component](/docs/tlpp/rest/exemplos-doc-generate/components) · [Função DOC · avançado](/docs/tlpp/rest/exemplos-doc-generate/rest-03_dedicated_function_doc-advanced).
+Fontes `.tlpp` de componentes: [TLPP / DOC Component](/docs/tlpp/rest/exemplos-doc-generate/components) · [Função DOC · avançado](/docs/tlpp/rest/exemplos-doc-generate/rest-03_dedicated_function_doc-advanced).

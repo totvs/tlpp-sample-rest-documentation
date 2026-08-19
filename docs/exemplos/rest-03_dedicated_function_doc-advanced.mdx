@@ -2,13 +2,41 @@
 title: "Função DOC · avançado"
 sidebar_label: "Função DOC · avançado"
 sidebar_position: 7
-displayed_sidebar: restSidebar
+displayed_sidebar: docsSidebar
 ---
 
 import ExemploRef from '@site/src/components/ExemploRef';
 import RepoLink from '@site/src/components/RepoLink';
 
 # Função DOC · avançado
+
+## Modelo com objeto oDoc (recomendado)
+
+:::tip Abordagem recomendada
+Este modelo utiliza o objeto [`RestDoc (oDoc)`](/docs/tlpp/rest/doc-generate/classe-restdoc) recebido por parâmetro na função DOC.
+Não é necessário conhecer a estrutura JSON esperada pelo REST_DOC — o próprio objeto serializa internamente.
+Disponível a partir do **tlppCore 01.07.01**.
+:::
+
+Exemplos em <RepoLink id="doc-generate" /> (`src/rest/03_dedicated_function_doc/advanced_with_object/`).
+
+| Arquivo | O que demonstra |
+|---------|-----------------|
+| `complete_api_with_object.tlpp` | <ExemploRef repo="doc-generate" file="complete_api_with_object.tlpp" path="rest/03_dedicated_function_doc/advanced_with_object" /> |
+| `complete_api_with_object_DOC.tlpp` | <ExemploRef repo="doc-generate" file="complete_api_with_object_DOC.tlpp" path="rest/03_dedicated_function_doc/advanced_with_object" /> |
+| `complete_api_with_object_DOC-i18n.tlpp` | <ExemploRef repo="doc-generate" file="complete_api_with_object_DOC-i18n.tlpp" path="rest/03_dedicated_function_doc/advanced_with_object" /> |
+
+### Destaques do exemplo com objeto
+
+- **Parâmetros via query, path e header** — todos documentados com `oDoc:createParam()` + setters
+- **Enum com min/max** — `setParamValueDefault`, `setParamValueMinimum`, `setParamValueMaximum`, `addParamValue`
+- **Body com componente** — `setParamBodyComponent("sampleBodyIn", _json_)`
+- **Respostas com componentes múltiplos** — `setResponseComponent(nIndex, "sampleBodyOutOk", _json_, _xml_)`
+- **i18n** — `tlpp.i18n.Localize()` em todos os textos (opcional, mas demonstrado)
+
+---
+
+## Modelo com JSON (retorno string)
 
 Exemplos TLPP em <RepoLink id="doc-generate" /> (`src/rest/03_dedicated_function_doc/advanced/`).
 

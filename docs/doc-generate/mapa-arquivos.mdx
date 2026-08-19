@@ -1,7 +1,7 @@
 ---
 title: Mapa de arquivos
 sidebar_position: 4
-displayed_sidebar: restSidebar
+displayed_sidebar: docsSidebar
 ---
 
 import {getExternalRepo, githubFileUrl, githubTreeUrl} from '@site/src/data/external-repos';
@@ -27,7 +27,7 @@ Estrutura do projeto <RepoLink id="doc-generate">{sampleRepo.label}</RepoLink> (
     </tr>
     <tr>
       <td><a href={githubFileUrl(sampleRepo, 'src/components/sample_components.tlpp')} target="_blank" rel="noopener noreferrer"><code>src/components/sample_components.tlpp</code></a></td>
-      <td><code>TLPP COMPONENT</code></td>
+      <td><code>DOC COMPONENT</code> (antes <code>TLPP COMPONENT</code>)</td>
     </tr>
     <tr>
       <td><strong><a href={githubTreeUrl(sampleRepo, 'src/rest/01_traditional_annotation')} target="_blank" rel="noopener noreferrer">01_traditional_annotation/</a></strong></td>
@@ -66,6 +66,10 @@ Estrutura do projeto <RepoLink id="doc-generate">{sampleRepo.label}</RepoLink> (
       <td><code>descriptionN</code></td>
     </tr>
     <tr>
+      <td><code>basic/restdoc_object_return.tlpp</code></td>
+      <td>função DOC com objeto <code>oDoc</code> (recomendado)</td>
+    </tr>
+    <tr>
       <td><code>advanced/complete_api.tlpp</code></td>
       <td>REST + <code>Localize()</code></td>
     </tr>
@@ -76,6 +80,18 @@ Estrutura do projeto <RepoLink id="doc-generate">{sampleRepo.label}</RepoLink> (
     <tr>
       <td><code>advanced/complete_api*-i18n.tlpp</code></td>
       <td>i18n REST e DOC</td>
+    </tr>
+    <tr>
+      <td><code>advanced_with_object/complete_api_with_object.tlpp</code></td>
+      <td>REST + referência à função DOC com objeto</td>
+    </tr>
+    <tr>
+      <td><code>advanced_with_object/complete_api_with_object_DOC.tlpp</code></td>
+      <td>DOC completo via <code>oDoc</code> (recomendado)</td>
+    </tr>
+    <tr>
+      <td><code>advanced_with_object/complete_api_with_object_DOC-i18n.tlpp</code></td>
+      <td>i18n para DOC com objeto</td>
     </tr>
     <tr>
       <td><strong><a href={githubTreeUrl(sampleRepo, 'src/rest/04_dynamic_mapping')} target="_blank" rel="noopener noreferrer">04_dynamic_mapping/</a></strong></td>

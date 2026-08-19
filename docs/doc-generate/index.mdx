@@ -2,7 +2,7 @@
 title: Doc Generate
 description: Exportar metadados REST para OpenAPI com tlpp.doc.generate().
 sidebar_position: 1
-displayed_sidebar: restSidebar
+displayed_sidebar: docsSidebar
 ---
 
 import ExemploRef from '@site/src/components/ExemploRef';
@@ -25,10 +25,12 @@ O **REST-DOC** do tlppCore lê os [metadados](/docs/tlpp/rest/metadados/visao-ge
 
 | Etapa | O que você aprende | Comece em |
 |-------|-------------------|-----------|
-| **1 — List dinâmico** | Associar DOC a rotas criadas em runtime | [List dinâmico](/docs/tlpp/rest/doc-generate/list-dinamico) |
-| **2 — Filtro de rotas** | Allowlist no 6º parâmetro de `generate` | [Filtro de rotas](/docs/tlpp/rest/doc-generate/list-filter) |
-| **3 — OpenAPI** | Formato e conteúdo do YAML gerado | [OpenAPI](/docs/tlpp/rest/doc-generate/openapi) |
-| **4 — Mapa de arquivos** | Onde cada exemplo do repo se encaixa | [Mapa de arquivos](/docs/tlpp/rest/doc-generate/mapa-arquivos) |
+| **1 — Classe RestDoc (oDoc)** | Objeto nativo para documentar endpoints (recomendado) | [Classe RestDoc](/docs/tlpp/rest/doc-generate/classe-restdoc) |
+| **2 — CLI** | Gerar OpenAPI pela linha de comando (CI/CD) | [CLI](/docs/tlpp/rest/doc-generate/cli) |
+| **3 — List dinâmico** | Associar DOC a rotas criadas em runtime | [List dinâmico](/docs/tlpp/rest/doc-generate/list-dinamico) |
+| **4 — Filtro de rotas** | Allowlist no 6º parâmetro de `generate` | [Filtro de rotas](/docs/tlpp/rest/doc-generate/list-filter) |
+| **5 — OpenAPI** | Formato e conteúdo do YAML gerado | [OpenAPI](/docs/tlpp/rest/doc-generate/openapi) |
+| **6 — Mapa de arquivos** | Onde cada exemplo do repo se encaixa | [Mapa de arquivos](/docs/tlpp/rest/doc-generate/mapa-arquivos) |
 
 ## `tlpp.doc.generate()`
 
@@ -42,24 +44,25 @@ GET /rest/sample/doc/generate
 
 Chama internamente `tlpp.doc.generate(...)` e grava o arquivo no servidor.
 
-:::note Parâmetro `swagger`
-O motor ainda exige a string literal `'swagger'` no 1º parâmetro, mesmo gerando OpenAPI 3.x.
+:::note Parâmetro `format`
+Aceita `'swagger'` ou `'openapi'` para YAML OpenAPI 3.x, e `'json'` para JSON. Se omitido, assume `'openapi'`.
 :::
 
 ### Parâmetros
 
 ```tlpp
-tlpp.doc.generate( <cFormato>, <cNomeArquivo>, [aPorts], [aLocales], [cListFunc], [cFilterFunc] )
+tlpp.doc.generate( format, fileName, [ports], [langs], [functionNameDOC], [functionNameFilter], [serviceTrace] )
 ```
 
 | Parâmetro | Função |
 |-----------|--------|
-| `cFormato` | `'swagger'` → YAML OpenAPI; `'json'` → JSON |
-| `cNomeArquivo` | Prefixo do arquivo gerado (ex.: `'api_doc'` → `api_doc_8080.yaml`) |
-| `aPorts` | Portas a documentar — ex.: `{8080}`; omitir = todas |
-| `aLocales` | Idiomas para textos i18n — ex.: `{'en-us','pt-br'}` |
-| `cListFunc` | Função `tlpp.doc.List()` para rotas dinâmicas — ex.: `"U_ListDOCFunctions"` |
-| `cFilterFunc` | Allowlist de path+método — ex.: `"U_ListFilter"` — ver [Filtro de rotas](/docs/tlpp/rest/doc-generate/list-filter) |
+| `format` | `'swagger'` / `'openapi'` → YAML OpenAPI; `'json'` → JSON. Default: `'openapi'` |
+| `fileName` | Prefixo do arquivo gerado (ex.: `'api_doc'` → `api_doc_8080.yaml`) |
+| `ports` | Array de portas a documentar — ex.: `{8080}`; omitir = todas |
+| `langs` | Idiomas para textos i18n — ex.: `{'en-us','pt-br'}` |
+| `functionNameDOC` | Função `tlpp.doc.List()` para rotas dinâmicas — ex.: `"U_ListDOCFunctions"` |
+| `functionNameFilter` | Allowlist de path+método — ex.: `"U_ListFilter"` — ver [Filtro de rotas](/docs/tlpp/rest/doc-generate/list-filter) |
+| `serviceTrace` | Rastreia a documentação de um serviço específico (debug). Formato: `"método:urn"` — ex.: `"get:/api/users"`. *(novo no 01.07.01)* |
 
 ### Orquestração típica
 

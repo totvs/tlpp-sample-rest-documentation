@@ -1,7 +1,7 @@
 ---
 title: JSON DOC
 sidebar_position: 4
-displayed_sidebar: restSidebar
+displayed_sidebar: docsSidebar
 ---
 
 import ExemploRef from '@site/src/components/ExemploRef';
@@ -9,6 +9,12 @@ import ExemploRef from '@site/src/components/ExemploRef';
 # JSON retornado pela função DOC
 
 Quando `description="[NomeFunc_DOC]"`, o motor executa a função e espera um **JSON** com os campos OpenAPI do endpoint.
+
+:::tip Alternativa recomendada: objeto oDoc
+A partir do **tlppCore 01.07.01**, a função DOC pode receber o objeto [`RestDoc (oDoc)`](/docs/tlpp/rest/doc-generate/classe-restdoc) por parâmetro.
+Com ele você define título, parâmetros, body e respostas **sem montar JSON manualmente** — o objeto serializa internamente.
+Esta é a abordagem recomendada para novos desenvolvimentos.
+:::
 
 ## Como montar o JSON
 
