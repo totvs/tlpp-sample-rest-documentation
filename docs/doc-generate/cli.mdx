@@ -1,0 +1,150 @@
+---
+title: CLI (linha de comando)
+description: Gerar documentação OpenAPI via linha de comando do AppServer, sem código REST.
+sidebar_position: 3
+displayed_sidebar: docsSidebar
+---
+
+# CLI — Geração via linha de comando
+
+A função `tlpp.doc.cli.generate` permite gerar a documentação OpenAPI diretamente pela linha de comando do AppServer — sem necessidade de um endpoint REST rodando.
+
+Útil para pipelines CI/CD, automação de build e geração de snapshots.
+
+:::tip Versão mínima
+Disponível a partir do **tlppCore 01.07.01**.
+:::
+
+## Chamada básica
+
+```bash
+./appsrvlinux -env=ENV -run=tlpp.doc.cli.generate -format openapi -filename api_doc.yaml -ports 8080
+```
+
+No Windows:
+```bash
+appserver.exe -env=ENV -run=tlpp.doc.cli.generate -format openapi -filename api_doc.yaml -ports 8080
+```
+
+## Parâmetros
+
+| Parâmetro | Tipo | Descrição |
+|-----------|------|-----------|
+| `-format` | string | Formato de exportação: `openapi` (YAML) ou `json`. Default: `openapi` |
+| `-filename` | string | Nome do arquivo de saída (ex.: `doc_rest.yaml`, `api.json`) |
+| `-ports` | inteiros | Portas do AppServer (ex.: `-ports 9000 9001 9002`) |
+| `-langs` | strings | Idiomas para i18n (ex.: `-langs pt en es` ou `BR USA ESP`) |
+| `-functionnamedoc` | string | Função com lista de endpoints dinâmicos (`tlpp.doc.List()`) |
+| `-functionnamefilter` | string | Função de filtro (allowlist de serviços documentados) |
+| `-servicetrace` | string | Rastreia um serviço específico com log detalhado. Formato: `método:urn` |
+
+:::note Separação de valores
+Use **espaço** para separar o nome do parâmetro do valor. Não use `=`.
+Correto: `-format openapi`. Incorreto: `-format=openapi`.
+:::
+
+## Variáveis de ambiente
+
+Todos os parâmetros podem ser definidos via variáveis de ambiente.
+Os valores passados por **linha de comando têm prioridade** sobre variáveis de ambiente.
+
+| Variável | Equivale a |
+|----------|-----------|
+| `format` | `-format` |
+| `filename` | `-filename` |
+| `ports` | `-ports` (separados por vírgula: `9000,9001`) |
+| `langs` | `-langs` (separados por vírgula: `pt,en,es`) |
+| `functionnamedoc` | `-functionnamedoc` |
+| `functionnamefilter` | `-functionnamefilter` |
+| `servicetrace` | `-servicetrace` |
+
+### Exemplo com variáveis de ambiente (Linux)
+
+```bash
+export format=openapi
+export filename=doc_rest.yaml
+export ports=9000,9001
+export langs=pt,en
+export functionnamedoc=U_ListDOCFunctions
+export functionnamefilter=U_ListFilter
+
+./appsrvlinux -env=ENV -run=tlpp.doc.cli.generate
+```
+
+### Exemplo com variáveis de ambiente (Windows)
+
+```bat
+set format=openapi
+set filename=doc_rest.yaml
+set ports=9000,9001
+set langs=pt,en
+set functionnamedoc=U_ListDOCFunctions
+set functionnamefilter=U_ListFilter
+
+appserver.exe -env=ENV -run=tlpp.doc.cli.generate
+```
+
+### Exemplo misto (variáveis + override por CLI)
+
+```bash
+# Linux
+export format=openapi
+export filename=doc_rest.yaml
+export ports=9000
+
+./appsrvlinux -env=ENV -run=tlpp.doc.cli.generate -filename api_custom.yaml
+```
+
+```bat
+rem Windows
+set format=openapi
+set filename=doc_rest.yaml
+set ports=9000
+
+appserver.exe -env=ENV -run=tlpp.doc.cli.generate -filename api_custom.yaml
+```
+
+## Exemplo completo (CI/CD)
+
+Linux:
+```bash
+./appsrvlinux \
+  -env=producao \
+  -run=tlpp.doc.cli.generate \
+  -format openapi \
+  -filename api_doc.yaml \
+  -ports 8080 8443 \
+  -langs pt en \
+  -functionnamedoc U_ListDOCFunctions \
+  -functionnamefilter U_ListFilter
+```
+
+Windows:
+```bat
+appserver.exe -env=producao -run=tlpp.doc.cli.generate -format openapi -filename api_doc.yaml -ports 8080 8443 -langs pt en -functionnamedoc U_ListDOCFunctions -functionnamefilter U_ListFilter
+```
+
+## Diagnóstico com serviceTrace
+
+Para depurar a geração de documentação de um endpoint específico:
+
+Linux:
+```bash
+./appsrvlinux -env=ENV -run=tlpp.doc.cli.generate \
+  -format openapi \
+  -filename debug.yaml \
+  -ports 8080 \
+  -servicetrace get:/api/clientes
+```
+
+Windows:
+```bat
+appserver.exe -env=ENV -run=tlpp.doc.cli.generate -format openapi -filename debug.yaml -ports 8080 -servicetrace get:/api/clientes
+```
+
+O log do AppServer mostrará o passo a passo do processamento daquele serviço.
+
+## Restrições de segurança
+
+A função `tlpp.doc.cli.generate` valida a stack de chamada — só executa se invocada diretamente pelo AppServer em modo command-line (sem Remote/SmartClient).
+Tentativas de chamá-la por código ou via REST resultam em erro.

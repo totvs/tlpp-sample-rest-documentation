@@ -1,0 +1,115 @@
+---
+title: Classe RestDoc (oDoc)
+description: Referência completa do objeto oDoc recebido nas funções de documentação REST.
+sidebar_position: 6
+displayed_sidebar: docsSidebar
+---
+
+import RestDocMethodCatalog from '@site/src/components/RestDocMethodCatalog';
+import ExemploRef from '@site/src/components/ExemploRef';
+
+A classe **RestDoc** (`tlpp.doc`) é o objeto nativo que o REST_DOC instancia e entrega por parâmetro à sua função de documentação. Com ele você descreve título, parâmetros, body e respostas **sem precisar conhecer a estrutura JSON interna** — o próprio objeto serializa tudo ao final.
+
+:::tip Versão mínima
+Recurso disponível a partir da versão **01.07.01** do tlppCore.
+:::
+
+## Como receber o objeto
+
+```tlpp
+#include 'tlpp-doc.th'
+
+function U_meuEndpoint_DOC( oDoc )
+
+  // Validação recomendada
+  if ( !valtype(oDoc) == "O" .or. !MethIsMemberOf(oDoc,"isa") .or. !oDoc:isa("RestDoc") )
+    return ""
+  endif
+
+  oDoc:setTitle("Meu endpoint")
+  oDoc:addDescription("Descrição da API.")
+  // ... parâmetros, body, respostas
+
+return
+```
+
+O include **`tlpp-doc.th`** é obrigatório — ele define as constantes de localização (`_query_`, `_path_`, `_header_`) e tipo (`_char_`, `_int_`, `_numeric_`, `_logical_`).
+
+---
+
+## Constantes disponíveis (tlpp-doc.th)
+
+| Grupo | Constante | Significado |
+|-------|-----------|-------------|
+| **Localização (in)** | `_query_` | Query String |
+| | `_path_` | Path Param |
+| | `_header_` | Header HTTP |
+| **Tipo do parâmetro** | `_char_` | character |
+| | `_int_` | integer |
+| | `_numeric_` | number |
+| | `_logical_` | boolean |
+| **Content-type (body)** | `_json_` | application/json |
+| | `_xml_` | application/xml |
+| | `_csv_` | text/csv |
+| | `_txt_` | text/plain |
+
+---
+
+## Verificação de tipo
+
+<RestDocMethodCatalog groupId="restdoc-geral" />
+
+---
+
+## Tratamento de erros
+
+<RestDocMethodCatalog groupId="restdoc-erro" />
+
+---
+
+## Título
+
+<RestDocMethodCatalog groupId="restdoc-titulo" />
+
+---
+
+## Descrição
+
+<RestDocMethodCatalog groupId="restdoc-descricao" />
+
+---
+
+## Parâmetros (query, path, header)
+
+<RestDocMethodCatalog groupId="restdoc-parametros" />
+
+---
+
+## Body (Request Body)
+
+<RestDocMethodCatalog groupId="restdoc-body" />
+
+---
+
+## Respostas (Responses)
+
+<RestDocMethodCatalog groupId="restdoc-respostas" />
+
+---
+
+## Exportação
+
+<RestDocMethodCatalog groupId="restdoc-exportacao" />
+
+---
+
+## Exemplos no GitHub
+
+| Exemplo | O que demonstra |
+|---------|----------------|
+| [Básico com objeto](/docs/tlpp/rest/exemplos-doc-generate/rest-03_dedicated_function_doc-basic) | `oDoc` com parâmetros e respostas simples |
+| [Avançado com objeto](/docs/tlpp/rest/exemplos-doc-generate/rest-03_dedicated_function_doc-advanced) | Todos os recursos: enum, body, componentes, i18n |
+
+<ExemploRef file="restdoc_object_return.tlpp" path="rest/03_dedicated_function_doc/basic" />
+
+**Próximo passo:** [List dinâmico](/docs/tlpp/rest/doc-generate/list-dinamico)
