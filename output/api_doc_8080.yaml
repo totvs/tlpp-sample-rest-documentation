@@ -3,19 +3,97 @@ info:
   title: APIs REST
   description: |-
     List of REST APIs available by TOTVS appServer.
-    Port: [9080]
+    
+    Port: [8080]
   version: 0.1.1
 paths:
+  /appserver/builddate:
+    get:
+      summary: Data Build appServer
+      description: Retorna a data do build do appServer em uso
+      responses: 
+        200:
+          description: Success
+  /appserver/buildtime:
+    get:
+      summary: Hora Build appServer
+      description: Retorna a hora do build do appServer em uso
+      responses: 
+        200:
+          description: Success
+  /appserver/environment:
+    get:
+      summary: Versão completa appServer
+      description: Retorna todos os dados sobre versão do appServer em uso- versão, nome versão, revisão, revisão Vader, data Build e hora Build.
+      responses: 
+        200:
+          description: Success
+  /appserver/revision:
+    get:
+      summary: Revisão appServer
+      description: Retorna o ID de revisão do código fonte do appServer em uso
+      responses: 
+        200:
+          description: Success
+  /appserver/vdrrevision:
+    get:
+      summary: Revisão Vader
+      description: Retorna o ID de revisão do código fonte do VADER do appServer em uso
+      responses: 
+        200:
+          description: Success
+  /appserver/version:
+    get:
+      summary: Versão appServer
+      description: Retorna o número da versão do appServer em uso
+      responses: 
+        200:
+          description: Success
+  /appserver/versionname:
+    get:
+      summary: Nome Versão appServer
+      description: Retorna o nome da versão do appServer em uso
+      responses: 
+        200:
+          description: Success
+  /class/{param1}:
+    get:
+      summary: Exemplo 03 dinâmico
+      description: Documentação do endpoint [/class/-param1] método [GET] recebendo 1 PathParam.
+      parameters:
+        - name: param1
+          in: path
+          description: Parâmetro param1 recebido via Path Param.
+          required: true
+          schema: 
+            type: string
+      responses: 
+        200:
+          description: Sucesso | Content- [METHOD_DYN hh-mm-ss [{param1-value_param}]]
+  /init/dyn:
+    get:
+      summary: Exemplo 01 dinâmico
+      description: Documentação do endpoint [/init/dyn] método [GET] gerado dinamicamente.
+      responses: 
+        200:
+          description: Sucesso | Content- [FUNC_DYN hh-mm-ss]
+    put:
+      summary: Exemplo 02 dinâmico
+      description: Documentação do endpoint [/init/dyn] método [PUT] gerado dinamicamente.
+      responses: 
+        200:
+          description: Sucesso | Content- [FUNC_DYN hh-mm-ss]
   /rest/sample/doc/basic/01:
     get:
-      description: Exemplo de documentaÃ§Ã£o simples, somente descriÃ§Ã£o
+      description: Exemplo de documentação simples, contendo apenas a descrição do endpoint.
+      parameters: []
       responses: 
         200:
           description: Success
   /rest/sample/doc/basic/02:
     get:
       summary: DOC simples 02
-      description: Exemplo de documentaÃ§Ã£o de REST diretamente na annotation
+      description: Exemplo de documentação de REST diretamente na annotation.
       parameters:
         - name: param1
           in: query
@@ -27,7 +105,7 @@ paths:
         200:
           description: OK
         400:
-          description: ParÃ¢metro invÃ¡lido
+          description: Parâmetro inválido
   /rest/sample/doc/basic/03:
     get:
       summary: simple DOC 03
@@ -47,7 +125,7 @@ paths:
   /rest/sample/doc/basic/04:
     get:
       summary: DOC simples 04
-      description: Exemplo de documentaÃ§Ã£o de REST utilizando funÃ§Ã£o retornando um JSON
+      description: Exemplo de documentação de REST utilizando função retornando um JSON nativo.
       parameters:
         - name: param1
           in: query
@@ -59,61 +137,153 @@ paths:
         200:
           description: OK
         400:
-          description: ParÃ¢metro invÃ¡lido
+          description: Parâmetro inválido
   /rest/sample/doc/basic/05/multiline:
     get:
-      summary: MÃºltiplas linhas
+      summary: Múltiplas linhas via JsonObject
       description: |-
         Linha 1
         
-        Linha 2
-        Linha 3
-        ...
+        Linha 2\n
+        Linha 3\n
+        ...\n
         Linha N
       responses: 
         200:
           description: Success
-  /rest/sample/doc/complete/{param1}:
-    put:
-      summary: Full example
-      description: |-
-        Complete example with all features available for use.
-        1 - Multi-line description
-        2 - Input parameters (Mandatory and Optional)
-            - QueryString
-            - Path Param
-            - Header Param
-            - Message body
-            - eNum with maximum and minimum value and their value sequences
-        3 - Return from the API
-            - Codes and description
-            - return JSON
-        4 - Creation of components
-        5 - Location (TLPP i18n)
-            - REST documentation
-            - Strings in original REST source
+  /rest/sample/doc/basic/restdoc_object_return:
+    get:
+      summary: DOC simples 04 - modelo com objeto
+      description: Exemplo de documentação de REST utilizando função recebendo um objeto nativo para gerar a documentação.
       parameters:
         - name: param1
           in: query
-          description: Parameter via Query String
+          description: desc_param_1
+          required: true
+          schema: 
+            type: string
+      responses: 
+        200:
+          description: OK
+        400:
+          description: Parâmetro inválido
+  /rest/sample/doc/complete/{param1}:
+    put:
+      summary: Exemplo completo
+      description: |-
+        Exemplo completo com todos os recursos disponíveis para uso.
+        1 - Descrição multi-linha
+        2 - Parâmetros de entrada (Obrigatórios e Opcionais)
+            - Cadeia de consulta (QueryString)
+            - Parâmetro no endpoint (Path Param)
+            - Parâmetro no Cabeçalho (Header Param)
+            - Corpo da mensagem (Body)
+            - eNum com valor máximo e mínimo e suas descrições de valores
+        3 - Retorno da API
+            - Códigos e descrição
+            - JSON de retorno
+        4 - Criação de componentes
+        5 - Localização (TLPP i18n)
+            - Documentação REST
+            - Strings no fonte original REST
+      parameters:
+        - name: param1
+          in: query
+          description: Parâmetro query
           required: true
           schema: 
             type: string
         - name: param1
           in: path
-          description: Param1 parameter received by path
+          description: Parâmetro path
           required: true
           schema: 
             type: string
         - name: param1
           in: header
-          description: Param1 parameter received by http header
+          description: Parâmetro header
           required: true
           schema: 
             type: string
         - name: log
           in: query
-          description: OPTIONAL parameter received by the query string ( Minimum value = 0, Maximum value = 1, Standard value = 0, Available values [0 = Turn off Log, 1 = Turn on Log] )
+          required: false
+          schema: 
+            type: integer
+            default: 0
+            enum: 
+            - 0
+            - 1
+        - name: return
+          in: query
+          description: Indica qual formato deseja de retorno (, Valor padrao = json, Valores disponiveis [json = application/json, xml = application/xml] )
+          required: false
+          schema: 
+            type: string
+            default: json
+            enum: 
+            - json
+            - xml
+      requestBody: 
+        description: Parâmetro param1 recebido pelo corpo da mensagem http (body)
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sampleBodyIn'
+      responses: 
+        200:
+          description: Sucesso
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sampleBodyOutOk'
+        400:
+          description: Requisição Inválida
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sampleBodyOutError'
+  /rest/sample/doc/complete_with_object/{param1}:
+    put:
+      summary: Exemplo completo
+      description: |-
+        Exemplo completo com todos os recursos disponíveis para uso.
+        1 - Descrição multi-linha
+        2 - Parâmetros de entrada (Obrigatórios e Opcionais)
+            - Cadeia de consulta (QueryString)
+            - Parâmetro no endpoint (Path Param)
+            - Parâmetro no Cabeçalho (Header Param)
+            - Corpo da mensagem (Body)
+            - eNum com valor máximo e mínimo e suas descrições de valores
+        3 - Retorno da API
+            - Códigos e descrição
+            - JSON de retorno
+        4 - Criação de componentes
+        5 - Localização (TLPP i18n)
+            - Documentação REST
+            - Strings no fonte original REST
+      parameters:
+        - name: param1
+          in: query
+          description: Parâmetro param1 recebido pela cadeia de consulta (QueryString)
+          required: true
+          schema: 
+            type: string
+        - name: param1
+          in: path
+          description: Parâmetro param1 recebido pelo caminho do endpoint (Path Param)
+          required: true
+          schema: 
+            type: string
+        - name: param1
+          in: header
+          description: Parâmetro param1 recebido pelo cabeçalho do http (Header Param)
+          required: true
+          schema: 
+            type: string
+        - name: log
+          in: query
+          description: Parâmetro OPCIONAL recebido pela cadeia de consulta (QueryString) ( Valor minimo = 0, Valor maximo = 1, Valor padrao = 0, Valores disponiveis [0 = Desliga Log, 1 = Liga Log] )
           required: false
           schema: 
             type: integer
@@ -125,7 +295,7 @@ paths:
             - 1
         - name: return
           in: query
-          description: Indicates which format you want to return (, Standard value = json, Available values [json = application/json, xml = application/xml] )
+          description: Indica qual formato deseja de retorno (, Valor padrao = json, Valores disponiveis [json = application/json, xml = application/xml] )
           required: false
           schema: 
             type: string
@@ -134,14 +304,14 @@ paths:
             - json
             - xml
       requestBody: 
-        description: ParÃ¢metro param1 recebido pelo corpo da mensagem http (body)
+        description: Parâmetro param1 recebido pelo corpo da mensagem http (body)
         content: 
-            application/json:
-              schema:
-                $ref: '#/components/schemas/sampleBodyIn'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sampleBodyIn'
       responses: 
         200:
-          description: Success
+          description: Sucesso
           content: 
             application/json:
               schema:
@@ -150,7 +320,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/sampleBodyOutOk'
         400:
-          description: Bad Request
+          description: Requisição Inválida
           content: 
             application/json:
               schema:
@@ -158,33 +328,344 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/sampleBodyOutError'
-  /class/{param1}:
+  /rest/sample/doc/generate:
     get:
-      summary: Exemplo 03 dinamico
-      description: Documentacao do endpoint [/class/-param1] metodo [GET] gerado dinamicamente sem annotation e recebendo 1 (um) PathParam
+      description: Gera documentacao OpenAPI
+      parameters: []
+      responses: 
+        200:
+          description: Success
+  /tlpp/dbaccessinfosapi/getgenericinfos:
+    get:
+      summary: Unknown
+      description: Unknown
+      responses: 
+        200:
+          description: Success
+  /tlpp/dbaccessinfosapi/gettccheckupinfos:
+    get:
+      summary: Informações TCCheckup DBAccess
+      description: Retorna informações referentes à função TCCheckup do DBAccess em uso
+      responses: 
+        200:
+          description: Success
+  /tlpp/dbaccessinfosapi/gettcpinginfos:
+    get:
+      summary: Informações TCPing DBAccess
+      description: Retorna informações coletadas através da função TCPing do DBAccess em uso
+      responses: 
+        200:
+          description: Success
+  /tlpp/dbaccesstcgetinfoapi/getslotreturn:
+    get:
+      summary: slots DBAccess
+      description: Retorna informações referentes ao(s) slot/slots disponibilizados pela função TCGetInfo() do DBAccess em uso
+      responses: 
+        200:
+          description: Success
+  /tlpp/environment:
+    get:
+      summary: Versão completa tlppCore
+      description: Retorna todos os dados sobre versão do tlppCore em uso- release, número versão, nome versão, id revisão e data/hora revisão.
+      responses: 
+        200:
+          description: Success
+  /tlpp/environments/getenvironments:
+    get:
+      summary: Unknown
+      description: Unknown
+      responses: 
+        200:
+          description: Success
+  /tlpp/getfiles:
+    get:
+      summary: Logs do Sistema
+      description: Retorna um arquivo compactado com logs e configuração (appserver.ini)
+      responses: 
+        200:
+          description: Success
+  /tlpp/gui/authentication:
+    post:
+      summary: Auth tlppCore GUI/Monitor
+      description: Exclusive tlppCore GUI/Monitor Authentication
+      requestBody: 
+        description: Login/Password data for authentication
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/guiAuth'
+      responses: 
+        200:
+          description: Authentication successful
+        500:
+          description: Authentication disabled
+        403:
+          description: Invalid parameters
+        401:
+          description: Authentication failed
+  /tlpp/gui/authentication/getloginstatus:
+    get:
+      summary: Auth tlppCore GUI/Monitor
+      description: Exclusive tlppCore GUI/Monitor Authentication
+      requestBody: 
+        description: Login/Password data for authentication
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/guiAuth'
+      responses: 
+        200:
+          description: Authentication successful
+        500:
+          description: Authentication disabled
+        403:
+          description: Invalid parameters
+        401:
+          description: Authentication failed
+  /tlpp/gui/be/list:
+    get:
+      summary: Back End
+      description: Back End data (BE) generated by appserver monitoring.
+      responses: 
+        200:
+          description: Success
+  /tlpp/gui/bt/list:
+    get:
+      summary: Business Transactions
+      description: Business Transactions list (BT) generated by appserver monitoring.
+      responses: 
+        200:
+          description: Success
+  /tlpp/gui/bt/quantity:
+    get:
+      summary: Number of Business Transactions
+      description: Number of Business Transactions (BT) generated by appserver monitoring.
+      responses: 
+        200:
+          description: Success
+  /tlpp/gui/cg/list:
+    get:
+      summary: Call Graph
+      description: Call Graph list (CG) generated by appserver monitoring.
+      responses: 
+        200:
+          description: Success
+  /tlpp/gui/config:
+    get:
+      summary: Configuração do GUI/Monitor
+      description: Página/serviço de configuração do GUI/Monitor
+      responses: 
+        200:
+          description: Success
+  /tlpp/gui/ec/list:
+    get:
+      summary: Exit Call
+      description: Exit Call list (EC) generated by appserver monitoring.
+      responses: 
+        200:
+          description: Success
+  /tlpp/healthcheck:
+    get:
+      summary: REST health check
+      description: Checks the health of the REST service, returning status code 200
+      responses: 
+        200:
+          description: Success
+  /tlpp/healthcheck/datetime:
+    get:
+      summary: REST health check
+      description: Checks the health of the REST service, returning status code 200 and current date and time in JSON format
+      responses: 
+        200:
+          description: Success
+  /tlpp/healthcheck/ok:
+    get:
+      summary: REST health check
+      description: Checks the health of the REST service, returning status code 200 and OK message
+      responses: 
+        200:
+          description: Success
+  /tlpp/managerdbaccess/dbaccessconnect:
+    get:
+      summary: Conecta com DBAccess
+      description: Realiza uma conexão com o DBAccess informado.
+      responses: 
+        200:
+          description: Success
+  /tlpp/oauth2/token:
+    post:
+      summary: REST access/refresh token oauth2
+      description: EndPoint responsável pela requisição access/refresh token, referente ao protocolo oAuth2
+      responses: 
+        200:
+          description: Success
+    get:
+      summary: REST access/refresh token oauth2
+      description: EndPoint responsável pela requisição access/refresh token, referente ao protocolo oAuth2
+      responses: 
+        200:
+          description: Success
+  /tlpp/probat/discovery:
+    get:
+      summary: PROBAT - descoberta testes
+      description: Dispara o processo de descoberta de fontes de testes compilados no RPO para que o PROBAT possa utilizá-los na execução de testes.
+      responses: 
+        200:
+          description: Success
+  /tlpp/probat/export:
+    get:
+      summary: PROBAT - exporta resultados
+      description: Dispara a função principal para exportação dos resultados de testes executados através do PROBAT.
+      responses: 
+        200:
+          description: Success
+  /tlpp/rest/config:
+    get:
+      summary: REST Configuration
+      description: Interface/API that makes it possible to configure tlppCore REST in some functionalities at runtime.
       parameters:
-        - name: param1
-          in: path
-          description: ParÃ¢metro param1 recebido via Path Param
-          required: true
-          schema:
+        - name: type
+          in: query
+          description: Indicates the return format for this api. ( Standard value = H, Available values [H = HTML, J = JSON] )
+          required: false
+          schema: 
             type: string
-      responses:
+            default: H
+            enum: 
+            - H
+            - J
+        - name: rest_error_full
+          in: query
+          description: Enables/Disables error stack printing. ( Minimum value = 0, Maximum value = 1, Standard value = 1, Available values [0 = Off, 1 = On] )
+          required: false
+          schema: 
+            type: integer
+            minimum: 0
+            maximum: 1
+            default: 1
+            enum: 
+            - 0
+            - 1
+        - name: rest_tlpp_function
+          in: query
+          description: Enables/Disables the execution of TLPP functions when Grader fails. ( Minimum value = 0, Maximum value = 1, Standard value = 0, Available values [0 = Off, 1 = On] )
+          required: false
+          schema: 
+            type: integer
+            minimum: 0
+            maximum: 1
+            default: 0
+            enum: 
+            - 0
+            - 1
+        - name: rest_trace_time
+          in: query
+          description: Enables/Disables the execution time counter for each tlppCore REST component. ( Minimum value = 0, Maximum value = 2, Standard value = 0, Available values [0 = Off, 1 = On, 2 = On and print] )
+          required: false
+          schema: 
+            type: integer
+            minimum: 0
+            maximum: 2
+            default: 0
+            enum: 
+            - 0
+            - 1
+            - 2
+        - name: rest_reloadtime
+          in: query
+          description: Time to reread tlppCore REST settings on each thread. ( Minimum value = 10, Maximum value = 86400, Standard value = 60 )
+          required: false
+          schema: 
+            type: integer
+            minimum: 10
+            maximum: 86400
+            default: 60
+        - name: rest_log_level
+          in: query
+          description: Level of verbosity that will be printed in Console.log. ( Minimum value = 3, Maximum value = 7, Standard value = 3, Available values [3 = Default, 4 = Information, 5 = Debug, 6 = Trace, 7 = Trace in | Trace out] )
+          required: false
+          schema: 
+            type: integer
+            minimum: 3
+            maximum: 7
+            default: 3
+            enum: 
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+        - name: rest_log_StringSize
+          in: query
+          description: Indicates the maximum length of the string that will be used when displaying the logs. ( Minimum value = 10, Standard value = 200 )
+          required: false
+          schema: 
+            type: integer
+            minimum: 10
+            default: 200
+      responses: 
         200:
-          description: Sucesso | Content- [METHOD_DYN hh-mm-ss [{param1-value_param}]]
-  /init/dyn:
+          description: Interface worked correctly.
+  /tlpp/rest/list/service:
     get:
-      summary: Exemplo 01 dinamico
-      description: Documentacao do endpoint [/init/dyn] metodo [GET] gerado dinamicamente sem annotation
-      responses:
+      summary: Lista de APIs
+      description: Lista de APIs REST disponíveis no ambiente em uso, com seu respectivo método e descrição.
+      responses: 
         200:
-          description: Sucesso | Content- [FUNC_DYN hh-mm-ss]
-    put:
-      summary: Exemplo 02 dinamico
-      description: Documentacao do endpoint [/init/dyn] metodo [PUT] gerado dinamicamente sem annotation
-      responses:
+          description: Sucesso
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listService'
+  /tlpp/rest/usage/time:
+    get:
+      summary: Relatório de tempos
+      description: Exibe todas as métricas coletadas de tempo quando estiver ligado mecanismo de tracking.
+      responses: 
         200:
-          description: Sucesso | Content- [FUNC_DYN hh-mm-ss]
+          description: Success
+  /tlpp/sourcerevision:
+    get:
+      summary: Revisão tlppCore
+      description: Retorna o ID de revisão do código fonte do tlppCore em uso
+      responses: 
+        200:
+          description: Success
+  /tlpp/sourcerevisiondate:
+    get:
+      summary: Data/Hora Revisão tlppCore
+      description: Retorna a data e hora de revisão do código fonte do tlppCore em uso
+      responses: 
+        200:
+          description: Success
+  /tlpp/version:
+    get:
+      summary: Release tlppCore
+      description: Retorna o número da versão do tlppCore em uso
+      responses: 
+        200:
+          description: Success
+  /tlpp/versionname:
+    get:
+      summary: Nome Versão tlppCore
+      description: Retorna o nome da versão do tlppCore em uso
+      responses: 
+        200:
+          description: Success
+  /tlpp/versionnumber:
+    get:
+      summary: Número Versão tlppCore
+      description: Retorna o número da versão do tlppCore em uso
+      responses: 
+        200:
+          description: Success
+  /totvs/environment:
+    get:
+      summary: Versão completa appServer e tlppCore
+      description: Retorna todos os dados disponíveis de versão do appServer e tlppCore em uso em formato JSON
+      responses: 
+        200:
+          description: Success
 components:
     schemas:
       sampleBodyIn:
@@ -211,3 +692,31 @@ components:
           sucess:
             type: boolean
             example: false
+      guiAuth:
+        type: object
+        properties:
+          login:
+            type: string
+            example: tlpp
+          password:
+            type: string
+            example: t199:s3cr37
+      listService:
+        type: object
+        properties:
+          endpoint:
+            type: string
+            example: /tlpp/endpoint
+          methods:
+            type: array
+            items:
+              $ref: '#/components/schemas/serviceMethod'
+      serviceMethod:
+        type: object
+        properties:
+          description:
+            type: string
+            example: Endpoint do tlpp
+          method:
+            type: string
+            example: GET

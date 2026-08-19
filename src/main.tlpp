@@ -1,81 +1,102 @@
 #include 'tlpp-core.th'
 
 /* ==========================================================================
-   FUNÇÃO PRINCIPAL: Orquestrador de Exemplos e Geração de DOC
-   ==========================================================================
-   Este bloco inicializa o ambiente de testes do repositório, levantando os
-   serviços REST dinâmicos e disparando a geração do arquivo de documentação.
-   ========================================================================== */
+FUNÇÃO PRINCIPAL: Orquestrador de Exemplos e Geração de DOC
+==========================================================================
+Este bloco inicializa o ambiente de testes do repositório, levantando os
+serviços REST dinâmicos e disparando a geração do arquivo de documentação.
+========================================================================== */
 function U_sampleDOC()
 
-    /* ----------------------------------------------------------------------
-       1. Inicialização dos Endpoints Dinâmicos
-       Subirá o servidor HTTP virtual e registrará as rotas construídas via 
-       JSON (sem o uso de annotations convencionais).
-       ---------------------------------------------------------------------- */
-    U_dynamic_rest_start()
+  /* ----------------------------------------------------------------------
+  1. Inicialização dos Endpoints Dinâmicos
+  Subirá o servidor HTTP virtual e registrará as rotas construídas via 
+  JSON (sem o uso de annotations convencionais).
+  Inicializa um serviço REST na porta 8080
+  ---------------------------------------------------------------------- */
+  U_dynamic_rest_start()
 
-    /* ----------------------------------------------------------------------
-       2. Disparo do Motor de Geração OpenAPI
-       Aciona o motor nativo do tlppCore para ler as annotations e as rotas 
-       dinâmicas amarradas e exportar o arquivo final.
-       ---------------------------------------------------------------------- */
-    tlpp.doc.generate( 'swagger', 'api_doc', {8080}, {'en-us','pt-br'}, "U_ListDOCFunctions" )
+  /* ----------------------------------------------------------------------
+  2. Disparo do Motor de Geração OpenAPI
+  Aciona o motor nativo do tlppCore para ler as annotations e as rotas 
+  dinâmicas amarradas e exportar o arquivo final.
+  ---------------------------------------------------------------------- */
+  tlpp.doc.generate( 'swagger', 'api_doc', {8080}, {'en-us','pt-br'}, "U_ListDOCFunctions", /*functionNameFilter=*/, /*serviceTrace=*/ )
 
 return
 
 /* ==========================================================================
-   DOCUMENTAÇÃO TÉCNICA: SINTAXE DA FUNÇÃO NATIVA
-   ==========================================================================
-   Sintaxe completa:
-   tlpp.doc.generate( <cFormato>, <cNomeArquivo>, [aPorts], [aLocales], [cListFunc] )
+DOCUMENTAÇÃO TÉCNICA: SINTAXE DA FUNÇÃO NATIVA
+==========================================================================
+Sintaxe completa:
+tlpp.doc.generate( <cFormato>, <cNomeArquivo>, [aPorts], [aLocales], [cListFunc] )
 
-   --------------------------------------------------------------------------
-   1. <cFormato> (String | Obrigatório)
-   --------------------------------------------------------------------------
-   Define o formato do arquivo de saída.
-   Opções: 
-     - 'swagger' : Gera o arquivo estruturado na especificação OpenAPI (.yaml).
-     - 'json'    : Gera o arquivo puro no formato JSON (.json).
-   Default: 'json'
+--------------------------------------------------------------------------
+1. <format> (String | Obrigatório)
+--------------------------------------------------------------------------
+Define o formato do arquivo de saída.
+Opções: 
+  - 'swagger' : Gera o arquivo estruturado na especificação OpenAPI (.yaml).
+                A partir do tlppCore 01.07.01, também será aceito 'openapi'
+  - 'json'    : Gera o arquivo puro no formato JSON (.json).
+Default: 'json'
 
-   --------------------------------------------------------------------------
-   2. <cNomeArquivo> (String | Obrigatório)
-   --------------------------------------------------------------------------
-   Define o nome base do arquivo que será salvo no servidor.
-   Default: 'rest_doc'
+--------------------------------------------------------------------------
+2. <fileName> (String | Obrigatório)
+--------------------------------------------------------------------------
+Define o nome base do arquivo que será salvo no servidor.
+Default: 'rest_doc'
 
-   --------------------------------------------------------------------------
-   3. [aPorts] (Array de Numéricos | Opcional)
-   --------------------------------------------------------------------------
-   Filtro de portas do serviço REST (configuradas via INI ou dinamicamente).
-   Se informado como NULL ou omitido, o motor gerará a documentação para 
-   TODOS os serviços REST que estiverem ativos ("no ar") no momento da execução.
-   Ex: {8080, 443}
-   Default: NULL
+--------------------------------------------------------------------------
+3. [ports] (Array de Numéricos | Opcional)
+--------------------------------------------------------------------------
+Filtro de portas do serviço REST (configuradas via INI ou dinamicamente).
+Se informado como NULL ou omitido, o motor gerará a documentação para 
+TODOS os serviços REST que estiverem ativos ("no ar") no momento da execução.
+Ex: {8080, 443}
+Default: NULL
 
-   --------------------------------------------------------------------------
-   4. [aLocales] (Array de Strings | Opcional)
-   --------------------------------------------------------------------------
-   Lista de idiomas (locales) que serão processados pelo i18n para gerar 
-   documentações localizadas/traduzidas.
-   Ex: {'en-us', 'pt-br'}
-   Default: Idioma padrão do sistema.
+--------------------------------------------------------------------------
+4. [langs] (Array de Strings | Opcional)
+--------------------------------------------------------------------------
+Lista de idiomas (locales) que serão processados pelo i18n para gerar 
+documentações localizadas/traduzidas.
+Ex: {'en-us', 'pt-br'}
+Default: Idioma padrão do sistema.
 
-   --------------------------------------------------------------------------
-   5. [cListFunc] (String | Opcional)
-   --------------------------------------------------------------------------
-   Nome da função customizada (User Function) responsável por retornar a lista 
-   de amarração (`tlpp.doc.List`) das rotas dinâmicas criadas via JSON.
-   Ex: "U_ListDOCFunctions"
-   Default: ""
+--------------------------------------------------------------------------
+5. [functionNameDOC] (String | Opcional)
+--------------------------------------------------------------------------
+Nome da função customizada (User Function) responsável por retornar a lista 
+de amarração (`tlpp.doc.List`) das rotas dinâmicas criadas via JSON.
+Ex: "U_ListDOCFunctions"
+Default: ""
 
-   ==========================================================================
-   EXEMPLOS DE SAÍDA NO SERVIDOR:
-   ==========================================================================
-   - Chamada: tlpp.doc.generate( 'swagger', 'rest_tlpp', {8080, 443} )
-     Gera na pasta do sistema: rest_tlpp_8080.yaml e rest_tlpp_443.yaml
+--------------------------------------------------------------------------
+6. [functionNameFilter] (String | Opcional)
+--------------------------------------------------------------------------
+Nome da função customizada (User Function) responsável por retornar uma 
+lista de rotas a serem documentadas, funcionando como um filtro, pois assim
+que essa função retornar uma lista válida, somente rotas pertencentes e
+essa lista serão incluídas no arquivo gerado.
+Ex: "U_ListFilter"
+Default: ""
 
-   - Chamada: tlpp.doc.generate( 'json', 'rest_tlpp', {8080, 443} )
-     Gera na pasta do sistema: rest_tlpp_8080.json e rest_tlpp_443.json
-   ========================================================================== */
+--------------------------------------------------------------------------
+7. [serviceTrace] (String | Opcional)
+--------------------------------------------------------------------------
+Indica qual rota gostaria de ativar um trace da execução da documentação,
+facilitando a depuração de possíveis problemas.
+Ex: "get:/meu/endpoint"
+Default: ""
+
+
+==========================================================================
+EXEMPLOS DE SAÍDA NO SERVIDOR:
+==========================================================================
+- Chamada: tlpp.doc.generate( 'swagger', 'rest_tlpp', {8080, 443} )
+  Gera na pasta do sistema: rest_tlpp_8080.yaml e rest_tlpp_443.yaml
+
+- Chamada: tlpp.doc.generate( 'json', 'rest_tlpp', {8080, 443} )
+  Gera na pasta do sistema: rest_tlpp_8080.json e rest_tlpp_443.json
+========================================================================== */
