@@ -22,10 +22,10 @@ a validação real (imperativa) da presença do parâmetro deve ser feita manualment
 
 @Get(;
     endpoint="/rest/sample/doc/basic/02",;
-    description="Exemplo de documentação de REST diretamente na annotation.",;
-    title="DOC simples 02",;
-    params='[{"name":"param1","description":"desc_param_1","in":"query","type":"character","required":true}]',;
-    responses='[{"statusCode":200,"description":"OK"},{"statusCode":400,"description":"Parâmetro inválido"}]';
+    description="",;
+    title="",;
+    params='[{"name":"param1","descriptiesc_param_1","in":"quer"type":"c,"required":true}]',;
+    responses='[{"statusCode":200,"},{"statusCode":400,"descri"ro inválido"}]';
 )
 function U_rest_sample_02_basic() as logical
     local lReturn := .T. as logical

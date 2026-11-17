@@ -1,0 +1,140 @@
+#include 'tlpp-rest.th'
+#include 'tlpp-doc.th'
+
+
+// ==========================================================================
+// READER: erro ao coletar a documentacao
+// ==========================================================================
+
+// erro_reader_01 | JSON de documentacao invalido (sem virgula e chave sem aspas)
+@Get(endpoint="/rest/sample/doc/force/reader_01", description='{ "title" : "JSON invalido" description : "sem virgula" }')
+function U_force_reader_01() as logical
+return oRest:setResponse("reader_01")
+
+// erro_reader_01 | JSON invalido vindo do dicionario i18n (force_errors-i18n.tlpp)
+@Get(endpoint="/rest/sample/doc/force/reader_01_i18n", description="<1>")
+function U_force_reader_01_i18n() as logical
+return oRest:setResponse("reader_01_i18n")
+
+// erro_reader_04 | excecao dentro da funcao de documentacao
+@Get(endpoint="/rest/sample/doc/force/reader_04", description="[U_force_reader_04_DOC]")
+function U_force_reader_04() as logical
+return oRest:setResponse("reader_04")
+
+function U_force_reader_04_DOC( oDoc )
+  local aVetor := {} as array
+  local xValue
+  oDoc:setTitle( "reader_04" )
+  xValue := aVetor[1] // posicao inexistente: excecao em runtime
+return
+
+// erro_reader_05 | toJson sem retorno (nenhum dado valido registrado no oDoc)
+@Get(endpoint="/rest/sample/doc/force/reader_05", description="[U_force_reader_05_DOC]")
+function U_force_reader_05() as logical
+return oRest:setResponse("reader_05")
+
+function U_force_reader_05_DOC( oDoc )
+  oDoc:setTitle( "" ) // titulo vazio: validacao rejeita
+return ""
+
+// erro_reader_06 | funcao destroi o oDoc recebido (invalid signature)
+@Get(endpoint="/rest/sample/doc/force/reader_06", description="[U_force_reader_06_DOC]")
+function U_force_reader_06() as logical
+return oRest:setResponse("reader_06")
+
+function U_force_reader_06_DOC( oDoc )
+  oDoc:setTitle( "reader_06" )
+  oDoc:destroy()
+return ""
+
+
+// ==========================================================================
+// GENERATE: quebra na exportacao (generate_error)
+// ==========================================================================
+
+// erro_generate_01 | statusCode como texto
+@Get(;
+  endpoint="/rest/sample/doc/force/generate_01",;
+  title="generate_01",;
+  description="statusCode como texto",;
+  responses='[{"statusCode":"200","description":"OK"}]';
+)
+function U_force_generate_01() as logical
+return oRest:setResponse("generate_01")
+
+// erro_generate_02 | JSON valido sem description
+// (annotation so com title vira no_doc; o JSON direto no description chega ao exportador)
+@Get(endpoint="/rest/sample/doc/force/generate_02", description='{"title":"generate_02 sem description"}')
+function U_force_generate_02() as logical
+return oRest:setResponse("generate_02")
+
+// erro_generate_02 | values de param sem description
+@Get(;
+  endpoint="/rest/sample/doc/force/generate_02_values",;
+  title="generate_02 values",;
+  description="values sem description",;
+  params='[{"name":"p1","in":"query","type":"character","values":[{"value":"a"}]}]';
+)
+function U_force_generate_02_values() as logical
+return oRest:setResponse("generate_02_values")
+
+// erro_generate_03 | param sem name
+@Get(;
+  endpoint="/rest/sample/doc/force/generate_03",;
+  title="generate_03",;
+  description="param sem name",;
+  params='[{"description":"x","in":"query","type":"character","required":true}]';
+)
+function U_force_generate_03() as logical
+return oRest:setResponse("generate_03")
+
+// erro_generate_04 | param sem in
+@Get(;
+  endpoint="/rest/sample/doc/force/generate_04",;
+  title="generate_04",;
+  description="param sem in",;
+  params='[{"name":"p1","description":"x","type":"character","required":true}]';
+)
+function U_force_generate_04() as logical
+return oRest:setResponse("generate_04")
+
+// erro_generate_05 | required numerico
+@Get(;
+  endpoint="/rest/sample/doc/force/generate_05",;
+  title="generate_05",;
+  description="required numerico",;
+  params='[{"name":"p1","description":"x","in":"query","type":"character","required":1}]';
+)
+function U_force_generate_05() as logical
+return oRest:setResponse("generate_05")
+
+// erro_generate_06 | Content-Type do requestBody com elemento texto
+@Post(;
+  endpoint="/rest/sample/doc/force/generate_06",;
+  title="generate_06",;
+  description="Content-Type com elemento texto",;
+  requestBody='{"description":"d","Content-Type":["application/json"]}';
+)
+function U_force_generate_06() as logical
+return oRest:setResponse("generate_06")
+
+// erro_generate_07 | type de param nao textual
+@Get(;
+  endpoint="/rest/sample/doc/force/generate_07",;
+  title="generate_07",;
+  description="type nao textual",;
+  params='[{"name":"p1","description":"x","in":"query","type":1}]';
+)
+function U_force_generate_07() as logical
+return oRest:setResponse("generate_07")
+
+// erro_generate_08 | componente autorreferente (prevenido pela guarda de ciclo: ok)
+// o componente forceNode esta em force_errors_components.tlpp
+@Get(;
+  endpoint="/rest/sample/doc/force/generate_08",;
+  title="generate_08",;
+  description="componente que referencia a si mesmo",;
+  responses='[{"statusCode":200,"description":"OK","Content-Type":[{"json":{"type":"component","component":"forceNode"}}]}]';
+)
+function U_force_generate_08() as logical
+return oRest:setResponse("generate_08")

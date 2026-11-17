@@ -1,0 +1,26 @@
+#include "tlpp-i18n.th"
+
+//////////////////////////////////////////////////////////////
+TLPP TRANSLATION BRA force_errors
+TLPP TRANSLATION EUA force_errors
+//////////////////////////////////////////////////////////////
+
+TLPP BEGIN TRANSLATION force_errors
+
+// TESTE TEMPORARIO (DTTLPP-3095): JSON invalido de proposito.
+// As chaves precisam estar balanceadas (o pre-processador exige), entao o erro
+// e outro: falta a virgula entre os campos e a chave "description" esta sem aspas.
+
+TRANSLATE 1#URI#BRA# ;
+{ ;
+  "title" : "JSON invalido de proposito" ;
+  description : "falta a virgula e as aspas da chave" ;
+}
+
+TRANSLATE 1#URI#EUA# ;
+{ ;
+  "title" : "intentionally invalid JSON" ;
+  description : "missing comma and key quotes" ;
+}
+
+TLPP END TRANSLATION
