@@ -1,0 +1,15 @@
+#include "tlpp-doc.th"
+
+/*
+==========================================================================
+erro_generate_08 | COMPONENTE QUE REFERENCIA A SI MESMO
+
+Usado pelo caso generate_08 de force_errors.tlpp. A guarda de ciclo do motor
+(getComponent) impede a recursao sem fim; o esperado e status ok.
+
+Para remover: apague este arquivo (ou a pasta 05_force_errors) e recompile.
+==========================================================================
+*/
+
+DOC COMPONENT forceNode name      character "no"
+DOC COMPONENT forceNode children  array     "forceNode"
