@@ -1,0 +1,132 @@
+---
+title: Auditoria da geração
+description: Resumo no log e relatório JSON com o estado de cada endpoint na geração da documentação REST.
+sidebar_position: 4
+displayed_sidebar: docsSidebar
+---
+
+# Auditoria da geração
+
+Com a **auditoria ligada**, o `tlpp.doc.generate()` mostra um resumo no log do AppServer e grava um arquivo `<arquivo>_report.json` com o estado de cada endpoint avaliado: documentado, sem documentação ou com erro, e o motivo.
+
+## Como ligar
+
+Passe a palavra reservada `"audit:on"` no 7º parâmetro (`serviceTrace`):
+
+```tlpp
+tlpp.doc.generate( 'openapi', 'api_doc', {8080}, {'pt-br'}, "", "", "audit:on" )
+```
+
+Pela [CLI](/docs/tlpp/rest/doc-generate/cli):
+
+```bash
+./appsrvlinux -env=ENV -run=tlpp.doc.cli.generate -format openapi -filename api_doc -ports 8080 -servicetrace audit:on
+```
+
+```bat
+appserver.exe -env=ENV -run=tlpp.doc.cli.generate -format openapi -filename api_doc -ports 8080 -servicetrace audit:on
+```
+
+:::note Trace ou auditoria
+O `serviceTrace` recebe **ou** um endpoint no formato `"método:urn"` (trace de um serviço) **ou** `"audit:on"`. Os dois usos não se combinam.
+:::
+
+## Estados de um endpoint
+
+| `status` | Significado | Exemplos de motivo (`reason`) |
+|----------|-------------|-------------------------------|
+| `ok` | Documentação coletada e exportada com sucesso | — |
+| `no_doc` | Endpoint sem documentação definida | — |
+| `read_error` | Erro ao coletar a documentação do endpoint | JSON de documentação inválido; função de documentação não encontrada ou com nome inválido; erro dentro da função de documentação; erro ao inicializar a classe REST |
+| `generate_error` | Erro ao exportar a documentação do endpoint | Valor com tipo inválido na documentação, por exemplo: `statusCode` como texto, parâmetro sem `name` ou sem `in`, `required` que não é lógico |
+
+Quando há mais de um motivo, o `reason` junta todos separados por ` | `.
+
+## Resumo no log
+
+Com a auditoria ligada, o fim da geração mostra um bloco como este (prefixo do log omitido):
+
+```text
+=== RESUMO DA DOCUMENTACAO ===
+  Total avaliado.........: 12
+  Documentados...........:  9
+  Sem documentacao.......:  1
+  Erros de leitura.......:  1
+  Erros de geracao.......:  1
+==============================
+
+  + Arquivo criado: api_doc_report.json
+    Diretorio: /totvs/protheus_data/
+
+Utilize nossa ferramenta para analise dos seus resultados!
+- https://totvs.github.io/totvstec-doc/tools/auditoria-api
+```
+
+Os textos seguem o idioma do AppServer (português, inglês ou espanhol).
+
+## Relatório `_report.json`
+
+O nome do relatório é o nome do arquivo de documentação sem a extensão, seguido de `_report.json`:
+
+| `fileName` informado | Relatório gerado |
+|----------------------|------------------|
+| `api_doc` | `api_doc_report.json` |
+| *(vazio)* | `rest_doc_report.json` |
+
+É um único arquivo por geração, mesmo com várias portas: cada endpoint traz a sua `port`. O caminho de gravação aparece no log (`Diretorio:`).
+
+```json
+{
+  "legend": {
+    "ok": "documentacao coletada e exportada com sucesso",
+    "read_error": "erro ao coletar a documentacao do endpoint (ver reason)",
+    "no_doc": "endpoint sem documentacao definida",
+    "generate_error": "erro ao exportar a documentacao do endpoint (ver reason)"
+  },
+  "endpoints": [
+    { "port": 8080, "endpoint": "/api/clientes", "method": "GET", "status": "ok", "reason": "" },
+    { "port": 8080, "endpoint": "/api/clientes/:id", "method": "GET", "status": "no_doc", "reason": "" },
+    { "port": 8080, "endpoint": "/api/pedidos", "method": "POST", "status": "read_error", "reason": "funcao de documentacao [U_PEDIDOS_DOC] nao encontrada" }
+  ]
+}
+```
+
+## Analisar no Auditor de APIs
+
+O [Auditor de documentação de APIs](/tools/auditoria-api) lê o relatório no navegador:
+
+- carregue o `api_doc_report.json` para ver cobertura e erros por endpoint, com explicação e sugestão de correção;
+- carregue também a documentação gerada com `format = 'json'` (ex.: `api_doc.json`) para medir a qualidade do que foi documentado.
+
+Nada é enviado para servidor: a análise roda no navegador.
+
+## Com a auditoria desligada
+
+Sem `audit:on`, nenhum relatório é gravado. Se algum endpoint tiver erro, o log mostra só a contagem e como ligar a auditoria:
+
+```text
+=== ATENCAO: ENDPOINTS COM ERRO NA DOCUMENTACAO ===
+  Erros de leitura.......: 1
+  Erros de geracao.......: 2
+
+  Para mais detalhes, ligue a auditoria:
+    serviceTrace = "audit:on"
+===================================================
+```
+
+## Erro em um endpoint não derruba os outros
+
+Se a documentação de um endpoint não puder ser exportada, só aquele método fica fora do arquivo gerado. Os demais endpoints são documentados normalmente, e o endpoint com problema aparece no relatório como `generate_error`.
+
+## Componentes autorreferentes
+
+Um componente pode referenciar a si mesmo (ex.: `categoria` com uma propriedade `subcategorias` do tipo `categoria`). A propriedade sai como referência ao próprio componente:
+
+```yaml
+subcategorias:
+  type: array
+  items:
+    $ref: '#/components/schemas/categoria'
+```
+
+**Ver também:** [Simulate](/docs/tlpp/rest/doc-generate/simulate) para gerar a documentação de um único endpoint no console.

@@ -1,0 +1,78 @@
+---
+title: Simulate (um endpoint)
+description: Gerar a documentação de um único endpoint e imprimir o resultado no console, sem gravar arquivo.
+sidebar_position: 5
+displayed_sidebar: docsSidebar
+---
+
+# Simulate — documentação de um endpoint no console
+
+`tlpp.doc.simulate()` gera a documentação de **um** endpoint + método e imprime o resultado (YAML ou JSON) no console do AppServer. Nenhum arquivo é gravado.
+
+Serve para conferir a documentação enquanto você escreve, sem gerar o arquivo da porta inteira.
+
+## Assinatura
+
+```tlpp
+lOk := tlpp.doc.simulate( cMethod, cEndpoint, [cDocFunction], [cFormat], [xPorts], [xLangs] )
+```
+
+| Parâmetro | Obrigatório | Descrição |
+|-----------|-------------|-----------|
+| `cMethod` | sim | Verbo HTTP, ex.: `"GET"` |
+| `cEndpoint` | sim | Rota, ex.: `"/api/clientes/:id"` |
+| `cDocFunction` | não | Função de documentação a usar para esse endpoint |
+| `cFormat` | não | `'openapi'` (YAML) ou `'json'`. Padrão: `'openapi'` |
+| `xPorts` | não | Porta (número ou texto) ou array de portas. Vazio = todas as portas |
+| `xLangs` | não | Idioma (texto) ou array de idiomas. Padrão: `{'pt-br'}` |
+
+Retorna `.T.` quando a geração termina sem erro e `.F.` quando falta `cMethod` ou `cEndpoint`, ou quando a geração falha.
+
+## Exemplos
+
+```tlpp
+// Documentação atual da rota
+tlpp.doc.simulate( "GET", "/api/clientes/:id" )
+
+// Usando uma função de documentação, saída em JSON, porta 8080, em inglês
+tlpp.doc.simulate( "POST", "/api/clientes", "U_clientesPost_DOC", "json", 8080, "en-us" )
+```
+
+## Resultado
+
+A documentação do endpoint é impressa no console do AppServer. Se nada for gerado, o log avisa:
+
+```text
+>> nenhuma documentacao gerada para o endpoint informado | port: 8080
+```
+
+## Pela linha de comando
+
+A função `tlpp.doc.cli.simulate` expõe o simulate na [CLI](/docs/tlpp/rest/doc-generate/cli):
+
+```bash
+./appsrvlinux -env=ENV -run=tlpp.doc.cli.simulate -method GET -endpoint /api/clientes/:id -ports 8080
+```
+
+```bat
+appserver.exe -env=ENV -run=tlpp.doc.cli.simulate -method POST -endpoint /api/clientes -docfunction U_clientesPost_DOC -format json -ports 8080 -langs en-us
+```
+
+### Parâmetros
+
+| Parâmetro | Variável de ambiente | Descrição |
+|-----------|----------------------|-----------|
+| `-method` | `method` | Verbo HTTP (obrigatório) |
+| `-endpoint` | `endpoint` | Rota (obrigatório) |
+| `-docfunction` | `docfunction` | Função de documentação para o endpoint |
+| `-format` | `format` | `openapi` (YAML) ou `json` |
+| `-ports` | `ports` | Portas, separadas por espaço na CLI ou por vírgula na variável (`8080,8081`) |
+| `-langs` | `langs` | Idiomas, separados por espaço na CLI ou por vírgula na variável (`pt-br,en-us`) |
+
+As regras são as mesmas do `tlpp.doc.cli.generate`: separe nome e valor com **espaço** (não use `=`), e a linha de comando tem prioridade sobre as variáveis de ambiente.
+
+:::tip Variáveis genéricas
+Nomes como `method` e `endpoint` podem já existir no ambiente da máquina. Na dúvida, informe os valores pela linha de comando.
+:::
+
+Assim como o `generate`, a função só executa quando invocada diretamente pelo AppServer em modo command-line.

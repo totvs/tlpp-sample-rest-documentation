@@ -7,12 +7,11 @@
    Este endpoint aciona programaticamente o motor do tlppCore para gerar
    o arquivo de documenta??o das APIs.
 
-   ATEN??O: Embora o termo correto da especifica??o seja "OpenAPI", a fun??o
-   nativa `tlpp.doc.generate` ainda exige o par?metro literal 'swagger' por
-   quest?es de compatibilidade com o motor.
+   Formato: use 'openapi' para gerar YAML OpenAPI 3.x. O valor 'swagger'
+   e legado e continua aceito por compatibilidade.
 
    Par?metros da fun??o tlpp.doc.generate utilizados aqui:
-   1. Formato (ex: 'swagger')
+   1. Formato (ex: 'openapi')
    2. Nome do arquivo gerado (ex: 'api_doc')
    3. Array de portas do AppServer (ex: {8080})
    4. Array de idiomas/locales (ex: {'en-us', 'pt-br'})
@@ -37,7 +36,7 @@ function U_rest_sample_doc_generate()
 
   begin sequence
     // Apenas os parametros basicos + filtro. Varre a porta 8080 (ou a do ini).
-    tlpp.doc.generate('swagger', 'api_doc', {8080}, {'en-us','pt-br'} , "" , "U_ListFilter")
+    tlpp.doc.generate('openapi', 'api_doc', {8080}, {'en-us','pt-br'} , "" , "U_ListFilter")
   recover
     lOk := .F.
   end sequence

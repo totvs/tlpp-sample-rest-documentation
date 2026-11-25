@@ -47,7 +47,7 @@ Uma ordem só — de declarar metadados até exportar o OpenAPI. O menu **DOC GE
 1. **Prefira o objeto `oDoc`** na função DOC — a partir do tlppCore 01.07.01, a função recebe um [`RestDoc`](/docs/tlpp/rest/doc-generate/classe-restdoc) por parâmetro que dispensa conhecer a estrutura JSON interna
 2. **Alternativa JSON:** se usar retorno string, prefira `JsonObject():New()` — evita JSON inválido por vírgula faltando
 3. **Multi-linha:** não pule números em `descriptionN` — o motor para no primeiro gap
-4. **Geração:** o 1º parâmetro de `tlpp.doc.generate` deve ser `'swagger'` — ver [Doc Generate](/docs/tlpp/rest/doc-generate)
+4. **Geração:** use `'openapi'` no 1º parâmetro de `tlpp.doc.generate` para gerar YAML (`'swagger'` é legado) — ver [Doc Generate](/docs/tlpp/rest/doc-generate)
 
 <ExemploRef file="restdoc_object_return.tlpp" path="rest/03_dedicated_function_doc/basic" />
 <ExemploRef file="complete_api_with_object_DOC.tlpp" path="rest/03_dedicated_function_doc/advanced_with_object" />

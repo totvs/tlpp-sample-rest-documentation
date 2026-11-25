@@ -13,9 +13,9 @@ displayed_sidebar: docsSidebar
 2. `#include "tlpp-doc.th"` onde houver `DOC COMPONENT` (ou `TLPP COMPONENT` legado) ou funções DOC
 3. Metadados coerentes com rotas reais — o YAML só documenta o que o AppServer expõe
 
-## `tlpp.doc.generate` — parâmetro `swagger`
+## `tlpp.doc.generate` — formato `openapi`
 
-O 1º parâmetro ainda deve ser a string literal `'swagger'` para gerar YAML OpenAPI 3.x. Não é o formato antigo Swagger 2 — é o nome exigido pelo motor.
+Use `'openapi'` no 1º parâmetro para gerar YAML OpenAPI 3.x. O valor `'swagger'` é legado e continua aceito por compatibilidade (antes do tlppCore 01.07.01 era o único valor para gerar YAML).
 
 ## `descriptionN` sem buracos
 

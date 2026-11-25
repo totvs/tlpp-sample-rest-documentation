@@ -21,7 +21,7 @@ function U_sampleDOC()
   Aciona o motor nativo do tlppCore para ler as annotations e as rotas 
   dinâmicas amarradas e exportar o arquivo final.
   ---------------------------------------------------------------------- */
-  tlpp.doc.generate( 'swagger', 'api_doc', {8080}, {'en-us','pt-br'}, "U_ListDOCFunctions", /*functionNameFilter=*/, /*serviceTrace=*/ )
+  tlpp.doc.generate( 'openapi', 'api_doc', {8080}, {'en-us','pt-br'}, "U_ListDOCFunctions", /*functionNameFilter=*/, /*serviceTrace=*/ )
 
 return
 
@@ -36,10 +36,10 @@ tlpp.doc.generate( <cFormato>, <cNomeArquivo>, [aPorts], [aLocales], [cListFunc]
 --------------------------------------------------------------------------
 Define o formato do arquivo de saída.
 Opções: 
-  - 'swagger' : Gera o arquivo estruturado na especificação OpenAPI (.yaml).
-                A partir do tlppCore 01.07.01, também será aceito 'openapi'
+  - 'openapi' : Gera o arquivo estruturado na especificação OpenAPI (.yaml).
+                'swagger' é legado e continua aceito por compatibilidade
   - 'json'    : Gera o arquivo puro no formato JSON (.json).
-Default: 'json'
+Default: 'openapi'
 
 --------------------------------------------------------------------------
 2. <fileName> (String | Obrigatório)
@@ -94,7 +94,7 @@ Default: ""
 ==========================================================================
 EXEMPLOS DE SAÍDA NO SERVIDOR:
 ==========================================================================
-- Chamada: tlpp.doc.generate( 'swagger', 'rest_tlpp', {8080, 443} )
+- Chamada: tlpp.doc.generate( 'openapi', 'rest_tlpp', {8080, 443} )
   Gera na pasta do sistema: rest_tlpp_8080.yaml e rest_tlpp_443.yaml
 
 - Chamada: tlpp.doc.generate( 'json', 'rest_tlpp', {8080, 443} )

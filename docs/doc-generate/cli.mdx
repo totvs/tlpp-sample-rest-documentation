@@ -36,7 +36,7 @@ appserver.exe -env=ENV -run=tlpp.doc.cli.generate -format openapi -filename api_
 | `-langs` | strings | Idiomas para i18n (ex.: `-langs pt en es` ou `BR USA ESP`) |
 | `-functionnamedoc` | string | Função com lista de endpoints dinâmicos (`tlpp.doc.List()`) |
 | `-functionnamefilter` | string | Função de filtro (allowlist de serviços documentados) |
-| `-servicetrace` | string | Rastreia um serviço específico com log detalhado. Formato: `método:urn` |
+| `-servicetrace` | string | Rastreia um serviço específico com log detalhado (formato `método:urn`) **ou** recebe `audit:on` para ligar a [auditoria](/docs/tlpp/rest/doc-generate/auditoria). Os dois usos não se combinam |
 
 :::note Separação de valores
 Use **espaço** para separar o nome do parâmetro do valor. Não use `=`.
@@ -144,7 +144,37 @@ appserver.exe -env=ENV -run=tlpp.doc.cli.generate -format openapi -filename debu
 
 O log do AppServer mostrará o passo a passo do processamento daquele serviço.
 
+## Auditoria com `audit:on`
+
+Para obter o resumo da geração no log e o relatório `<arquivo>_report.json` com o estado de cada endpoint:
+
+Linux:
+```bash
+./appsrvlinux -env=ENV -run=tlpp.doc.cli.generate \
+  -format openapi \
+  -filename api_doc \
+  -ports 8080 \
+  -servicetrace audit:on
+```
+
+Windows:
+```bat
+appserver.exe -env=ENV -run=tlpp.doc.cli.generate -format openapi -filename api_doc -ports 8080 -servicetrace audit:on
+```
+
+Os estados, o formato do relatório e a ferramenta de análise estão em [Auditoria da geração](/docs/tlpp/rest/doc-generate/auditoria).
+
+## Simulate: um endpoint no console
+
+`tlpp.doc.cli.simulate` gera a documentação de um único endpoint + método e imprime o resultado no console, sem gravar arquivo:
+
+```bash
+./appsrvlinux -env=ENV -run=tlpp.doc.cli.simulate -method GET -endpoint /api/clientes/:id -ports 8080
+```
+
+Parâmetros (`-method`, `-endpoint`, `-docfunction`, `-format`, `-ports`, `-langs`) em [Simulate](/docs/tlpp/rest/doc-generate/simulate#pela-linha-de-comando).
+
 ## Restrições de segurança
 
-A função `tlpp.doc.cli.generate` valida a stack de chamada — só executa se invocada diretamente pelo AppServer em modo command-line (sem Remote/SmartClient).
-Tentativas de chamá-la por código ou via REST resultam em erro.
+As funções `tlpp.doc.cli.generate` e `tlpp.doc.cli.simulate` validam a stack de chamada — só executam se invocadas diretamente pelo AppServer em modo command-line (sem Remote/SmartClient).
+Tentativas de chamá-las por código ou via REST resultam em erro.

@@ -13,7 +13,7 @@ Por padrão, `tlpp.doc.generate()` exporta **todas** as rotas encontradas na por
 ## Ligação com a geração
 
 ```tlpp
-tlpp.doc.generate( 'swagger', 'api_doc', {8080}, {'en-us','pt-br'}, "", "U_ListFilter" )
+tlpp.doc.generate( 'openapi', 'api_doc', {8080}, {'en-us','pt-br'}, "", "U_ListFilter" )
 ```
 
 | Parâmetro | Valor neste exemplo |
@@ -49,11 +49,40 @@ Cada `oFilter:add( path, method )` é um par **rota + verbo HTTP**.
 
 Qualquer outra rota da porta (básicos `/05`, completo, dinâmicos, etc.) **fica de fora**.
 
+## Rotas com path params
+
+Uma rota com path params (ex.: `/class/:param1`) pode entrar no filtro de duas formas.
+
+**Rota literal** — o mesmo texto da declaração da rota:
+
+```tlpp
+function U_ListFilter( oFilter ) as object
+  oFilter:add( "/class/:param1", "GET" )
+return oFilter
+```
+
+**Forma com `*`** — cada segmento `:param` é escrito como `*`. Útil para rotas legadas ou quando o nome do parâmetro não importa:
+
+```tlpp
+function U_ListFilter( oFilter ) as object
+  oFilter:add( "/class/*", "GET" )
+return oFilter
+```
+
+| Rota declarada | Forma com `*` equivalente |
+|----------------|---------------------------|
+| `/class/:param1` | `/class/*` |
+| `/cliente/:id/pedidos/:pedido` | `/cliente/*/pedidos/*` |
+
+:::note O `*` não é curinga livre
+O `*` ocupa exatamente o lugar de um path param. `/class/*` documenta `/class/:param1`, mas **não** documenta `/class/:param1/itens` nem `/class/fixo`.
+:::
+
 ## Regras
 
 1. **Allowlist** — só o que você `add` é exportado.
 2. **Path + método** — o mesmo path com verbos diferentes exige uma linha por verbo.
-3. **Path params** — use a sintaxe TLPP (`:param`), alinhada à declaração da rota.
+3. **Path params** — use a sintaxe TLPP (`:param`), alinhada à declaração da rota, ou a forma com `*` no lugar de cada `:param`.
 4. **Não cria rotas** — apenas filtra a geração; a API e os metadados DOC precisam existir.
 5. **Diferente do 5º parâmetro** — `U_ListDOCFunctions` / `tlpp.doc.List()` associa DOC a rotas dinâmicas; `U_ListFilter` só decide o que entra no arquivo final.
 
